@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package rpi;
+
+message InitReq {}
+message CloseReq {}
+message Void {}
+
+message SetDirectionReq {
+    string pin = 1;
+    int32 direction = 2;
+}
+
+message PinInfo {
+    string id = 1;
+    repeated string alias = 2;
+    int32 caps = 3;
+    int32 digitalLogical = 4;
+    int32 analogLogical = 5;
+}
+
+message PinsRes {
+    repeated PinInfo info = 1;
+}
+
+message DigitalWriteReq {
+    string pin = 1;
+    int32 value = 2;
+}
+
+message DigitalReadReq {
+    string pin = 1;
+}
+
+message DigitalReadRes {
+    int32 value = 1;
+}
+
+service GPIO {
+  rpc Init (Void) returns (Void) {};
+  rpc Close (Void) returns (Void) {};
+  rpc Pins (Void) returns (PinsRes) {};
+  rpc SetDirection (SetDirectionReq) returns (Void) {};
+  rpc DigitalWrite (DigitalWriteReq) returns (Void) {};
+  rpc DigitalRead (DigitalReadReq) returns (DigitalReadRes) {};
+}
