@@ -6,6 +6,13 @@ message InitReq {}
 message CloseReq {}
 message Void {}
 
+message InfoRes {
+    int32 in = 1;
+    int32 out = 2;
+    int32 high = 3;
+    int32 low = 4;
+}
+
 message SetDirectionReq {
     string pin = 1;
     int32 direction = 2;
@@ -39,6 +46,7 @@ message DigitalReadRes {
 service GPIO {
   rpc Init (Void) returns (Void) {};
   rpc Close (Void) returns (Void) {};
+  rpc Info (Void) returns (InfoRes) {};
   rpc Pins (Void) returns (PinsRes) {};
   rpc SetDirection (SetDirectionReq) returns (Void) {};
   rpc DigitalWrite (DigitalWriteReq) returns (Void) {};

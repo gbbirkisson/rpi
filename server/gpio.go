@@ -68,5 +68,13 @@ func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.DigitalReadRe
 	pin := req.Pin
 	log.Printf("GPIO.DigitalRead(%s)\n", pin)
 	res, err := embd.DigitalRead(pin)
+	if err != nil {
+		return nil, err
+	}
 	return &rpi.DigitalReadRes{Value: int32(res)}, err
+}
+
+func (s *GpioServerImpl) Info(ctx context.Context, req *rpi.Void) (*rpi.InfoRes, error) {
+	log.Printf("GPIO.Info()\n")
+	return &rpi.InfoRes{In: int32(embd.In), Out: int32(embd.Out), High: int32(embd.High), Low: int32(embd.Low)}, nil
 }

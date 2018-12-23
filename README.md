@@ -6,7 +6,7 @@ A gRPC server for remote IO operations on the RaspberryPi + cli tool to call it
 
 * GPIO
     * ~~Get available pins~~
-    * Set pin direction
+    * ~~Set pin direction~~
     * Read pin values
     * Write pin values
     * Pulldown / Pullup / ActiveLow
