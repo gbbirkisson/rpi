@@ -37,6 +37,7 @@ func (s *GpioServerImpl) Close(ctx context.Context, void *rpi.Void) (*rpi.Void, 
 }
 
 func (s *GpioServerImpl) Info(ctx context.Context, void *rpi.Void) (*rpi.InfoRes, error) {
+	log.Printf("GPIO.Info()\n")
 	driver, err := embd.DescribeHost()
 	res := rpi.InfoRes{}
 
