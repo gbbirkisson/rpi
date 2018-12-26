@@ -5,10 +5,10 @@ import (
 	"log"
 	"net"
 	"os"
+	"path/filepath"
 
 	proto "github.com/gbbirkisson/rpi/proto"
 	rpi "github.com/gbbirkisson/rpi/server"
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	grpc "google.golang.org/grpc"
@@ -33,34 +33,41 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.Flags().IntP("port", "p", 8000, "server port")
-	rootCmd.Flags().StringP("ip", "i", "0.0.0.0", "server ip")
-	rootCmd.Flags().BoolP("gpio", "g", false, "gpio service enabled")
+	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
+	rootCmd.PersistentFlags().StringP("ip", "i", "0.0.0.0", "server ip")
+	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
+
+	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
+	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
 
-		// Search config in home directory with name ".rpi-server" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".rpi-server")
-	}
+	configPath := "/etc/rpi-server"
+	viper.AddConfigPath(configPath)
+	viper.SetConfigName("config")
 
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	if err := viper.ReadInConfig(); err != nil {
+		file := filepath.Join(configPath, "config.yaml")
+
+		fmt.Fprintf(os.Stderr, "Config file not found, creating it: %s\n", file)
+
+		err = os.MkdirAll(configPath, os.ModePerm)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed creating configuration folder: %v\n", err)
+			return
+		}
+
+		err = viper.WriteConfigAs(file)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed creating configuration file: %v\n", err)
+			return
+		}
 	}
 }
 
