@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 )
@@ -29,10 +30,7 @@ var digitalCmd = &cobra.Command{
 
 		client, ctx := getGpioClientAndContext(cmd)
 		_, err = client.DigitalWrite(ctx, &proto.DigitalWriteReq{Pin: args[0], Value: int32(value)})
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "unable to write value gpio: %v\n", err)
-			os.Exit(1)
-		}
+		rpi.ExitOnError(err, "unable to write value gpio")
 	},
 }
 

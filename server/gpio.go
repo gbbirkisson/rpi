@@ -71,7 +71,7 @@ func (s *GpioServerImpl) DigitalWrite(ctx context.Context, req *rpi.DigitalWrite
 	return &rpi.Void{}, embd.DigitalWrite(req.Pin, int(req.Value))
 }
 
-func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.PinReadReq) (*rpi.PinReadRes, error) {
+func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.PinReq) (*rpi.PinReadRes, error) {
 	pin := req.Pin
 	log.Printf("GPIO.DigitalRead(%s)\n", pin)
 	res, err := embd.DigitalRead(pin)
@@ -79,4 +79,32 @@ func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.PinReadReq) (
 		return nil, err
 	}
 	return &rpi.PinReadRes{Value: int32(res)}, err
+}
+
+func (s *GpioServerImpl) AnalogRead(ctx context.Context, req *rpi.PinReq) (*rpi.PinReadRes, error) {
+	pin := req.Pin
+	log.Printf("GPIO.AnalogRead(%s)\n", pin)
+	res, err := embd.AnalogRead(pin)
+	if err != nil {
+		return nil, err
+	}
+	return &rpi.PinReadRes{Value: int32(res)}, err
+}
+
+func (s *GpioServerImpl) PullDown(ctx context.Context, req *rpi.PinReq) (*rpi.Void, error) {
+	pin := req.Pin
+	log.Printf("GPIO.PullDown(%s)\n", pin)
+	return &rpi.Void{}, embd.PullDown(pin)
+}
+
+func (s *GpioServerImpl) PullUp(ctx context.Context, req *rpi.PinReq) (*rpi.Void, error) {
+	pin := req.Pin
+	log.Printf("GPIO.PullUp(%s)\n", pin)
+	return &rpi.Void{}, embd.PullUp(pin)
+}
+
+func (s *GpioServerImpl) ActiveLow(ctx context.Context, req *rpi.ActiveLowReq) (*rpi.Void, error) {
+	pin := req.Pin
+	log.Printf("GPIO.ActiveLow(%s)\n", pin)
+	return &rpi.Void{}, embd.ActiveLow(pin, req.Value)
 }

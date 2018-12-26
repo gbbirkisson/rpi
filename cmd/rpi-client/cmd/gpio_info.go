@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 )
@@ -15,10 +15,7 @@ var gpioInfoCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		client, ctx := getGpioClientAndContext(cmd)
 		info, err := client.Info(ctx, &proto.Void{})
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "unable to get gpio info: %v\n", err)
-			os.Exit(1)
-		}
+		rpi.ExitOnError(err, "unable to get gpio info")
 
 		fmt.Printf("Name\tConstant\tDescription\n")
 		fmt.Printf("In\t%d\t\tSet pin direction to in\n", info.In)

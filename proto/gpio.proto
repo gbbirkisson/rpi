@@ -33,12 +33,17 @@ message DigitalWriteReq {
     int32 value = 2;
 }
 
-message PinReadReq {
+message PinReq {
     string pin = 1;
 }
 
 message PinReadRes {
     int32 value = 1;
+}
+
+message ActiveLowReq {
+    string pin = 1;
+    bool value = 2;
 }
 
 service GPIO {
@@ -47,5 +52,9 @@ service GPIO {
   rpc Info (Void) returns (InfoRes) {};
   rpc SetDirection (SetDirectionReq) returns (Void) {};
   rpc DigitalWrite (DigitalWriteReq) returns (Void) {};
-  rpc DigitalRead (PinReadReq) returns (PinReadRes) {};
+  rpc DigitalRead (PinReq) returns (PinReadRes) {};
+  rpc AnalogRead (PinReq) returns (PinReadRes) {};
+  rpc PullDown(PinReq) returns (Void) {};
+  rpc PullUp(PinReq) returns (Void) {};
+  rpc ActiveLow(ActiveLowReq) returns (Void) {};
 }

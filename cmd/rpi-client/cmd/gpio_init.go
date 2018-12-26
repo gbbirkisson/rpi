@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 )
@@ -14,10 +12,7 @@ var gpioInitCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		client, ctx := getGpioClientAndContext(cmd)
 		_, err := client.Init(ctx, &proto.Void{})
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "unable to initialize gpio: %v\n", err)
-			os.Exit(1)
-		}
+		rpi.ExitOnError(err, "unable to initialize gpio")
 	},
 }
 

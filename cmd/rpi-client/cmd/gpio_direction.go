@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 )
@@ -30,10 +31,7 @@ var gpioDirectionCmd = &cobra.Command{
 
 		client, ctx := getGpioClientAndContext(cmd)
 		_, err = client.SetDirection(ctx, &proto.SetDirectionReq{Pin: args[0], Direction: int32(dir)})
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "unable to close gpio: %v\n", err)
-			os.Exit(1)
-		}
+		rpi.ExitOnError(err, "unable to set direction")
 	},
 }
 
