@@ -71,12 +71,12 @@ func (s *GpioServerImpl) DigitalWrite(ctx context.Context, req *rpi.DigitalWrite
 	return &rpi.Void{}, embd.DigitalWrite(req.Pin, int(req.Value))
 }
 
-func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.DigitalReadReq) (*rpi.DigitalReadRes, error) {
+func (s *GpioServerImpl) DigitalRead(ctx context.Context, req *rpi.PinReadReq) (*rpi.PinReadRes, error) {
 	pin := req.Pin
 	log.Printf("GPIO.DigitalRead(%s)\n", pin)
 	res, err := embd.DigitalRead(pin)
 	if err != nil {
 		return nil, err
 	}
-	return &rpi.DigitalReadRes{Value: int32(res)}, err
+	return &rpi.PinReadRes{Value: int32(res)}, err
 }
