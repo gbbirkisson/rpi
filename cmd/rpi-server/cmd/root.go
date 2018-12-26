@@ -20,10 +20,7 @@ var rootCmd = &cobra.Command{
 	Use:   "rpi-server",
 	Short: "Raspberry PI IO server",
 	Long:  `A gRPC server that allows you to do IO operations on the Raspberry PI`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
-	RunE: run,
+	RunE:  run,
 }
 
 func Execute() {
@@ -74,6 +71,8 @@ func run(cmd *cobra.Command, args []string) error {
 	address := ip + ":" + port
 
 	srv := grpc.NewServer()
+
+	proto.RegisterCommonServer(srv, &rpi.CommonServerImpl{})
 
 	if cmd.Flag("gpio").Value.String() == "true" {
 		log.Printf("adding gpio service")

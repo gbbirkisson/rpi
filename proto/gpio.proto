@@ -2,9 +2,10 @@ syntax = "proto3";
 
 package rpi;
 
+import "base.proto";
+
 message InitReq {}
 message CloseReq {}
-message Void {}
 
 message SetDirectionReq {
     string pin = 1;

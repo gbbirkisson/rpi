@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rpi;
+
+import "base.proto";
+
+message VersionRes {
+    string version = 1;
+}
+
+service Common {
+  rpc Version (Void) returns (VersionRes) {};
+}
