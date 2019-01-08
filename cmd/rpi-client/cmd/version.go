@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
@@ -14,13 +13,18 @@ var versionCmd = &cobra.Command{
 	Short: "Print version",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Client version: %s\n", rpi.Version)
-		client, ctx := getGrpcClientAndContext(cmd)
-		common := proto.NewCommonClient(client)
-		res, err := common.Version(ctx, &proto.Void{})
+		client, err := getCommonClient()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "could not retrieve server version: %v\n", err)
-			os.Exit(1)
+			rpi.ExitOnError("could not get server version", err)
 		}
+		ctx, cancel := getContext()
+		defer cancel()
+
+		res, err := client.Version(ctx, &proto.Void{})
+		if err != nil {
+			rpi.ExitOnError("could not get server version", err)
+		}
+
 		fmt.Printf("Server version: %s\n", res.Version)
 	},
 }

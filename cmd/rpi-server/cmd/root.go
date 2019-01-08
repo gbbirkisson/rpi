@@ -7,8 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
-	rpi "github.com/gbbirkisson/rpi/server"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	grpc "google.golang.org/grpc"
@@ -20,7 +20,31 @@ var rootCmd = &cobra.Command{
 	Use:   "rpi-server",
 	Short: "Raspberry PI IO server",
 	Long:  `A gRPC server that allows you to do IO operations on the Raspberry PI`,
-	RunE:  run,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		log.Printf("rpi server started")
+		ip := viper.GetString("ip")
+		port := viper.GetString("port")
+		address := ip + ":" + port
+
+		srv := grpc.NewServer()
+
+		proto.RegisterCommonServer(srv, &rpi.CommonServerImpl{})
+
+		if cmd.Flag("gpio").Value.String() == "true" {
+			log.Printf("adding gpio service")
+			proto.RegisterGpioServer(srv, &rpi.GpioServerImpl{})
+		}
+
+		lis, err := net.Listen("tcp", address)
+		if err != nil {
+			log.Printf("failed starting server: %v\n", err)
+			os.Exit(1)
+		}
+
+		log.Printf("listening to %s\n", address)
+		log.Fatal(srv.Serve(lis))
+		return nil
+	},
 }
 
 func Execute() {
@@ -69,30 +93,4 @@ func initConfig() {
 			return
 		}
 	}
-}
-
-func run(cmd *cobra.Command, args []string) error {
-	log.Printf("rpi server started")
-	ip := cmd.Flag("ip").Value.String()
-	port := cmd.Flag("port").Value.String()
-	address := ip + ":" + port
-
-	srv := grpc.NewServer()
-
-	proto.RegisterCommonServer(srv, &rpi.CommonServerImpl{})
-
-	if cmd.Flag("gpio").Value.String() == "true" {
-		log.Printf("adding gpio service")
-		proto.RegisterGPIOServer(srv, rpi.GetGPIOServer())
-	}
-
-	lis, err := net.Listen("tcp", address)
-	if err != nil {
-		log.Printf("failed starting server: %v\n", err)
-		os.Exit(1)
-	}
-
-	log.Printf("listening to %s\n", address)
-	log.Fatal(srv.Serve(lis))
-	return nil
 }

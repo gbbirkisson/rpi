@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package rpi;
+
+import "base.proto";
+
+message GpioPin {
+  int32 pin = 1;
+}
+
+service Gpio {
+  rpc Open (Void) returns (Void) {};
+  rpc Close (Void) returns (Void) {};
+  rpc Input (GpioPin) returns (Void) {};
+  rpc Output (GpioPin) returns (Void) {};
+
+  rpc Clock(GpioPin) returns (Void) {};
+  rpc Pwm(GpioPin) returns (Void) {};
+  rpc High(GpioPin) returns (Void) {};
+  rpc Low(GpioPin) returns (Void) {};
+
+  rpc Toggle (GpioPin) returns (Void) {};
+}
