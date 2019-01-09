@@ -86,21 +86,76 @@ var gpioCloseCmd = &cobra.Command{
 
 var gpioToggleCmd = &cobra.Command{
 	Use:   "toggle [pin]",
-	Short: "Toggle pin on/off",
+	Short: "Toggle pin low/high",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) != 1 {
 			return errors.New("command requires [pin] arguments")
 		}
+		_, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("argument [pin] is not a valid int")
+		}
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		pin, err := strconv.Atoi(args[0])
-		rpi.ExitOnError("invalid pin", err)
+		pin, _ := strconv.Atoi(args[0])
+
 		ctx, cancel := getContext()
 		defer cancel()
+
 		gpio, err := getGpio()
 		rpi.ExitOnError("could not create client", err)
 		rpi.ExitOnError("error repsonse from server", gpio.Toggle(ctx, rpi.Pin(pin)))
+	},
+}
+
+var gpioHighCmd = &cobra.Command{
+	Use:   "high [pin]",
+	Short: "Set pin to high",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return errors.New("command requires [pin] arguments")
+		}
+		_, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("argument [pin] is not a valid int")
+		}
+		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		pin, _ := strconv.Atoi(args[0])
+
+		ctx, cancel := getContext()
+		defer cancel()
+
+		gpio, err := getGpio()
+		rpi.ExitOnError("could not create client", err)
+		rpi.ExitOnError("error repsonse from server", gpio.High(ctx, rpi.Pin(pin)))
+	},
+}
+
+var gpioLowCmd = &cobra.Command{
+	Use:   "low [pin]",
+	Short: "Set pin to low",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return errors.New("command requires [pin] arguments")
+		}
+		_, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("argument [pin] is not a valid int")
+		}
+		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		pin, _ := strconv.Atoi(args[0])
+
+		ctx, cancel := getContext()
+		defer cancel()
+
+		gpio, err := getGpio()
+		rpi.ExitOnError("could not create client", err)
+		rpi.ExitOnError("error repsonse from server", gpio.Low(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -166,27 +221,6 @@ var gpioModeCmd = &cobra.Command{
 	},
 }
 
-// var gpioOutputCmd = &cobra.Command{
-// 	Use:   "output [pin]",
-// 	Short: "Set pin as output pin",
-// 	Args: func(cmd *cobra.Command, args []string) error {
-// 		if len(args) != 1 {
-// 			return errors.New("command requires [pin] arguments")
-// 		}
-// 		return nil
-// 	},
-// 	Run: func(cmd *cobra.Command, args []string) {
-// 		pin, err := strconv.Atoi(args[0])
-// 		rpi.ExitOnError("invalid pin", err)
-
-// 		ctx, cancel := getContext()
-// 		defer cancel()
-// 		gpio, err := getGpio()
-// 		rpi.ExitOnError("could not create client", err)
-// 		rpi.ExitOnError("error repsonse from server", gpio.Output(ctx, rpi.Pin(pin)))
-// 	},
-// }
-
 func init() {
 	rootCmd.AddCommand(gpioCmd)
 	gpioCmd.AddCommand(gpioLayoutCmd)
@@ -198,6 +232,9 @@ func init() {
 	// Pin mode
 	gpioCmd.AddCommand(gpioModeCmd)
 
+	// Basic pin operations
 	gpioCmd.AddCommand(gpioToggleCmd)
+	gpioCmd.AddCommand(gpioHighCmd)
+	gpioCmd.AddCommand(gpioLowCmd)
 
 }

@@ -36,6 +36,17 @@ Run the program using help to get documentation
 rpi-client help
 ```
 
+## TODO
+
+* rpi-client
+    * gpio
+        * Write
+        * Read
+        * Freq
+        * DutyCycle
+        * Detect
+        * EdgeDetected
+
 ## Using another languages
 
 Generate a client with `protoc` from [.proto](./proto) files.

@@ -37,12 +37,12 @@ func getCommonClient() (proto.CommonClient, error) {
 }
 
 func getContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("timeout"))*time.Second)
+	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("timeout"))*time.Millisecond)
 }
 
 var rootCmd = &cobra.Command{
 	Use:   "rpi-client",
-	Short: "A client to run commands the rpi-server",
+	Short: "A client to run commands on the rpi-server",
 }
 
 func Execute() {
@@ -57,7 +57,7 @@ func init() {
 
 	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
 	rootCmd.PersistentFlags().StringP("ip", "i", "127.0.0.1", "server ip")
-	rootCmd.PersistentFlags().IntP("timeout", "t", 3, "server timeout in seconds")
+	rootCmd.PersistentFlags().IntP("timeout", "t", 3000, "server timeout in milliseconds")
 
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))

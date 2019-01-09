@@ -1,4 +1,4 @@
-FROM golang:1.9-stretch as builder
+FROM golang:1.10.4 as builder
 
 COPY . $GOPATH/src/github.com/gbbirkisson/rpi
 WORKDIR $GOPATH/src/github.com/gbbirkisson/rpi/cmd/rpi-server
