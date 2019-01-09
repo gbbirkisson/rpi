@@ -61,26 +61,322 @@ func (m *GpioPin) GetPin() int32 {
 	return 0
 }
 
+type RequestFreq struct {
+	Pin                  int32    `protobuf:"varint,1,opt,name=pin,proto3" json:"pin,omitempty"`
+	Freq                 int32    `protobuf:"varint,2,opt,name=freq,proto3" json:"freq,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestFreq) Reset()         { *m = RequestFreq{} }
+func (m *RequestFreq) String() string { return proto.CompactTextString(m) }
+func (*RequestFreq) ProtoMessage()    {}
+func (*RequestFreq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{1}
+}
+
+func (m *RequestFreq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestFreq.Unmarshal(m, b)
+}
+func (m *RequestFreq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestFreq.Marshal(b, m, deterministic)
+}
+func (m *RequestFreq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestFreq.Merge(m, src)
+}
+func (m *RequestFreq) XXX_Size() int {
+	return xxx_messageInfo_RequestFreq.Size(m)
+}
+func (m *RequestFreq) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestFreq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestFreq proto.InternalMessageInfo
+
+func (m *RequestFreq) GetPin() int32 {
+	if m != nil {
+		return m.Pin
+	}
+	return 0
+}
+
+func (m *RequestFreq) GetFreq() int32 {
+	if m != nil {
+		return m.Freq
+	}
+	return 0
+}
+
+type RequestDutyCycle struct {
+	Pin                  int32    `protobuf:"varint,1,opt,name=pin,proto3" json:"pin,omitempty"`
+	DutyLen              int32    `protobuf:"varint,2,opt,name=dutyLen,proto3" json:"dutyLen,omitempty"`
+	CycleLen             int32    `protobuf:"varint,3,opt,name=cycleLen,proto3" json:"cycleLen,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestDutyCycle) Reset()         { *m = RequestDutyCycle{} }
+func (m *RequestDutyCycle) String() string { return proto.CompactTextString(m) }
+func (*RequestDutyCycle) ProtoMessage()    {}
+func (*RequestDutyCycle) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{2}
+}
+
+func (m *RequestDutyCycle) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestDutyCycle.Unmarshal(m, b)
+}
+func (m *RequestDutyCycle) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestDutyCycle.Marshal(b, m, deterministic)
+}
+func (m *RequestDutyCycle) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestDutyCycle.Merge(m, src)
+}
+func (m *RequestDutyCycle) XXX_Size() int {
+	return xxx_messageInfo_RequestDutyCycle.Size(m)
+}
+func (m *RequestDutyCycle) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestDutyCycle.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestDutyCycle proto.InternalMessageInfo
+
+func (m *RequestDutyCycle) GetPin() int32 {
+	if m != nil {
+		return m.Pin
+	}
+	return 0
+}
+
+func (m *RequestDutyCycle) GetDutyLen() int32 {
+	if m != nil {
+		return m.DutyLen
+	}
+	return 0
+}
+
+func (m *RequestDutyCycle) GetCycleLen() int32 {
+	if m != nil {
+		return m.CycleLen
+	}
+	return 0
+}
+
+type RequestWrite struct {
+	Pin                  int32    `protobuf:"varint,1,opt,name=pin,proto3" json:"pin,omitempty"`
+	State                int32    `protobuf:"varint,2,opt,name=state,proto3" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestWrite) Reset()         { *m = RequestWrite{} }
+func (m *RequestWrite) String() string { return proto.CompactTextString(m) }
+func (*RequestWrite) ProtoMessage()    {}
+func (*RequestWrite) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{3}
+}
+
+func (m *RequestWrite) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestWrite.Unmarshal(m, b)
+}
+func (m *RequestWrite) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestWrite.Marshal(b, m, deterministic)
+}
+func (m *RequestWrite) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestWrite.Merge(m, src)
+}
+func (m *RequestWrite) XXX_Size() int {
+	return xxx_messageInfo_RequestWrite.Size(m)
+}
+func (m *RequestWrite) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestWrite.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestWrite proto.InternalMessageInfo
+
+func (m *RequestWrite) GetPin() int32 {
+	if m != nil {
+		return m.Pin
+	}
+	return 0
+}
+
+func (m *RequestWrite) GetState() int32 {
+	if m != nil {
+		return m.State
+	}
+	return 0
+}
+
+type ResponseRead struct {
+	State                int32    `protobuf:"varint,1,opt,name=state,proto3" json:"state,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResponseRead) Reset()         { *m = ResponseRead{} }
+func (m *ResponseRead) String() string { return proto.CompactTextString(m) }
+func (*ResponseRead) ProtoMessage()    {}
+func (*ResponseRead) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{4}
+}
+
+func (m *ResponseRead) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ResponseRead.Unmarshal(m, b)
+}
+func (m *ResponseRead) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ResponseRead.Marshal(b, m, deterministic)
+}
+func (m *ResponseRead) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseRead.Merge(m, src)
+}
+func (m *ResponseRead) XXX_Size() int {
+	return xxx_messageInfo_ResponseRead.Size(m)
+}
+func (m *ResponseRead) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseRead.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseRead proto.InternalMessageInfo
+
+func (m *ResponseRead) GetState() int32 {
+	if m != nil {
+		return m.State
+	}
+	return 0
+}
+
+type RequestEdgeDetect struct {
+	Pin                  int32    `protobuf:"varint,1,opt,name=pin,proto3" json:"pin,omitempty"`
+	Edge                 int32    `protobuf:"varint,2,opt,name=edge,proto3" json:"edge,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestEdgeDetect) Reset()         { *m = RequestEdgeDetect{} }
+func (m *RequestEdgeDetect) String() string { return proto.CompactTextString(m) }
+func (*RequestEdgeDetect) ProtoMessage()    {}
+func (*RequestEdgeDetect) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{5}
+}
+
+func (m *RequestEdgeDetect) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestEdgeDetect.Unmarshal(m, b)
+}
+func (m *RequestEdgeDetect) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestEdgeDetect.Marshal(b, m, deterministic)
+}
+func (m *RequestEdgeDetect) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestEdgeDetect.Merge(m, src)
+}
+func (m *RequestEdgeDetect) XXX_Size() int {
+	return xxx_messageInfo_RequestEdgeDetect.Size(m)
+}
+func (m *RequestEdgeDetect) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestEdgeDetect.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestEdgeDetect proto.InternalMessageInfo
+
+func (m *RequestEdgeDetect) GetPin() int32 {
+	if m != nil {
+		return m.Pin
+	}
+	return 0
+}
+
+func (m *RequestEdgeDetect) GetEdge() int32 {
+	if m != nil {
+		return m.Edge
+	}
+	return 0
+}
+
+type ResponseEdgeDetected struct {
+	Detected             bool     `protobuf:"varint,1,opt,name=detected,proto3" json:"detected,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ResponseEdgeDetected) Reset()         { *m = ResponseEdgeDetected{} }
+func (m *ResponseEdgeDetected) String() string { return proto.CompactTextString(m) }
+func (*ResponseEdgeDetected) ProtoMessage()    {}
+func (*ResponseEdgeDetected) Descriptor() ([]byte, []int) {
+	return fileDescriptor_770c7e3939ac3542, []int{6}
+}
+
+func (m *ResponseEdgeDetected) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ResponseEdgeDetected.Unmarshal(m, b)
+}
+func (m *ResponseEdgeDetected) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ResponseEdgeDetected.Marshal(b, m, deterministic)
+}
+func (m *ResponseEdgeDetected) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseEdgeDetected.Merge(m, src)
+}
+func (m *ResponseEdgeDetected) XXX_Size() int {
+	return xxx_messageInfo_ResponseEdgeDetected.Size(m)
+}
+func (m *ResponseEdgeDetected) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseEdgeDetected.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ResponseEdgeDetected proto.InternalMessageInfo
+
+func (m *ResponseEdgeDetected) GetDetected() bool {
+	if m != nil {
+		return m.Detected
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*GpioPin)(nil), "rpi.GpioPin")
+	proto.RegisterType((*RequestFreq)(nil), "rpi.RequestFreq")
+	proto.RegisterType((*RequestDutyCycle)(nil), "rpi.RequestDutyCycle")
+	proto.RegisterType((*RequestWrite)(nil), "rpi.RequestWrite")
+	proto.RegisterType((*ResponseRead)(nil), "rpi.ResponseRead")
+	proto.RegisterType((*RequestEdgeDetect)(nil), "rpi.RequestEdgeDetect")
+	proto.RegisterType((*ResponseEdgeDetected)(nil), "rpi.ResponseEdgeDetected")
 }
 
 func init() { proto.RegisterFile("rpio.proto", fileDescriptor_770c7e3939ac3542) }
 
 var fileDescriptor_770c7e3939ac3542 = []byte{
-	// 186 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0x2a, 0xc8, 0xcc,
-	0xd7, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x94, 0xe2, 0x4a, 0x4a, 0x2c,
-	0x4e, 0x85, 0x08, 0x28, 0x49, 0x73, 0xb1, 0xbb, 0x17, 0x64, 0xe6, 0x07, 0x64, 0xe6, 0x09, 0x09,
-	0x70, 0x31, 0x17, 0x64, 0xe6, 0x49, 0x30, 0x2a, 0x30, 0x6a, 0xb0, 0x06, 0x81, 0x98, 0x46, 0x07,
-	0x98, 0xb8, 0x58, 0x40, 0xb2, 0x42, 0x72, 0x5c, 0x2c, 0xfe, 0x05, 0xa9, 0x79, 0x42, 0x9c, 0x7a,
-	0x45, 0x05, 0x99, 0x7a, 0x61, 0xf9, 0x99, 0x29, 0x52, 0x08, 0xa6, 0x12, 0x83, 0x90, 0x3c, 0x17,
-	0xab, 0x73, 0x4e, 0x7e, 0x71, 0x2a, 0x4e, 0x05, 0x4a, 0x5c, 0xac, 0x9e, 0x79, 0x05, 0xa5, 0x25,
-	0x42, 0x3c, 0x60, 0x51, 0xa8, 0x95, 0xa8, 0x6a, 0x94, 0xb9, 0xd8, 0xfc, 0x4b, 0x4b, 0x08, 0x28,
-	0x52, 0x02, 0xdb, 0x94, 0x9c, 0x8d, 0x4f, 0x8d, 0x02, 0x17, 0x73, 0x40, 0x79, 0x2e, 0x3e, 0x15,
-	0x8a, 0x5c, 0x2c, 0x1e, 0x99, 0xe9, 0x19, 0x04, 0x0c, 0xf1, 0xc9, 0x2f, 0x27, 0xe0, 0xde, 0x90,
-	0xfc, 0xf4, 0xf4, 0x9c, 0x54, 0x3c, 0x8a, 0x92, 0xd8, 0xc0, 0xc1, 0x6c, 0x0c, 0x08, 0x00, 0x00,
-	0xff, 0xff, 0xba, 0xad, 0xe5, 0x7d, 0x85, 0x01, 0x00, 0x00,
+	// 433 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x94, 0xdf, 0x8f, 0xd2, 0x40,
+	0x10, 0xc7, 0x0f, 0xdb, 0x02, 0x37, 0xf2, 0x70, 0xb7, 0x39, 0x0d, 0x62, 0xa2, 0xe7, 0x7a, 0x46,
+	0x7d, 0x10, 0x13, 0x48, 0x4c, 0x78, 0x06, 0x7f, 0x25, 0x24, 0x90, 0xc6, 0x1f, 0x89, 0x6f, 0xd0,
+	0x0e, 0x75, 0x63, 0xed, 0x2e, 0xed, 0x36, 0x84, 0xff, 0xd0, 0x3f, 0xcb, 0xec, 0x76, 0x4b, 0xbb,
+	0x11, 0xdb, 0xb7, 0x99, 0xe9, 0xe7, 0xfb, 0x9d, 0xd9, 0x65, 0x16, 0x80, 0x54, 0x30, 0x3e, 0x16,
+	0x29, 0x97, 0x9c, 0x38, 0xa9, 0x60, 0x23, 0xd8, 0x6e, 0x32, 0x2c, 0x0a, 0xf4, 0x31, 0xf4, 0x3e,
+	0x0a, 0xc6, 0xd7, 0x2c, 0x21, 0x57, 0xe0, 0x08, 0x96, 0x0c, 0x3b, 0xb7, 0x9d, 0x57, 0x9e, 0xaf,
+	0x42, 0x3a, 0x85, 0xfb, 0x3e, 0xee, 0x73, 0xcc, 0xe4, 0x87, 0x14, 0xf7, 0xff, 0x02, 0x84, 0x80,
+	0xbb, 0x4b, 0x71, 0x3f, 0xbc, 0xa7, 0x4b, 0x3a, 0xa6, 0x3f, 0xe0, 0xca, 0x88, 0x16, 0xb9, 0x3c,
+	0xce, 0x8f, 0x41, 0x8c, 0x67, 0x94, 0x43, 0xe8, 0x85, 0xb9, 0x3c, 0x2e, 0x31, 0x31, 0xe2, 0x32,
+	0x25, 0x23, 0xe8, 0x07, 0x4a, 0xa4, 0x3e, 0x39, 0xfa, 0xd3, 0x29, 0xa7, 0xef, 0x60, 0x60, 0xbc,
+	0xbf, 0xa7, 0x4c, 0x9e, 0xf3, 0xbd, 0x01, 0x2f, 0x93, 0x1b, 0x89, 0xc6, 0xb5, 0x48, 0xe8, 0x9d,
+	0xd2, 0x65, 0x82, 0x27, 0x19, 0xfa, 0xb8, 0x09, 0x2b, 0xaa, 0x53, 0xa7, 0x66, 0x70, 0x6d, 0xdc,
+	0xdf, 0x87, 0x11, 0x2e, 0x50, 0x62, 0x20, 0xcf, 0x1f, 0x1a, 0xc3, 0xa8, 0xec, 0xa0, 0x63, 0x3a,
+	0x81, 0x9b, 0xb2, 0x41, 0xa5, 0xc5, 0x50, 0x1d, 0x26, 0x34, 0xb1, 0xb6, 0xe8, 0xfb, 0xa7, 0x7c,
+	0xf2, 0xc7, 0x03, 0x57, 0xdd, 0x3d, 0x79, 0x02, 0xee, 0x4a, 0x60, 0x42, 0x2e, 0xc7, 0xa9, 0x60,
+	0xe3, 0x6f, 0x9c, 0x85, 0xa3, 0x2a, 0xa4, 0x17, 0xe4, 0x29, 0x78, 0xf3, 0x98, 0x67, 0xf8, 0x5f,
+	0x80, 0x82, 0xf7, 0x39, 0x11, 0xb9, 0x24, 0x03, 0x5d, 0x35, 0x3f, 0xa8, 0xcd, 0x3c, 0x87, 0xee,
+	0x2a, 0x97, 0x2d, 0x10, 0xd5, 0x9d, 0x82, 0x5f, 0x4d, 0xcc, 0x2d, 0x38, 0xeb, 0xc3, 0xef, 0x96,
+	0x56, 0xeb, 0x3c, 0x8e, 0xbf, 0x8a, 0x26, 0xe8, 0x05, 0xf4, 0x15, 0xb4, 0xe0, 0x87, 0xa4, 0x09,
+	0xbb, 0x83, 0x9e, 0xc2, 0x56, 0xbb, 0x5d, 0x13, 0xf5, 0x0c, 0xdc, 0x4f, 0x2c, 0xfa, 0xd9, 0x32,
+	0xf6, 0x92, 0x1f, 0x5a, 0xc6, 0xfe, 0xc2, 0xa3, 0x28, 0xc6, 0x26, 0xe8, 0x25, 0x78, 0xc5, 0xea,
+	0x5d, 0xeb, 0x6a, 0x7d, 0x1b, 0x6d, 0xf0, 0x35, 0xb8, 0x7a, 0xd5, 0x6c, 0xaf, 0x52, 0x55, 0xed,
+	0xa2, 0xbe, 0x0a, 0xb7, 0x78, 0x5f, 0x75, 0x4b, 0x55, 0xb1, 0x1d, 0xdf, 0xc2, 0x65, 0xf5, 0xa2,
+	0x1e, 0xd4, 0xd9, 0x53, 0xd9, 0x16, 0xbc, 0x81, 0xae, 0x59, 0xe2, 0x87, 0x75, 0xba, 0x5a, 0x50,
+	0x1b, 0x9f, 0xc1, 0xc0, 0xda, 0x5d, 0x7b, 0xf2, 0x47, 0xd6, 0xe4, 0x75, 0x90, 0x5e, 0x6c, 0xbb,
+	0xfa, 0xcf, 0x64, 0xfa, 0x37, 0x00, 0x00, 0xff, 0xff, 0xb8, 0xed, 0x8f, 0xd5, 0x6b, 0x04, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -95,15 +391,29 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type GpioClient interface {
+	// Init / Shutdown
 	Open(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error)
 	Close(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error)
+	// Pin Modes
 	Input(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
 	Output(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
 	Clock(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
 	Pwm(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
+	PullUp(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
+	PullDown(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
+	PullOff(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
+	// Basic pin operations
 	High(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
 	Low(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
 	Toggle(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error)
+	Write(ctx context.Context, in *RequestWrite, opts ...grpc.CallOption) (*Void, error)
+	Read(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseRead, error)
+	// Clock and PWM operations
+	Freq(ctx context.Context, in *RequestFreq, opts ...grpc.CallOption) (*Void, error)
+	DutyCycle(ctx context.Context, in *RequestDutyCycle, opts ...grpc.CallOption) (*Void, error)
+	// Edge detection
+	Detect(ctx context.Context, in *RequestEdgeDetect, opts ...grpc.CallOption) (*Void, error)
+	EdgeDetected(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseEdgeDetected, error)
 }
 
 type gpioClient struct {
@@ -168,6 +478,33 @@ func (c *gpioClient) Pwm(ctx context.Context, in *GpioPin, opts ...grpc.CallOpti
 	return out, nil
 }
 
+func (c *gpioClient) PullUp(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullUp", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) PullDown(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullDown", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) PullOff(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullOff", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *gpioClient) High(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
 	err := c.cc.Invoke(ctx, "/rpi.Gpio/High", in, out, opts...)
@@ -195,17 +532,85 @@ func (c *gpioClient) Toggle(ctx context.Context, in *GpioPin, opts ...grpc.CallO
 	return out, nil
 }
 
+func (c *gpioClient) Write(ctx context.Context, in *RequestWrite, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Write", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) Read(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseRead, error) {
+	out := new(ResponseRead)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Read", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) Freq(ctx context.Context, in *RequestFreq, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Freq", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) DutyCycle(ctx context.Context, in *RequestDutyCycle, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/DutyCycle", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) Detect(ctx context.Context, in *RequestEdgeDetect, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Detect", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gpioClient) EdgeDetected(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseEdgeDetected, error) {
+	out := new(ResponseEdgeDetected)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/EdgeDetected", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GpioServer is the server API for Gpio service.
 type GpioServer interface {
+	// Init / Shutdown
 	Open(context.Context, *Void) (*Void, error)
 	Close(context.Context, *Void) (*Void, error)
+	// Pin Modes
 	Input(context.Context, *GpioPin) (*Void, error)
 	Output(context.Context, *GpioPin) (*Void, error)
 	Clock(context.Context, *GpioPin) (*Void, error)
 	Pwm(context.Context, *GpioPin) (*Void, error)
+	PullUp(context.Context, *GpioPin) (*Void, error)
+	PullDown(context.Context, *GpioPin) (*Void, error)
+	PullOff(context.Context, *GpioPin) (*Void, error)
+	// Basic pin operations
 	High(context.Context, *GpioPin) (*Void, error)
 	Low(context.Context, *GpioPin) (*Void, error)
 	Toggle(context.Context, *GpioPin) (*Void, error)
+	Write(context.Context, *RequestWrite) (*Void, error)
+	Read(context.Context, *GpioPin) (*ResponseRead, error)
+	// Clock and PWM operations
+	Freq(context.Context, *RequestFreq) (*Void, error)
+	DutyCycle(context.Context, *RequestDutyCycle) (*Void, error)
+	// Edge detection
+	Detect(context.Context, *RequestEdgeDetect) (*Void, error)
+	EdgeDetected(context.Context, *GpioPin) (*ResponseEdgeDetected, error)
 }
 
 func RegisterGpioServer(s *grpc.Server, srv GpioServer) {
@@ -320,6 +725,60 @@ func _Gpio_Pwm_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Gpio_PullUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GpioPin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).PullUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/PullUp",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).PullUp(ctx, req.(*GpioPin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_PullDown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GpioPin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).PullDown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/PullDown",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).PullDown(ctx, req.(*GpioPin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_PullOff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GpioPin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).PullOff(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/PullOff",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).PullOff(ctx, req.(*GpioPin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Gpio_High_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
@@ -374,6 +833,114 @@ func _Gpio_Toggle_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Gpio_Write_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestWrite)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).Write(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/Write",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).Write(ctx, req.(*RequestWrite))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GpioPin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).Read(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/Read",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).Read(ctx, req.(*GpioPin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_Freq_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestFreq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).Freq(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/Freq",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).Freq(ctx, req.(*RequestFreq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_DutyCycle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestDutyCycle)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).DutyCycle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/DutyCycle",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).DutyCycle(ctx, req.(*RequestDutyCycle))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_Detect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestEdgeDetect)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).Detect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/Detect",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).Detect(ctx, req.(*RequestEdgeDetect))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Gpio_EdgeDetected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GpioPin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GpioServer).EdgeDetected(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpi.Gpio/EdgeDetected",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GpioServer).EdgeDetected(ctx, req.(*GpioPin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Gpio_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rpi.Gpio",
 	HandlerType: (*GpioServer)(nil),
@@ -403,6 +970,18 @@ var _Gpio_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Gpio_Pwm_Handler,
 		},
 		{
+			MethodName: "PullUp",
+			Handler:    _Gpio_PullUp_Handler,
+		},
+		{
+			MethodName: "PullDown",
+			Handler:    _Gpio_PullDown_Handler,
+		},
+		{
+			MethodName: "PullOff",
+			Handler:    _Gpio_PullOff_Handler,
+		},
+		{
 			MethodName: "High",
 			Handler:    _Gpio_High_Handler,
 		},
@@ -413,6 +992,30 @@ var _Gpio_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Toggle",
 			Handler:    _Gpio_Toggle_Handler,
+		},
+		{
+			MethodName: "Write",
+			Handler:    _Gpio_Write_Handler,
+		},
+		{
+			MethodName: "Read",
+			Handler:    _Gpio_Read_Handler,
+		},
+		{
+			MethodName: "Freq",
+			Handler:    _Gpio_Freq_Handler,
+		},
+		{
+			MethodName: "DutyCycle",
+			Handler:    _Gpio_DutyCycle_Handler,
+		},
+		{
+			MethodName: "Detect",
+			Handler:    _Gpio_Detect_Handler,
+		},
+		{
+			MethodName: "EdgeDetected",
+			Handler:    _Gpio_EdgeDetected_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

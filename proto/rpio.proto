@@ -8,16 +8,61 @@ message GpioPin {
   int32 pin = 1;
 }
 
+message RequestFreq {
+  int32 pin = 1;
+  int32 freq = 2;
+}
+
+message RequestDutyCycle {
+  int32 pin = 1;
+  int32 dutyLen = 2;
+  int32 cycleLen = 3;
+}
+
+message RequestWrite {
+  int32 pin = 1;
+  int32 state = 2;
+}
+
+message ResponseRead {
+  int32 state = 1;
+}
+
+message RequestEdgeDetect {
+  int32 pin = 1;
+  int32 edge = 2;
+}
+
+message ResponseEdgeDetected {
+  bool detected = 1;
+}
+
 service Gpio {
+  // Init / Shutdown
   rpc Open (Void) returns (Void) {};
   rpc Close (Void) returns (Void) {};
+
+  // Pin Modes
   rpc Input (GpioPin) returns (Void) {};
   rpc Output (GpioPin) returns (Void) {};
-
   rpc Clock(GpioPin) returns (Void) {};
   rpc Pwm(GpioPin) returns (Void) {};
+  rpc PullUp(GpioPin) returns (Void) {};
+  rpc PullDown(GpioPin) returns (Void) {};
+  rpc PullOff(GpioPin) returns (Void) {};
+
+  // Basic pin operations
   rpc High(GpioPin) returns (Void) {};
   rpc Low(GpioPin) returns (Void) {};
-
   rpc Toggle (GpioPin) returns (Void) {};
+  rpc Write(RequestWrite) returns (Void) {};
+  rpc Read(GpioPin) returns (ResponseRead) {};
+
+  // Clock and PWM operations
+  rpc Freq(RequestFreq) returns (Void) {};
+  rpc DutyCycle(RequestDutyCycle) returns (Void) {};
+
+  // Edge detection
+  rpc Detect(RequestEdgeDetect) returns (Void) {};
+  rpc EdgeDetected(GpioPin) returns (ResponseEdgeDetected) {};
 }
