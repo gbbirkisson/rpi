@@ -8,7 +8,6 @@ RUN go get && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -tags local -ldflags 
 FROM resin/%%BALENA_MACHINE_NAME%%-alpine
 
 RUN apk add --no-cache raspberrypi
-
 ENV PATH /opt/vc/bin:$PATH
 
 COPY --from=builder /go/bin/rpi-server /rpi-server
