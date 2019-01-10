@@ -15,14 +15,21 @@ import (
 type PiCamServerImpl struct {
 }
 
-func (s *PiCamServerImpl) GetPhoto(ctx context.Context, req *proto.Void) (*proto.ResponseImage, error) {
+func (s *PiCamServerImpl) GetPhoto(ctx context.Context, req *proto.RequestImage) (*proto.ResponseImage, error) {
 	log.Println("PiCam.GetPhoto()")
 
 	cam := raspicam.NewStill()
-	cam.Width = 648
-	cam.Height = 486
+	cam.Width = int(req.Width)
+	cam.Height = int(req.Height)
 
-	log.Printf("%s", cam.Cmd())
+	if cam.Width == 0 {
+		cam.Width = 648
+	}
+
+	if cam.Height == 0 {
+		cam.Height = 486
+	}
+	log.Printf("%s", cam.String())
 	errCh := make(chan error)
 	go func() {
 		for x := range errCh {

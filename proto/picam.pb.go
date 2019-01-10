@@ -22,6 +22,53 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type RequestImage struct {
+	Width                int32    `protobuf:"varint,1,opt,name=width,proto3" json:"width,omitempty"`
+	Height               int32    `protobuf:"varint,2,opt,name=height,proto3" json:"height,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RequestImage) Reset()         { *m = RequestImage{} }
+func (m *RequestImage) String() string { return proto.CompactTextString(m) }
+func (*RequestImage) ProtoMessage()    {}
+func (*RequestImage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_30fec5ee6d2f922d, []int{0}
+}
+
+func (m *RequestImage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestImage.Unmarshal(m, b)
+}
+func (m *RequestImage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestImage.Marshal(b, m, deterministic)
+}
+func (m *RequestImage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestImage.Merge(m, src)
+}
+func (m *RequestImage) XXX_Size() int {
+	return xxx_messageInfo_RequestImage.Size(m)
+}
+func (m *RequestImage) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestImage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RequestImage proto.InternalMessageInfo
+
+func (m *RequestImage) GetWidth() int32 {
+	if m != nil {
+		return m.Width
+	}
+	return 0
+}
+
+func (m *RequestImage) GetHeight() int32 {
+	if m != nil {
+		return m.Height
+	}
+	return 0
+}
+
 type ResponseImage struct {
 	ImageBytes           []byte   `protobuf:"bytes,1,opt,name=imageBytes,proto3" json:"imageBytes,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -33,7 +80,7 @@ func (m *ResponseImage) Reset()         { *m = ResponseImage{} }
 func (m *ResponseImage) String() string { return proto.CompactTextString(m) }
 func (*ResponseImage) ProtoMessage()    {}
 func (*ResponseImage) Descriptor() ([]byte, []int) {
-	return fileDescriptor_30fec5ee6d2f922d, []int{0}
+	return fileDescriptor_30fec5ee6d2f922d, []int{1}
 }
 
 func (m *ResponseImage) XXX_Unmarshal(b []byte) error {
@@ -62,22 +109,25 @@ func (m *ResponseImage) GetImageBytes() []byte {
 }
 
 func init() {
+	proto.RegisterType((*RequestImage)(nil), "rpi.RequestImage")
 	proto.RegisterType((*ResponseImage)(nil), "rpi.ResponseImage")
 }
 
 func init() { proto.RegisterFile("picam.proto", fileDescriptor_30fec5ee6d2f922d) }
 
 var fileDescriptor_30fec5ee6d2f922d = []byte{
-	// 131 bytes of a gzipped FileDescriptorProto
+	// 164 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2e, 0xc8, 0x4c, 0x4e,
-	0xcc, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x94, 0xe2, 0x4a, 0x4a,
-	0x2c, 0x4e, 0x85, 0x08, 0x28, 0xe9, 0x73, 0xf1, 0x06, 0xa5, 0x16, 0x17, 0xe4, 0xe7, 0x15, 0xa7,
-	0x7a, 0xe6, 0x26, 0xa6, 0xa7, 0x0a, 0xc9, 0x71, 0x71, 0x65, 0x82, 0x18, 0x4e, 0x95, 0x25, 0xa9,
-	0xc5, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x3c, 0x41, 0x48, 0x22, 0x46, 0x26, 0x5c, 0xac, 0x01, 0x99,
-	0xce, 0x89, 0xb9, 0x42, 0xda, 0x5c, 0x1c, 0xee, 0xa9, 0x25, 0x01, 0x19, 0x20, 0x63, 0x39, 0xf5,
-	0x8a, 0x0a, 0x32, 0xf5, 0xc2, 0xf2, 0x33, 0x53, 0xa4, 0x84, 0xc0, 0x4c, 0x14, 0x33, 0x95, 0x18,
-	0x92, 0xd8, 0xc0, 0xb6, 0x19, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0xa1, 0x59, 0x91, 0x9a, 0x8d,
-	0x00, 0x00, 0x00,
+	0xcc, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x54, 0xb2, 0xe1, 0xe2,
+	0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0xf1, 0xcc, 0x4d, 0x4c, 0x4f, 0x15, 0x12, 0xe1, 0x62,
+	0x2d, 0xcf, 0x4c, 0x29, 0xc9, 0x90, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x0d, 0x82, 0x70, 0x84, 0xc4,
+	0xb8, 0xd8, 0x32, 0x52, 0x33, 0xd3, 0x33, 0x4a, 0x24, 0x98, 0xc0, 0xc2, 0x50, 0x9e, 0x92, 0x3e,
+	0x17, 0x6f, 0x50, 0x6a, 0x71, 0x41, 0x7e, 0x5e, 0x71, 0x2a, 0x44, 0xbb, 0x1c, 0x17, 0x57, 0x26,
+	0x88, 0xe1, 0x54, 0x59, 0x92, 0x5a, 0x0c, 0x36, 0x83, 0x27, 0x08, 0x49, 0xc4, 0xc8, 0x86, 0x8b,
+	0x35, 0x20, 0xd3, 0x39, 0x31, 0x57, 0xc8, 0x98, 0x8b, 0xc3, 0x3d, 0xb5, 0x24, 0x20, 0x03, 0xe4,
+	0x10, 0x41, 0xbd, 0xa2, 0x82, 0x4c, 0x3d, 0x64, 0x67, 0x48, 0x09, 0x41, 0x85, 0x90, 0xcc, 0x56,
+	0x62, 0x48, 0x62, 0x03, 0x3b, 0xdc, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0x34, 0xf2, 0x68, 0xb7,
+	0xc7, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -92,7 +142,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PiCamClient interface {
-	GetPhoto(ctx context.Context, in *Void, opts ...grpc.CallOption) (*ResponseImage, error)
+	GetPhoto(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (*ResponseImage, error)
 }
 
 type piCamClient struct {
@@ -103,7 +153,7 @@ func NewPiCamClient(cc *grpc.ClientConn) PiCamClient {
 	return &piCamClient{cc}
 }
 
-func (c *piCamClient) GetPhoto(ctx context.Context, in *Void, opts ...grpc.CallOption) (*ResponseImage, error) {
+func (c *piCamClient) GetPhoto(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (*ResponseImage, error) {
 	out := new(ResponseImage)
 	err := c.cc.Invoke(ctx, "/rpi.PiCam/GetPhoto", in, out, opts...)
 	if err != nil {
@@ -114,7 +164,7 @@ func (c *piCamClient) GetPhoto(ctx context.Context, in *Void, opts ...grpc.CallO
 
 // PiCamServer is the server API for PiCam service.
 type PiCamServer interface {
-	GetPhoto(context.Context, *Void) (*ResponseImage, error)
+	GetPhoto(context.Context, *RequestImage) (*ResponseImage, error)
 }
 
 func RegisterPiCamServer(s *grpc.Server, srv PiCamServer) {
@@ -122,7 +172,7 @@ func RegisterPiCamServer(s *grpc.Server, srv PiCamServer) {
 }
 
 func _PiCam_GetPhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+	in := new(RequestImage)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -134,7 +184,7 @@ func _PiCam_GetPhoto_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/rpi.PiCam/GetPhoto",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiCamServer).GetPhoto(ctx, req.(*Void))
+		return srv.(PiCamServer).GetPhoto(ctx, req.(*RequestImage))
 	}
 	return interceptor(ctx, in, info, handler)
 }
