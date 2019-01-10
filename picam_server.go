@@ -69,7 +69,8 @@ func (s *PiCamServerImpl) GetVideo(req *proto.RequestImage, stream proto.PiCam_G
 	for {
 		frame, err := cam.GetFrame()
 		if err != nil {
-			return fmt.Errorf("unable to get frame: %v", err)
+			fmt.Printf("unable to get frame: %v", err)
+			time.Sleep(100 * time.Millisecond)
 		}
 		stream.Send(&proto.ResponseImage{ImageBytes: frame})
 	}
