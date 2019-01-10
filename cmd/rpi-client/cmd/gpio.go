@@ -23,9 +23,9 @@ var gpioCmd = &cobra.Command{
 	Short: "Control the GPIO pins on the device",
 }
 
-var gpioLayoutCmd = &cobra.Command{
-	Use:   "layout",
-	Short: "Print pin layout",
+var gpioInfoCmd = &cobra.Command{
+	Use:   "info",
+	Short: "Print GPIO info",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(layout)
 	},
@@ -33,6 +33,22 @@ var gpioLayoutCmd = &cobra.Command{
 
 const layout = `The server uses raw BCM2835 pinouts, not the ports as they are mapped on the output pins for the
 raspberry pi, and not the wiringPi convention.
+
+Modes:
+* pwm is possible only for pins 12, 13, 18, 19.
+* clock is possible only for pins 4, 5, 6, 20, 21.
+
+Note that some pins share common pwm channel, so calling this function will set same duty cycle
+for all pins belonging to channel:
+* channel 1 (pwm0) for pins 12, 18, 40
+* channel 2 (pwm1) for pins 13, 19, 41, 45.
+
+Note that some pins share the same clock source, it means that changing frequency for one pin will 
+change it also for all pins within a group:
+* gp_clk0: pins 4, 20, 32, 34
+* gp_clk1: pins 5, 21, 42, 44
+* gp_clk2: pins 6 and 43
+* pwm_clk: pins 12, 13, 18, 19, 40, 41, 45
 
             Rev 2 and 3 Raspberry Pi                        Rev 1 Raspberry Pi (legacy)
   +-----+---------+----------+---------+-----+      +-----+--------+----------+--------+-----+
@@ -62,7 +78,7 @@ raspberry pi, and not the wiringPi convention.
 
 var gpioOpenCmd = &cobra.Command{
 	Use:   "open",
-	Short: "Open GPIO interface",
+	Short: "Open and memory map GPIO memory",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
@@ -74,7 +90,7 @@ var gpioOpenCmd = &cobra.Command{
 
 var gpioCloseCmd = &cobra.Command{
 	Use:   "close",
-	Short: "Close GPIO interface",
+	Short: "Unmap GPIO memory",
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
@@ -223,7 +239,7 @@ var gpioModeCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(gpioCmd)
-	gpioCmd.AddCommand(gpioLayoutCmd)
+	gpioCmd.AddCommand(gpioInfoCmd)
 
 	// Init
 	gpioCmd.AddCommand(gpioOpenCmd)
