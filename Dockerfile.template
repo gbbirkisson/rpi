@@ -5,10 +5,7 @@ WORKDIR $GOPATH/src/github.com/gbbirkisson/rpi/cmd/rpi-server
 
 RUN go get && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -tags local -ldflags "-X github.com/gbbirkisson/rpi.Version=$(git rev-parse HEAD)" -a -installsuffix cgo -o /go/bin/rpi-server
 
-FROM resin/%%BALENA_MACHINE_NAME%%-alpine
-
-RUN apk add --no-cache raspberrypi
-ENV PATH /opt/vc/bin:$PATH
+FROM balenalib/raspberrypi3
 
 COPY --from=builder /go/bin/rpi-server /rpi-server
 
