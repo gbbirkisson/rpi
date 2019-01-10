@@ -13,4 +13,5 @@ message ResponseImage {
 
 service PiCam {
     rpc GetPhoto (RequestImage) returns (ResponseImage) {};
+    rpc GetVideo (RequestImage) returns (stream ResponseImage){};
 }

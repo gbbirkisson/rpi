@@ -19,7 +19,14 @@ var picamCmd = &cobra.Command{
 		client := proto.NewPiCamClient(conn)
 		ctx, cancel := getContext()
 		defer cancel()
-		res, err := client.GetPhoto(ctx, &proto.Void{})
+
+		width, err := cmd.Flags().GetInt32("width")
+		rpi.ExitOnError("invalid width argument", err)
+
+		height, err := cmd.Flags().GetInt32("height")
+		rpi.ExitOnError("invalid height argument", err)
+
+		res, err := client.GetPhoto(ctx, &proto.RequestImage{Width: width, Height: height})
 		rpi.ExitOnError("error repsonse from server", err)
 
 		if len(args) > 0 {
@@ -38,4 +45,6 @@ var picamCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(picamCmd)
+	picamCmd.Flags().Int32P("width", "x", 648, "Width of the image")
+	picamCmd.Flags().Int32P("height", "y", 486, "Height of the image")
 }
