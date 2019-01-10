@@ -11,6 +11,7 @@ import (
 
 	"github.com/dhowden/raspicam"
 	proto "github.com/gbbirkisson/rpi/proto"
+	picamera "github.com/technomancers/piCamera"
 )
 
 type PiCamServerImpl struct {
@@ -51,39 +52,26 @@ func (s *PiCamServerImpl) GetPhoto(ctx context.Context, req *proto.RequestImage)
 
 func (s *PiCamServerImpl) GetVideo(req *proto.RequestImage, stream proto.PiCam_GetVideoServer) error {
 	log.Println("PiCam.GetVideo()")
-	cam := raspicam.NewStill()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	cam.Width = int(req.Width)
-	cam.Height = int(req.Height)
-
-	if cam.Width == 0 {
-		cam.Width = 648
+	cam, err := picamera.New(ctx, picamera.NewArgs())
+	if err != nil {
+		return fmt.Errorf("unable to create camera: %v", err)
 	}
 
-	if cam.Height == 0 {
-		cam.Height = 486
+	err = cam.Start()
+	if err != nil {
+		return fmt.Errorf("unable to start camera: %v", err)
 	}
-
-	errCh := make(chan error)
-	go func() {
-		for x := range errCh {
-			fmt.Fprintf(os.Stderr, "%v\n", x)
-		}
-	}()
+	defer cam.Stop()
 
 	for {
-		select {
-		case err := <-errCh:
-			return err
-		default:
-			var b bytes.Buffer
-			logTime(func() {
-				w := bufio.NewWriter(&b)
-				raspicam.Capture(cam, w, errCh)
-				w.Flush()
-			})
-			stream.Send(&proto.ResponseImage{ImageBytes: b.Bytes()})
+		frame, err := cam.GetFrame()
+		if err != nil {
+			return fmt.Errorf("unable to get frame: %v", err)
 		}
+		stream.Send(&proto.ResponseImage{ImageBytes: frame})
 	}
 }
 
