@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/gbbirkisson/rpi"
@@ -37,7 +38,12 @@ var rootCmd = &cobra.Command{
 
 		if cmd.Flag("picam").Value.String() == "true" {
 			log.Printf("adding picam service")
-			proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{})
+			err := modprobe()
+			if err != nil {
+				log.Printf("unable to modprobe: %v\n", err)
+			} else {
+				proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{})
+			}
 		}
 
 		lis, err := net.Listen("tcp", address)
@@ -100,4 +106,9 @@ func initConfig() {
 			return
 		}
 	}
+}
+
+func modprobe() error {
+	_, err := exec.Command("modprobe", os.Getenv("MODPROBE")).CombinedOutput()
+	return err
 }
