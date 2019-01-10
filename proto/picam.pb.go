@@ -116,19 +116,18 @@ func init() {
 func init() { proto.RegisterFile("picam.proto", fileDescriptor_30fec5ee6d2f922d) }
 
 var fileDescriptor_30fec5ee6d2f922d = []byte{
-	// 177 bytes of a gzipped FileDescriptorProto
+	// 169 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2e, 0xc8, 0x4c, 0x4e,
 	0xcc, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x54, 0xb2, 0xe1, 0xe2,
 	0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0xf1, 0xcc, 0x4d, 0x4c, 0x4f, 0x15, 0x12, 0xe1, 0x62,
 	0x2d, 0xcf, 0x4c, 0x29, 0xc9, 0x90, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x0d, 0x82, 0x70, 0x84, 0xc4,
 	0xb8, 0xd8, 0x32, 0x52, 0x33, 0xd3, 0x33, 0x4a, 0x24, 0x98, 0xc0, 0xc2, 0x50, 0x9e, 0x92, 0x3e,
 	0x17, 0x6f, 0x50, 0x6a, 0x71, 0x41, 0x7e, 0x5e, 0x71, 0x2a, 0x44, 0xbb, 0x1c, 0x17, 0x57, 0x26,
-	0x88, 0xe1, 0x54, 0x59, 0x92, 0x5a, 0x0c, 0x36, 0x83, 0x27, 0x08, 0x49, 0xc4, 0xa8, 0x98, 0x8b,
-	0x35, 0x20, 0xd3, 0x39, 0x31, 0x57, 0xc8, 0x98, 0x8b, 0xc3, 0x3d, 0xb5, 0x24, 0x20, 0x03, 0xe4,
-	0x10, 0x41, 0xbd, 0xa2, 0x82, 0x4c, 0x3d, 0x64, 0x67, 0x48, 0x09, 0x41, 0x85, 0x90, 0xcc, 0x56,
-	0x62, 0x10, 0x32, 0x05, 0x6b, 0x0a, 0xcb, 0x4c, 0x49, 0x25, 0x5e, 0x93, 0x01, 0x63, 0x12, 0x1b,
-	0xd8, 0xbf, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xf9, 0xc4, 0xed, 0xca, 0xfe, 0x00, 0x00,
-	0x00,
+	0x88, 0xe1, 0x54, 0x59, 0x92, 0x5a, 0x0c, 0x36, 0x83, 0x27, 0x08, 0x49, 0xc4, 0xc8, 0x9e, 0x8b,
+	0x35, 0x20, 0xd3, 0x39, 0x31, 0x57, 0xc8, 0x8c, 0x8b, 0xd3, 0x3d, 0xb5, 0xc4, 0xad, 0x28, 0x31,
+	0x37, 0xb5, 0x58, 0x48, 0x50, 0xaf, 0xa8, 0x20, 0x53, 0x0f, 0xd9, 0x1d, 0x52, 0x42, 0x50, 0x21,
+	0x24, 0xc3, 0x95, 0x18, 0x0c, 0x18, 0x93, 0xd8, 0xc0, 0x6e, 0x37, 0x06, 0x04, 0x00, 0x00, 0xff,
+	0xff, 0xfd, 0xd5, 0xa8, 0x59, 0xca, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -143,8 +142,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PiCamClient interface {
-	GetPhoto(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (*ResponseImage, error)
-	GetVideo(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetVideoClient, error)
+	GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetFramesClient, error)
 }
 
 type piCamClient struct {
@@ -155,21 +153,12 @@ func NewPiCamClient(cc *grpc.ClientConn) PiCamClient {
 	return &piCamClient{cc}
 }
 
-func (c *piCamClient) GetPhoto(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (*ResponseImage, error) {
-	out := new(ResponseImage)
-	err := c.cc.Invoke(ctx, "/rpi.PiCam/GetPhoto", in, out, opts...)
+func (c *piCamClient) GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetFramesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_PiCam_serviceDesc.Streams[0], "/rpi.PiCam/GetFrames", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
-}
-
-func (c *piCamClient) GetVideo(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetVideoClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_PiCam_serviceDesc.Streams[0], "/rpi.PiCam/GetVideo", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &piCamGetVideoClient{stream}
+	x := &piCamGetFramesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -179,16 +168,16 @@ func (c *piCamClient) GetVideo(ctx context.Context, in *RequestImage, opts ...gr
 	return x, nil
 }
 
-type PiCam_GetVideoClient interface {
+type PiCam_GetFramesClient interface {
 	Recv() (*ResponseImage, error)
 	grpc.ClientStream
 }
 
-type piCamGetVideoClient struct {
+type piCamGetFramesClient struct {
 	grpc.ClientStream
 }
 
-func (x *piCamGetVideoClient) Recv() (*ResponseImage, error) {
+func (x *piCamGetFramesClient) Recv() (*ResponseImage, error) {
 	m := new(ResponseImage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -198,66 +187,42 @@ func (x *piCamGetVideoClient) Recv() (*ResponseImage, error) {
 
 // PiCamServer is the server API for PiCam service.
 type PiCamServer interface {
-	GetPhoto(context.Context, *RequestImage) (*ResponseImage, error)
-	GetVideo(*RequestImage, PiCam_GetVideoServer) error
+	GetFrames(*RequestImage, PiCam_GetFramesServer) error
 }
 
 func RegisterPiCamServer(s *grpc.Server, srv PiCamServer) {
 	s.RegisterService(&_PiCam_serviceDesc, srv)
 }
 
-func _PiCam_GetPhoto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestImage)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PiCamServer).GetPhoto(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/rpi.PiCam/GetPhoto",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiCamServer).GetPhoto(ctx, req.(*RequestImage))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PiCam_GetVideo_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _PiCam_GetFrames_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(RequestImage)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(PiCamServer).GetVideo(m, &piCamGetVideoServer{stream})
+	return srv.(PiCamServer).GetFrames(m, &piCamGetFramesServer{stream})
 }
 
-type PiCam_GetVideoServer interface {
+type PiCam_GetFramesServer interface {
 	Send(*ResponseImage) error
 	grpc.ServerStream
 }
 
-type piCamGetVideoServer struct {
+type piCamGetFramesServer struct {
 	grpc.ServerStream
 }
 
-func (x *piCamGetVideoServer) Send(m *ResponseImage) error {
+func (x *piCamGetFramesServer) Send(m *ResponseImage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
 var _PiCam_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rpi.PiCam",
 	HandlerType: (*PiCamServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetPhoto",
-			Handler:    _PiCam_GetPhoto_Handler,
-		},
-	},
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "GetVideo",
-			Handler:       _PiCam_GetVideo_Handler,
+			StreamName:    "GetFrames",
+			Handler:       _PiCam_GetFrames_Handler,
 			ServerStreams: true,
 		},
 	},

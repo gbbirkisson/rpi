@@ -12,6 +12,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	picamera "github.com/technomancers/piCamera"
 	"google.golang.org/grpc"
 )
 
@@ -38,14 +39,37 @@ var rootCmd = &cobra.Command{
 
 		if cmd.Flag("picam").Value.String() == "true" {
 			log.Printf("adding picam service\n")
-			err := modprobe()
+			m, err := cmd.Flags().GetBool("cmod")
 			if err != nil {
-				log.Printf("unable to modprobe: %v\n", err)
-				log.Printf("not startin picam service\n")
-			} else {
-				log.Printf("successfully ran modprobe\n")
-				proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{})
+				rpi.ExitOnError("cmod flag invalid", err)
 			}
+			if m {
+				err := modprobe()
+				rpi.ExitOnError("unable to modprobe", err)
+			}
+
+			width, err := cmd.Flags().GetInt("cwidth")
+			if err != nil {
+				rpi.ExitOnError("cwidth flag invalid", err)
+			}
+
+			height, err := cmd.Flags().GetInt("cheight")
+			if err != nil {
+				rpi.ExitOnError("cheight flag invalid", err)
+			}
+
+			camargs := picamera.NewArgs()
+			camargs.Width = width
+			camargs.Height = height
+			cam, err := picamera.New(nil, camargs)
+			rpi.ExitOnError("unable to create camera", err)
+
+			err = cam.Start()
+			rpi.ExitOnError("unable to start camera", err)
+
+			defer cam.Stop()
+
+			proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{Camera: cam})
 		}
 
 		lis, err := net.Listen("tcp", address)
@@ -74,11 +98,17 @@ func init() {
 	rootCmd.PersistentFlags().StringP("ip", "i", "0.0.0.0", "server ip")
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
 	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
+	rootCmd.PersistentFlags().Bool("cmod", true, "modprobe on start (for pi camera)")
+	rootCmd.PersistentFlags().Int("cwidth", 648, "Width of the image from picam")
+	rootCmd.PersistentFlags().Int("cheight", 486, "Height of the image from picam")
 
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
 	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
 	viper.BindPFlag("picam", rootCmd.PersistentFlags().Lookup("picam"))
+	viper.BindPFlag("cmod", rootCmd.PersistentFlags().Lookup("cmod"))
+	viper.BindPFlag("cwidth", rootCmd.PersistentFlags().Lookup("cwidth"))
+	viper.BindPFlag("cheight", rootCmd.PersistentFlags().Lookup("cheight"))
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -111,6 +141,9 @@ func initConfig() {
 }
 
 func modprobe() error {
-	_, err := exec.Command("modprobe", os.Getenv("MODPROBE")).CombinedOutput()
-	return err
+	output, err := exec.Command("modprobe", os.Getenv("MODPROBE")).CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("%v: %s", err, output)
+	}
+	return nil
 }

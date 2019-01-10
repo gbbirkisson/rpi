@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
@@ -13,7 +14,7 @@ import (
 
 var picamCmd = &cobra.Command{
 	Use:   "picam",
-	Short: "Get a photo from the PiCam",
+	Short: "Get frame from the PiCam",
 	Run: func(cmd *cobra.Command, args []string) {
 		conn, err := getGrpcClient()
 		rpi.ExitOnError("could not create client", err)
@@ -21,77 +22,39 @@ var picamCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		width, err := cmd.Flags().GetInt32("width")
-		rpi.ExitOnError("invalid width argument", err)
+		stream, err := client.GetFrames(ctx, &proto.RequestImage{})
+		rpi.ExitOnError("error response from server", err)
+		defer stream.CloseSend()
 
-		height, err := cmd.Flags().GetInt32("height")
-		rpi.ExitOnError("invalid height argument", err)
+		shouldStream, err := cmd.Flags().GetBool("stream")
+		rpi.ExitOnError("stream flag invalid", err)
 
-		res, err := client.GetPhoto(ctx, &proto.RequestImage{Width: width, Height: height})
-		rpi.ExitOnError("error repsonse from server", err)
-
-		if len(args) > 0 {
-			// Create file
-			f, err := os.Create(args[0])
-			rpi.ExitOnError("could not create file", err)
-			defer f.Close()
-			f.Write(res.ImageBytes)
-		} else {
-			r := bytes.NewReader(res.ImageBytes)
-			_, err := io.Copy(os.Stdout, r)
-			rpi.ExitOnError("failed to write to std out", err)
-		}
-	},
-}
-
-var picamStreamCmd = &cobra.Command{
-	Use:   "stream",
-	Short: "Stream frames from the raspberry pi",
-	Run: func(cmd *cobra.Command, args []string) {
-		conn, err := getGrpcClient()
-		rpi.ExitOnError("could not create client", err)
-		client := proto.NewPiCamClient(conn)
-		ctx, cancel := getContext()
-		defer cancel()
-
-		width, err := cmd.Flags().GetInt32("width")
-		rpi.ExitOnError("invalid width argument", err)
-
-		height, err := cmd.Flags().GetInt32("height")
-		rpi.ExitOnError("invalid height argument", err)
-
-		stream, err := client.GetVideo(ctx, &proto.RequestImage{Width: width, Height: height})
-		rpi.ExitOnError("error repsonse from server", err)
-
-		for i := 0; i < 10; i++ {
+		for {
 			res, err := stream.Recv()
-			fmt.Println(i)
 			if err != nil {
-				fmt.Printf("error: %v\n", err)
+				fmt.Fprintf(os.Stderr, "error getting frame: %v\n", err)
+				time.Sleep(100 * time.Millisecond)
 			} else {
-				fmt.Printf("bytes: %d\n", len(res.ImageBytes))
+				if len(args) > 0 && !shouldStream {
+					// Create file
+					f, err := os.Create(args[0])
+					rpi.ExitOnError("could not create file", err)
+					defer f.Close()
+					f.Write(res.ImageBytes)
+				} else {
+					r := bytes.NewReader(res.ImageBytes)
+					_, err := io.Copy(os.Stdout, r)
+					rpi.ExitOnError("failed to write to std out", err)
+				}
+			}
+			if !shouldStream {
+				break
 			}
 		}
-
-		stream.CloseSend()
-
-		// if len(args) > 0 {
-		// 	// Create file
-		// 	f, err := os.Create(args[0])
-		// 	rpi.ExitOnError("could not create file", err)
-		// 	defer f.Close()
-		// 	f.Write(res.ImageBytes)
-		// } else {
-		// 	r := bytes.NewReader(res.ImageBytes)
-		// 	_, err := io.Copy(os.Stdout, r)
-		// 	rpi.ExitOnError("failed to write to std out", err)
-		// }
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(picamCmd)
-	picamCmd.AddCommand(picamStreamCmd)
-	picamCmd.PersistentFlags().Int32P("width", "x", 648, "Width of the image")
-	picamCmd.PersistentFlags().Int32P("height", "y", 486, "Height of the image")
+	picamCmd.Flags().BoolP("stream", "s", false, "Get a stream of frames")
 }
