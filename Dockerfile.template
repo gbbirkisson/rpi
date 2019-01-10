@@ -1,12 +1,12 @@
-FROM resin/%%BALENA_MACHINE_NAME%%-golang:1.9-stretch as builder
+FROM balenalib/raspberrypi3-golang:1.10-stretch as builder
 
 COPY . $GOPATH/src/github.com/gbbirkisson/rpi
 WORKDIR $GOPATH/src/github.com/gbbirkisson/rpi/cmd/rpi-server
 
 RUN go get && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -tags local -ldflags "-X github.com/gbbirkisson/rpi.Version=$(git rev-parse HEAD)" -a -installsuffix cgo -o /go/bin/rpi-server
 
-FROM balenalib/raspberrypi3
+FROM balenalib/raspberrypi3:stretch
 
 COPY --from=builder /go/bin/rpi-server /rpi-server
 
-CMD ["/rpi-server", "--gpio=true"]
+CMD ["modprobe", "bcm2835-v4l2", "&&", "/rpi-server", "--gpio", "--picam"]

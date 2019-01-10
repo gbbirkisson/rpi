@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rpi;
+
+import "base.proto";
+
+message ResponseImage {
+    bytes imageBytes = 1;
+}
+
+service PiCam {
+    rpc GetPhoto (Void) returns (ResponseImage) {};
+}
