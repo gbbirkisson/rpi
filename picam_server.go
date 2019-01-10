@@ -19,6 +19,7 @@ func (s *PiCamServerImpl) GetPhoto(ctx context.Context, req *proto.Void) (*proto
 	log.Println("PiCam.GetPhoto()")
 
 	cam := raspicam.NewStill()
+	log.Printf("%s", cam.String())
 	errCh := make(chan error)
 	go func() {
 		for x := range errCh {
