@@ -47,6 +47,13 @@ rpi-client help
         * Detect
         * EdgeDetected
 
+## Pi Camera
+
+RESIN_HOST_CONFIG_gpu_mem 128
+RESIN_HOST_CONFIG_start_x 1
+
+modprobe bcm2835-v4l2
+
 ## Using another languages
 
 Generate a client with `protoc` from [.proto](./proto) files.

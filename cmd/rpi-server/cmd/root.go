@@ -98,7 +98,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("ip", "i", "0.0.0.0", "server ip")
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
 	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
-	rootCmd.PersistentFlags().Bool("cmod", true, "modprobe on start (for pi camera)")
+	rootCmd.PersistentFlags().Bool("cmod", false, "modprobe on start (for pi camera)")
 	rootCmd.PersistentFlags().Int("cwidth", 648, "Width of the image from picam")
 	rootCmd.PersistentFlags().Int("cheight", 486, "Height of the image from picam")
 
