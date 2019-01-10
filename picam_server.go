@@ -51,7 +51,7 @@ func (s *PiCamServerImpl) GetPhoto(ctx context.Context, req *proto.RequestImage)
 
 func (s *PiCamServerImpl) GetVideo(req *proto.RequestImage, stream proto.PiCam_GetVideoServer) error {
 	log.Println("PiCam.GetVideo()")
-	cam := raspicam.NewVid()
+	cam := raspicam.NewStill()
 
 	cam.Width = int(req.Width)
 	cam.Height = int(req.Height)
