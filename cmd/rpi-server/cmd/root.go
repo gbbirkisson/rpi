@@ -37,11 +37,13 @@ var rootCmd = &cobra.Command{
 		}
 
 		if cmd.Flag("picam").Value.String() == "true" {
-			log.Printf("adding picam service")
+			log.Printf("adding picam service\n")
 			err := modprobe()
 			if err != nil {
 				log.Printf("unable to modprobe: %v\n", err)
+				log.Printf("not startin picam service\n")
 			} else {
+				log.Printf("successfully ran modprobe\n")
 				proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{})
 			}
 		}
@@ -71,7 +73,7 @@ func init() {
 	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
 	rootCmd.PersistentFlags().StringP("ip", "i", "0.0.0.0", "server ip")
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
-	rootCmd.PersistentFlags().BoolP("picam", "p", false, "picam service enabled")
+	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
 
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
