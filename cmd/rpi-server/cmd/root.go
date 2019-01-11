@@ -58,9 +58,15 @@ var rootCmd = &cobra.Command{
 				rpi.ExitOnError("cheight flag invalid", err)
 			}
 
+			rot, err := cmd.Flags().GetInt("crotation")
+			if err != nil {
+				rpi.ExitOnError("crotation flag invalid", err)
+			}
+
 			camargs := picamera.NewArgs()
 			camargs.Width = width
 			camargs.Height = height
+			camargs.Rotation = rot
 			cam, err := picamera.New(nil, camargs)
 			rpi.ExitOnError("unable to create camera", err)
 
@@ -101,6 +107,7 @@ func init() {
 	rootCmd.PersistentFlags().Bool("cmod", false, "modprobe on start (for pi camera)")
 	rootCmd.PersistentFlags().Int("cwidth", 648, "Width of the image from picam")
 	rootCmd.PersistentFlags().Int("cheight", 486, "Height of the image from picam")
+	rootCmd.PersistentFlags().Int("crotation", 0, "Rotation of camera image")
 
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
@@ -109,6 +116,7 @@ func init() {
 	viper.BindPFlag("cmod", rootCmd.PersistentFlags().Lookup("cmod"))
 	viper.BindPFlag("cwidth", rootCmd.PersistentFlags().Lookup("cwidth"))
 	viper.BindPFlag("cheight", rootCmd.PersistentFlags().Lookup("cheight"))
+	viper.BindPFlag("crotation", rootCmd.PersistentFlags().Lookup("crotation"))
 }
 
 // initConfig reads in config file and ENV variables if set.

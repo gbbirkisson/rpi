@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"bufio"
 	"bytes"
-	"fmt"
-	"io"
+	"image"
+	"image/png"
 	"os"
-	"time"
 
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
@@ -31,21 +31,23 @@ var picamCmd = &cobra.Command{
 
 		for {
 			res, err := stream.Recv()
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "error getting frame: %v\n", err)
-				time.Sleep(100 * time.Millisecond)
+			rpi.ExitOnError("error getting frame", err)
+			r := bytes.NewReader(res.ImageBytes)
+			imageData, _, err := image.Decode(r)
+			rpi.ExitOnError("unable to decode image", err)
+
+			if len(args) > 0 && !shouldStream {
+				// Create file
+				f, err := os.Create(args[0])
+				rpi.ExitOnError("could not create file", err)
+				defer f.Close()
+				w := bufio.NewWriter(f)
+				err = png.Encode(w, imageData)
+				rpi.ExitOnError("unable to encode image", err)
 			} else {
-				if len(args) > 0 && !shouldStream {
-					// Create file
-					f, err := os.Create(args[0])
-					rpi.ExitOnError("could not create file", err)
-					defer f.Close()
-					f.Write(res.ImageBytes)
-				} else {
-					r := bytes.NewReader(res.ImageBytes)
-					_, err := io.Copy(os.Stdout, r)
-					rpi.ExitOnError("failed to write to std out", err)
-				}
+				w := bufio.NewWriter(os.Stdout)
+				err = png.Encode(w, imageData)
+				rpi.ExitOnError("unable to encode image", err)
 			}
 			if !shouldStream {
 				break

@@ -11,4 +11,4 @@ ENV MODPROBE=bcm2835-v4l2
 
 COPY --from=builder /go/bin/rpi-server /rpi-server
 
-CMD ["/rpi-server", "--gpio", "--picam", "--cmod"]
+CMD ["/rpi-server", "--gpio", "--picam", "--cmod", "--crotation=180"]
