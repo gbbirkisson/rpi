@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 	Use:   "rpi-server",
 	Short: "Raspberry PI IO server",
 	Long:  `A gRPC server that allows you to do IO operations on the Raspberry PI`,
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(_ *cobra.Command, args []string) error {
 		log.Printf("rpi server started")
 		ip := viper.GetString("ip")
 		port := viper.GetString("port")
@@ -32,41 +32,22 @@ var rootCmd = &cobra.Command{
 
 		proto.RegisterCommonServer(srv, &rpi.CommonServerImpl{})
 
-		if cmd.Flag("gpio").Value.String() == "true" {
+		if viper.GetBool("gpio") {
 			log.Printf("adding gpio service")
 			proto.RegisterGpioServer(srv, &rpi.GpioServerImpl{})
 		}
 
-		if cmd.Flag("picam").Value.String() == "true" {
+		if viper.GetBool("camera") {
 			log.Printf("adding picam service\n")
-			m, err := cmd.Flags().GetBool("cmod")
-			if err != nil {
-				rpi.ExitOnError("cmod flag invalid", err)
-			}
-			if m {
-				err := modprobe()
-				rpi.ExitOnError("unable to modprobe", err)
-			}
 
-			width, err := cmd.Flags().GetInt("cwidth")
-			if err != nil {
-				rpi.ExitOnError("cwidth flag invalid", err)
-			}
-
-			height, err := cmd.Flags().GetInt("cheight")
-			if err != nil {
-				rpi.ExitOnError("cheight flag invalid", err)
-			}
-
-			rot, err := cmd.Flags().GetInt("crotation")
-			if err != nil {
-				rpi.ExitOnError("crotation flag invalid", err)
-			}
+			err := modprobe()
+			rpi.ExitOnError("unable to modprobe", err)
 
 			camargs := picamera.NewArgs()
-			camargs.Width = width
-			camargs.Height = height
-			camargs.Rotation = rot
+			camargs.Width = viper.GetInt("camera_width")
+			camargs.Height = viper.GetInt("camera_height")
+			camargs.Rotation = viper.GetInt("camera_rotation")
+			log.Printf("camera arguments: %+v\n", camargs)
 			cam, err := picamera.New(nil, camargs)
 			rpi.ExitOnError("unable to create camera", err)
 
@@ -103,20 +84,22 @@ func init() {
 	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
 	rootCmd.PersistentFlags().StringP("ip", "i", "0.0.0.0", "server ip")
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
-	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
-	rootCmd.PersistentFlags().Bool("cmod", false, "modprobe on start (for pi camera)")
-	rootCmd.PersistentFlags().Int("cwidth", 648, "Width of the image from picam")
-	rootCmd.PersistentFlags().Int("cheight", 486, "Height of the image from picam")
-	rootCmd.PersistentFlags().Int("crotation", 0, "Rotation of camera image")
+	rootCmd.PersistentFlags().BoolP("camera", "c", false, "picam service enabled")
+	rootCmd.PersistentFlags().String("modprobe", "", "modprobe on start (for pi camera)")
+	rootCmd.PersistentFlags().Int("camera_width", 648, "Width of the image from pi camera")
+	rootCmd.PersistentFlags().Int("camera_height", 486, "Height of the image from pi camera")
+	rootCmd.PersistentFlags().Int("camera_rotation", 0, "Rotation of pi camera image")
 
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
 	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
-	viper.BindPFlag("picam", rootCmd.PersistentFlags().Lookup("picam"))
-	viper.BindPFlag("cmod", rootCmd.PersistentFlags().Lookup("cmod"))
-	viper.BindPFlag("cwidth", rootCmd.PersistentFlags().Lookup("cwidth"))
-	viper.BindPFlag("cheight", rootCmd.PersistentFlags().Lookup("cheight"))
-	viper.BindPFlag("crotation", rootCmd.PersistentFlags().Lookup("crotation"))
+	viper.BindPFlag("camera", rootCmd.PersistentFlags().Lookup("camera"))
+	viper.BindPFlag("modprobe", rootCmd.PersistentFlags().Lookup("modprobe"))
+	viper.BindPFlag("camera_width", rootCmd.PersistentFlags().Lookup("camera_width"))
+	viper.BindPFlag("camera_height", rootCmd.PersistentFlags().Lookup("camera_height"))
+	viper.BindPFlag("camera_rotation", rootCmd.PersistentFlags().Lookup("camera_rotation"))
+
+	viper.SetEnvPrefix("rpi")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -149,9 +132,14 @@ func initConfig() {
 }
 
 func modprobe() error {
-	output, err := exec.Command("modprobe", os.Getenv("MODPROBE")).CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("%v: %s", err, output)
+	param := viper.GetString("modprobe")
+	if param != "" {
+		log.Printf("running 'modprobe %s'\n", param)
+
+		output, err := exec.Command("modprobe", param).CombinedOutput()
+		if err != nil {
+			return fmt.Errorf("%v: %s", err, output)
+		}
 	}
 	return nil
 }
