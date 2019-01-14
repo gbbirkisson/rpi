@@ -9,11 +9,11 @@ import (
 	"os/exec"
 	"path/filepath"
 
+	picamera "github.com/gbbirkisson/piCamera"
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	picamera "github.com/technomancers/piCamera"
 	"google.golang.org/grpc"
 )
 

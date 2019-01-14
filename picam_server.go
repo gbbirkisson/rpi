@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
+	picamera "github.com/gbbirkisson/piCamera"
 	proto "github.com/gbbirkisson/rpi/proto"
-	picamera "github.com/technomancers/piCamera"
 )
 
 type PiCamServerImpl struct {

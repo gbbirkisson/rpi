@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
 	"image"
 	"image/jpeg"
 	"io"
@@ -30,7 +29,6 @@ var picamCmd = &cobra.Command{
 		defer stream.CloseSend()
 
 		shouldStream := viper.GetBool("stream")
-		fmt.Println(shouldStream)
 		for {
 			res, err := stream.Recv()
 			rpi.ExitOnError("error getting frame", err)

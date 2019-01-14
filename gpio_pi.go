@@ -5,7 +5,7 @@ package rpi
 import (
 	"context"
 
-	rpio "github.com/stianeikeland/go-rpio/v4"
+	rpio "github.com/gbbirkisson/go-rpio/v4"
 )
 
 func checkContextAndExec(ctx context.Context, f func()) error {

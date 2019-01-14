@@ -1,8 +1,8 @@
 package rpi
 
 import (
+	rpio "github.com/gbbirkisson/go-rpio"
 	proto "github.com/gbbirkisson/rpi/proto"
-	rpio "github.com/stianeikeland/go-rpio"
 )
 
 type Pin = rpio.Pin

@@ -36,29 +36,32 @@ Run the program using help to get documentation
 rpi-client help
 ```
 
-## TODO
+## Server modules
 
-* rpi-client
-    * gpio
-        * Write
-        * Read
-        * Freq
-        * DutyCycle
-        * Detect
-        * EdgeDetected
+### GPIO
 
-## Pi Camera
+To enable on balena.io:
 
-RESIN_HOST_CONFIG_gpu_mem 128
-RESIN_HOST_CONFIG_start_x 1
+* Device Service variables
+    * `RPI_GPIO`: `true`
 
-modprobe bcm2835-v4l2
+### Pi Camera
+
+To enable on balena.io:
+
+* Device Configuration
+    * `RESIN_HOST_CONFIG_gpu_mem`: `128`
+    * `RESIN_HOST_CONFIG_start_x`: `1`
+* Device Service variables
+    * `RPI_CAMERA`: `true`
+    * `RPI_MODPROBE`: `bcm2835-v4l2`
+
+### Ngrok tunnel
+
+* Device Service variables
+    * `RPI_NGROK`: `true`
+    * `RPI_NGROK_TOKEN`: `<your ngrok token>`
 
 ## Using another languages
 
 Generate a client with `protoc` from [.proto](./proto) files.
-
-## Libraries used
-
-* [go-rpio](https://github.com/stianeikeland/go-rpio)
-* [cobra](https://github.com/spf13/cobra)
