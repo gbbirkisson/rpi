@@ -1,11 +1,14 @@
 package cmd
 
 import (
-	"bufio"
 	"bytes"
+	"fmt"
 	"image"
-	"image/png"
+	"image/jpeg"
+	"io"
 	"os"
+
+	"github.com/spf13/viper"
 
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/proto"
@@ -15,7 +18,7 @@ import (
 var picamCmd = &cobra.Command{
 	Use:   "picam",
 	Short: "Get frame from the PiCam",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, args []string) {
 		conn, err := getGrpcClient()
 		rpi.ExitOnError("could not create client", err)
 		client := proto.NewPiCamClient(conn)
@@ -26,9 +29,8 @@ var picamCmd = &cobra.Command{
 		rpi.ExitOnError("error response from server", err)
 		defer stream.CloseSend()
 
-		shouldStream, err := cmd.Flags().GetBool("stream")
-		rpi.ExitOnError("stream flag invalid", err)
-
+		shouldStream := viper.GetBool("stream")
+		fmt.Println(shouldStream)
 		for {
 			res, err := stream.Recv()
 			rpi.ExitOnError("error getting frame", err)
@@ -36,17 +38,19 @@ var picamCmd = &cobra.Command{
 			imageData, _, err := image.Decode(r)
 			rpi.ExitOnError("unable to decode image", err)
 
+			opts := jpeg.Options{}
+			opts.Quality = 80
+
 			if len(args) > 0 && !shouldStream {
 				// Create file
 				f, err := os.Create(args[0])
 				rpi.ExitOnError("could not create file", err)
 				defer f.Close()
-				w := bufio.NewWriter(f)
-				err = png.Encode(w, imageData)
-				rpi.ExitOnError("unable to encode image", err)
+				io.Copy(f, bytes.NewReader(res.ImageBytes))
+				// err = jpeg.Encode(f, imageData, &opts)
+				// rpi.ExitOnError("unable to encode image", err)
 			} else {
-				w := bufio.NewWriter(os.Stdout)
-				err = png.Encode(w, imageData)
+				err = jpeg.Encode(os.Stdout, imageData, &opts)
 				rpi.ExitOnError("unable to encode image", err)
 			}
 			if !shouldStream {
@@ -58,5 +62,7 @@ var picamCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(picamCmd)
+
 	picamCmd.Flags().BoolP("stream", "s", false, "Get a stream of frames")
+	viper.BindPFlag("stream", picamCmd.Flags().Lookup("stream"))
 }

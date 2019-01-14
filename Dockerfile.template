@@ -1,16 +1,22 @@
 FROM balenalib/raspberrypi3-golang:1.10-stretch as builder
 
+ENV NGROK_DL="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip" \
+    GOOS="linux" \
+    GOARCH="arm" \
+    GOTAGS="-tags pi"
+
+RUN apt-get update && apt-get install -yq unzip && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
+    unzip /tmp/ngrok.zip -d /tmp/ngrok && \
+    chmod +x /tmp/ngrok/ngrok
+
 COPY . $GOPATH/src/github.com/gbbirkisson/rpi
 WORKDIR $GOPATH/src/github.com/gbbirkisson/rpi/cmd/rpi-server
 
-RUN go get && CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -tags pi -ldflags "-X github.com/gbbirkisson/rpi.Version=$(git rev-parse HEAD)" -a -installsuffix cgo -o /go/bin/rpi-server
+RUN go get && CGO_ENABLED=0 go build ${GOTAGS} -ldflags "-X github.com/gbbirkisson/rpi.Version=$(git rev-parse HEAD)" -a -installsuffix cgo -o /tmp/rpi-server
 
 FROM balenalib/raspberrypi3:stretch
 
-ENV RPI_GPIO=true \
-    RPI_CAMERA=true \
-    RPI_MODPROBE=bcm2835-v4l2
+COPY --from=builder /tmp/ngrok/ngrok /usr/bin/ngrok
+COPY --from=builder /tmp/rpi-server /usr/bin/rpi-server
 
-COPY --from=builder /go/bin/rpi-server /rpi-server
-
-CMD ["/rpi-server"]
+CMD ["rpi-server"]

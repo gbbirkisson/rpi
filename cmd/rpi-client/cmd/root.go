@@ -17,9 +17,9 @@ import (
 var cfgFile string
 
 func getGrpcClient() (*grpc.ClientConn, error) {
-	ip := viper.GetString("ip")
+	host := viper.GetString("host")
 	port := viper.GetString("port")
-	address := ip + ":" + port
+	address := host + ":" + port
 
 	c, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
@@ -55,12 +55,12 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
-	rootCmd.PersistentFlags().StringP("ip", "i", "127.0.0.1", "server ip")
-	rootCmd.PersistentFlags().IntP("timeout", "t", 3000, "server timeout in milliseconds")
+	rootCmd.PersistentFlags().String("host", "127.0.0.1", "server ip")
+	rootCmd.PersistentFlags().Int("port", 8000, "server port")
+	rootCmd.PersistentFlags().Int("timeout", 3000, "server timeout in milliseconds")
 
+	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
-	viper.BindPFlag("ip", rootCmd.PersistentFlags().Lookup("ip"))
 	viper.BindPFlag("timeout", rootCmd.PersistentFlags().Lookup("timeout"))
 }
 
