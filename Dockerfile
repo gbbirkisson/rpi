@@ -5,7 +5,7 @@ ENV NGROK_DL="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip"
     GOARCH="amd64" \
     GOTAGS=""
 
-RUN apt-get update && apt-get install -yq unzip && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
+RUN apt-get update && apt-get install -yq unzip wget && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
     unzip /tmp/ngrok.zip -d /tmp/ngrok && \
     chmod +x /tmp/ngrok/ngrok
 
