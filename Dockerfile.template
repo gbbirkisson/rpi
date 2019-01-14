@@ -5,7 +5,7 @@ ENV NGROK_DL="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip" \
     GOARCH="arm" \
     GOTAGS="-tags pi"
 
-RUN apt-get update && apt-get install -yq unzip && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
+RUN apt-get update && apt-get install -yq unzip wget && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
     unzip /tmp/ngrok.zip -d /tmp/ngrok && \
     chmod +x /tmp/ngrok/ngrok
 
