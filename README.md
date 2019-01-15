@@ -1,9 +1,9 @@
-# rpi
-
-[![Build](https://img.shields.io/travis/gbbirkisson/rpi/master.svg?style=flat-square)](https://travis-ci.org/gbbirkisson/rpi/branches/master)
+[![Build](https://img.shields.io/travis/gbbirkisson/rpi/master.svg?style=flat-square)](https://travis-ci.org/gbbirkisson/rpi)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gbbirkisson/rpi?style=flat-square)](https://goreportcard.com/report/github.com/gbbirkisson/rpi)
 [![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/gbbirkisson/rpi)
 [![Release](https://img.shields.io/github/release/gbbirkisson/rpi.svg?style=flat-square)](https://github.com/gbbirkisson/rpi/releases/latest)
+
+# rpi
 
 A gRPC server for remote IO operations on the RaspberryPi + cli tool to call it
 
