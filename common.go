@@ -9,6 +9,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/proto"
 )
 
+var Revision string = "development"
 var Version string = "development"
 
 func ExitOnError(msg string, err error) {
