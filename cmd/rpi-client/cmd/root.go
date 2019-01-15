@@ -7,33 +7,21 @@ import (
 	"path/filepath"
 	"time"
 
-	proto "github.com/gbbirkisson/rpi/proto"
+	"github.com/gbbirkisson/rpi"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"google.golang.org/grpc"
 )
 
 var cfgFile string
 
-func getGrpcClient() (*grpc.ClientConn, error) {
-	host := viper.GetString("host")
-	port := viper.GetString("port")
-	address := host + ":" + port
-
-	c, err := grpc.Dial(address, grpc.WithInsecure())
-	if err != nil {
-		return nil, fmt.Errorf("could not connect to backend: %v\n", err)
-	}
-	return c, nil
-}
-
-func getCommonClient() (proto.CommonClient, error) {
-	conn, err := getGrpcClient()
+func getCommonClient() (proto.CommonServiceClient, error) {
+	conn, err := rpi.GetGrpcClient(viper.GetString("host"), viper.GetString("port"))
 	if err != nil {
 		return nil, err
 	}
-	return proto.NewCommonClient(conn), nil
+	return proto.NewCommonServiceClient(conn), nil
 }
 
 func getContext() (context.Context, context.CancelFunc) {

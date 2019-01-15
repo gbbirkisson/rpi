@@ -1,27 +1,24 @@
 package rpi
 
 import (
-	context "context"
 	"fmt"
-	"log"
-	"os"
 
-	proto "github.com/gbbirkisson/rpi/proto"
+	common "github.com/gbbirkisson/rpi/pkg/common"
+	"google.golang.org/grpc"
 )
 
 var Revision string = "development"
 var Version string = "development"
 
-func ExitOnError(msg string, err error) {
-	if err != nil {
-		fmt.Fprintf(os.Stderr, msg+": %v\n", err)
-		os.Exit(1)
-	}
+func GetCommonServer() *common.CommonServer {
+	return &common.CommonServer{Version: Version, Revision: Revision}
 }
 
-type CommonServerImpl struct{}
-
-func (s *CommonServerImpl) Version(context.Context, *proto.Void) (*proto.VersionRes, error) {
-	log.Printf("Common.Version()\n")
-	return &proto.VersionRes{Version: Version}, nil
+func GetGrpcClient(host, port string) (*grpc.ClientConn, error) {
+	address := host + ":" + port
+	c, err := grpc.Dial(address, grpc.WithInsecure())
+	if err != nil {
+		return nil, fmt.Errorf("could not connect to backend: %v\n", err)
+	}
+	return c, nil
 }

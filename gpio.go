@@ -1,21 +1,28 @@
 package rpi
 
 import (
-	rpio "github.com/gbbirkisson/go-rpio"
-	proto "github.com/gbbirkisson/rpi/proto"
+	gpio "github.com/gbbirkisson/rpi/pkg/gpio"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
+	"google.golang.org/grpc"
 )
 
-type Pin = rpio.Pin
-type PinEdge = rpio.Edge
-type PinState = rpio.State
+func GetGpio(client proto.GpioServiceClient) (*gpio.Gpio, error) {
+	g := gpio.Gpio{Client: client}
+	err := g.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return &g, nil
+}
 
-const (
-	Input  = rpio.Input
-	Output = rpio.Output
-	Low    = rpio.Low
-	High   = rpio.High
-)
+func GetGpioClient(conn *grpc.ClientConn) proto.GpioServiceClient {
+	return proto.NewGpioServiceClient(conn)
+}
 
-type GPIO struct {
-	Client proto.GpioClient
+func GetGpioServer(g *gpio.Gpio) (*gpio.GpioServer, error) {
+	err := g.Validate()
+	if err != nil {
+		return nil, err
+	}
+	return &gpio.GpioServer{Gpio: g}, nil
 }

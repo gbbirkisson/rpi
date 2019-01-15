@@ -11,6 +11,6 @@ message ResponseImage {
     bytes imageBytes = 1;
 }
 
-service PiCam {
+service PiCamService {
     rpc GetFrames (RequestImage) returns (stream ResponseImage){};
 }

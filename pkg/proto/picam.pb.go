@@ -116,18 +116,18 @@ func init() {
 func init() { proto.RegisterFile("picam.proto", fileDescriptor_30fec5ee6d2f922d) }
 
 var fileDescriptor_30fec5ee6d2f922d = []byte{
-	// 169 bytes of a gzipped FileDescriptorProto
+	// 176 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2e, 0xc8, 0x4c, 0x4e,
 	0xcc, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x54, 0xb2, 0xe1, 0xe2,
 	0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0xf1, 0xcc, 0x4d, 0x4c, 0x4f, 0x15, 0x12, 0xe1, 0x62,
 	0x2d, 0xcf, 0x4c, 0x29, 0xc9, 0x90, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x0d, 0x82, 0x70, 0x84, 0xc4,
 	0xb8, 0xd8, 0x32, 0x52, 0x33, 0xd3, 0x33, 0x4a, 0x24, 0x98, 0xc0, 0xc2, 0x50, 0x9e, 0x92, 0x3e,
 	0x17, 0x6f, 0x50, 0x6a, 0x71, 0x41, 0x7e, 0x5e, 0x71, 0x2a, 0x44, 0xbb, 0x1c, 0x17, 0x57, 0x26,
-	0x88, 0xe1, 0x54, 0x59, 0x92, 0x5a, 0x0c, 0x36, 0x83, 0x27, 0x08, 0x49, 0xc4, 0xc8, 0x9e, 0x8b,
-	0x35, 0x20, 0xd3, 0x39, 0x31, 0x57, 0xc8, 0x8c, 0x8b, 0xd3, 0x3d, 0xb5, 0xc4, 0xad, 0x28, 0x31,
-	0x37, 0xb5, 0x58, 0x48, 0x50, 0xaf, 0xa8, 0x20, 0x53, 0x0f, 0xd9, 0x1d, 0x52, 0x42, 0x50, 0x21,
-	0x24, 0xc3, 0x95, 0x18, 0x0c, 0x18, 0x93, 0xd8, 0xc0, 0x6e, 0x37, 0x06, 0x04, 0x00, 0x00, 0xff,
-	0xff, 0xfd, 0xd5, 0xa8, 0x59, 0xca, 0x00, 0x00, 0x00,
+	0x88, 0xe1, 0x54, 0x59, 0x92, 0x5a, 0x0c, 0x36, 0x83, 0x27, 0x08, 0x49, 0xc4, 0xc8, 0x8d, 0x8b,
+	0x27, 0x20, 0xd3, 0x39, 0x31, 0x37, 0x38, 0xb5, 0xa8, 0x2c, 0x33, 0x39, 0x55, 0xc8, 0x8c, 0x8b,
+	0xd3, 0x3d, 0xb5, 0xc4, 0xad, 0x28, 0x31, 0x37, 0xb5, 0x58, 0x48, 0x50, 0xaf, 0xa8, 0x20, 0x53,
+	0x0f, 0xd9, 0x39, 0x52, 0x42, 0x50, 0x21, 0x24, 0x3b, 0x94, 0x18, 0x0c, 0x18, 0x93, 0xd8, 0xc0,
+	0x5e, 0x30, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0x3e, 0x09, 0x55, 0x5b, 0xd1, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -138,27 +138,27 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// PiCamClient is the client API for PiCam service.
+// PiCamServiceClient is the client API for PiCamService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type PiCamClient interface {
-	GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetFramesClient, error)
+type PiCamServiceClient interface {
+	GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCamService_GetFramesClient, error)
 }
 
-type piCamClient struct {
+type piCamServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewPiCamClient(cc *grpc.ClientConn) PiCamClient {
-	return &piCamClient{cc}
+func NewPiCamServiceClient(cc *grpc.ClientConn) PiCamServiceClient {
+	return &piCamServiceClient{cc}
 }
 
-func (c *piCamClient) GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCam_GetFramesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_PiCam_serviceDesc.Streams[0], "/rpi.PiCam/GetFrames", opts...)
+func (c *piCamServiceClient) GetFrames(ctx context.Context, in *RequestImage, opts ...grpc.CallOption) (PiCamService_GetFramesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_PiCamService_serviceDesc.Streams[0], "/rpi.PiCamService/GetFrames", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &piCamGetFramesClient{stream}
+	x := &piCamServiceGetFramesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -168,16 +168,16 @@ func (c *piCamClient) GetFrames(ctx context.Context, in *RequestImage, opts ...g
 	return x, nil
 }
 
-type PiCam_GetFramesClient interface {
+type PiCamService_GetFramesClient interface {
 	Recv() (*ResponseImage, error)
 	grpc.ClientStream
 }
 
-type piCamGetFramesClient struct {
+type piCamServiceGetFramesClient struct {
 	grpc.ClientStream
 }
 
-func (x *piCamGetFramesClient) Recv() (*ResponseImage, error) {
+func (x *piCamServiceGetFramesClient) Recv() (*ResponseImage, error) {
 	m := new(ResponseImage)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -185,44 +185,44 @@ func (x *piCamGetFramesClient) Recv() (*ResponseImage, error) {
 	return m, nil
 }
 
-// PiCamServer is the server API for PiCam service.
-type PiCamServer interface {
-	GetFrames(*RequestImage, PiCam_GetFramesServer) error
+// PiCamServiceServer is the server API for PiCamService service.
+type PiCamServiceServer interface {
+	GetFrames(*RequestImage, PiCamService_GetFramesServer) error
 }
 
-func RegisterPiCamServer(s *grpc.Server, srv PiCamServer) {
-	s.RegisterService(&_PiCam_serviceDesc, srv)
+func RegisterPiCamServiceServer(s *grpc.Server, srv PiCamServiceServer) {
+	s.RegisterService(&_PiCamService_serviceDesc, srv)
 }
 
-func _PiCam_GetFrames_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _PiCamService_GetFrames_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(RequestImage)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(PiCamServer).GetFrames(m, &piCamGetFramesServer{stream})
+	return srv.(PiCamServiceServer).GetFrames(m, &piCamServiceGetFramesServer{stream})
 }
 
-type PiCam_GetFramesServer interface {
+type PiCamService_GetFramesServer interface {
 	Send(*ResponseImage) error
 	grpc.ServerStream
 }
 
-type piCamGetFramesServer struct {
+type piCamServiceGetFramesServer struct {
 	grpc.ServerStream
 }
 
-func (x *piCamGetFramesServer) Send(m *ResponseImage) error {
+func (x *piCamServiceGetFramesServer) Send(m *ResponseImage) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _PiCam_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "rpi.PiCam",
-	HandlerType: (*PiCamServer)(nil),
+var _PiCamService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "rpi.PiCamService",
+	HandlerType: (*PiCamServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "GetFrames",
-			Handler:       _PiCam_GetFrames_Handler,
+			Handler:       _PiCamService_GetFrames_Handler,
 			ServerStreams: true,
 		},
 	},

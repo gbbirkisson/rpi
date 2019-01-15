@@ -11,7 +11,9 @@ import (
 
 	picamera "github.com/gbbirkisson/piCamera"
 	"github.com/gbbirkisson/rpi"
-	proto "github.com/gbbirkisson/rpi/proto"
+	helper "github.com/gbbirkisson/rpi/cmd"
+	gpio "github.com/gbbirkisson/rpi/pkg/gpio"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -22,12 +24,12 @@ var cfgFile string
 func startGpio(srv *grpc.Server) func() {
 	ctx := context.Background()
 	log.Printf("adding gpio service")
-	gpio := rpi.GPIO{}
-	err := gpio.Open(ctx)
-	rpi.ExitOnError("unable to open gpio pins", err)
-	proto.RegisterGpioServer(srv, &rpi.GpioServerImpl{})
+	g := gpio.Gpio{}
+	err := g.Open(ctx)
+	helper.ExitOnError("unable to open gpio pins", err)
+	proto.RegisterGpioServiceServer(srv, &gpio.GpioServer{})
 	return func() {
-		gpio.Close(ctx)
+		g.Close(ctx)
 	}
 }
 
@@ -35,20 +37,24 @@ func startCamera(srv *grpc.Server) func() {
 	log.Printf("adding picam service\n")
 
 	err := modprobe()
-	rpi.ExitOnError("unable to modprobe", err)
+	helper.ExitOnError("unable to modprobe", err)
 
 	camargs := picamera.NewArgs()
 	camargs.Width = viper.GetInt("camera_width")
 	camargs.Height = viper.GetInt("camera_height")
 	camargs.Rotation = viper.GetInt("camera_rotation")
 	log.Printf("camera arguments: %+v\n", camargs)
-	cam, err := picamera.New(nil, camargs)
-	rpi.ExitOnError("unable to create camera", err)
+
+	cam, err := rpi.GetPiCam(camargs)
+	helper.ExitOnError("unable to create camera", err)
 
 	err = cam.Start()
-	rpi.ExitOnError("unable to start camera", err)
+	helper.ExitOnError("unable to start camera", err)
 
-	proto.RegisterPiCamServer(srv, &rpi.PiCamServerImpl{Camera: cam})
+	camserver, err := rpi.GetPiCamServer(cam)
+	helper.ExitOnError("unable to create picam server", err)
+
+	proto.RegisterPiCamServiceServer(srv, camserver)
 	return cam.Stop
 }
 
@@ -76,7 +82,7 @@ func startNgrok() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Start()
-	rpi.ExitOnError("unable to start ngrok", err)
+	helper.ExitOnError("unable to start ngrok", err)
 }
 
 var rootCmd = &cobra.Command{
@@ -91,7 +97,7 @@ var rootCmd = &cobra.Command{
 
 		srv := grpc.NewServer()
 
-		proto.RegisterCommonServer(srv, &rpi.CommonServerImpl{})
+		proto.RegisterCommonServiceServer(srv, rpi.GetCommonServer())
 
 		if viper.GetBool("gpio") {
 			close := startGpio(srv)

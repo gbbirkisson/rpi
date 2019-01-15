@@ -9,7 +9,7 @@ install-server:
 	@cd ./cmd/rpi-server && go install -ldflags "-X ${VVAR}=$(shell git rev-parse HEAD)"
 
 proto:
-	@cd ./proto && protoc --go_out=plugins=grpc,import_path=rpi:. *.proto
+	@cd ./pkg/proto && protoc --go_out=plugins=grpc,import_path=rpi:. *.proto
 
 balena:
 	@git push balena master

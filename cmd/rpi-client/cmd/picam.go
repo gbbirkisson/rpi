@@ -10,7 +10,8 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/gbbirkisson/rpi"
-	proto "github.com/gbbirkisson/rpi/proto"
+	helper "github.com/gbbirkisson/rpi/cmd"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
 	"github.com/spf13/cobra"
 )
 
@@ -18,23 +19,23 @@ var picamCmd = &cobra.Command{
 	Use:   "picam",
 	Short: "Get frame from the PiCam",
 	Run: func(_ *cobra.Command, args []string) {
-		conn, err := getGrpcClient()
-		rpi.ExitOnError("could not create client", err)
-		client := proto.NewPiCamClient(conn)
+		conn, err := rpi.GetGrpcClient(viper.GetString("host"), viper.GetString("port"))
+		helper.ExitOnError("could not create client", err)
+		client := proto.NewPiCamServiceClient(conn)
 		ctx, cancel := getContext()
 		defer cancel()
 
 		stream, err := client.GetFrames(ctx, &proto.RequestImage{})
-		rpi.ExitOnError("error response from server", err)
+		helper.ExitOnError("error response from server", err)
 		defer stream.CloseSend()
 
 		shouldStream := viper.GetBool("stream")
 		for {
 			res, err := stream.Recv()
-			rpi.ExitOnError("error getting frame", err)
+			helper.ExitOnError("error getting frame", err)
 			r := bytes.NewReader(res.ImageBytes)
 			imageData, _, err := image.Decode(r)
-			rpi.ExitOnError("unable to decode image", err)
+			helper.ExitOnError("unable to decode image", err)
 
 			opts := jpeg.Options{}
 			opts.Quality = 80
@@ -42,14 +43,14 @@ var picamCmd = &cobra.Command{
 			if len(args) > 0 && !shouldStream {
 				// Create file
 				f, err := os.Create(args[0])
-				rpi.ExitOnError("could not create file", err)
+				helper.ExitOnError("could not create file", err)
 				defer f.Close()
 				io.Copy(f, bytes.NewReader(res.ImageBytes))
 				// err = jpeg.Encode(f, imageData, &opts)
-				// rpi.ExitOnError("unable to encode image", err)
+				// helper.ExitOnError("unable to encode image", err)
 			} else {
 				err = jpeg.Encode(os.Stdout, imageData, &opts)
-				rpi.ExitOnError("unable to encode image", err)
+				helper.ExitOnError("unable to encode image", err)
 			}
 			if !shouldStream {
 				break

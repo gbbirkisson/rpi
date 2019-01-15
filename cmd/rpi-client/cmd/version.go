@@ -4,7 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gbbirkisson/rpi"
-	proto "github.com/gbbirkisson/rpi/proto"
+	helper "github.com/gbbirkisson/rpi/cmd"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
 	"github.com/spf13/cobra"
 )
 
@@ -15,17 +16,17 @@ var versionCmd = &cobra.Command{
 		fmt.Printf("rpi-client version %s %s\n", rpi.Version, rpi.Revision)
 		client, err := getCommonClient()
 		if err != nil {
-			rpi.ExitOnError("could not get server version", err)
+			helper.ExitOnError("could not get server version", err)
 		}
 		ctx, cancel := getContext()
 		defer cancel()
 
-		res, err := client.Version(ctx, &proto.Void{})
+		res, err := client.GetVersion(ctx, &proto.Void{})
 		if err != nil {
-			rpi.ExitOnError("could not get server version", err)
+			helper.ExitOnError("could not get server version", err)
 		}
 
-		fmt.Printf("Server version: %s\n", res.Version)
+		fmt.Printf("rpi-server version %s %s\n", res.Version, res.Revision)
 	},
 }
 

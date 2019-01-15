@@ -23,7 +23,8 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type VersionRes struct {
-	Version              string   `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
+	Revision             string   `protobuf:"bytes,1,opt,name=revision,proto3" json:"revision,omitempty"`
+	Version              string   `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -54,6 +55,13 @@ func (m *VersionRes) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_VersionRes proto.InternalMessageInfo
 
+func (m *VersionRes) GetRevision() string {
+	if m != nil {
+		return m.Revision
+	}
+	return ""
+}
+
 func (m *VersionRes) GetVersion() string {
 	if m != nil {
 		return m.Version
@@ -68,15 +76,16 @@ func init() {
 func init() { proto.RegisterFile("common.proto", fileDescriptor_555bd8c177793206) }
 
 var fileDescriptor_555bd8c177793206 = []byte{
-	// 118 bytes of a gzipped FileDescriptorProto
+	// 143 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x49, 0xce, 0xcf, 0xcd,
 	0xcd, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x94, 0xe2, 0x4a,
-	0x4a, 0x2c, 0x4e, 0x85, 0x08, 0x28, 0xa9, 0x71, 0x71, 0x85, 0xa5, 0x16, 0x15, 0x67, 0xe6, 0xe7,
-	0x05, 0xa5, 0x16, 0x0b, 0x49, 0x70, 0xb1, 0x97, 0x41, 0x78, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c,
-	0x41, 0x30, 0xae, 0x91, 0x21, 0x17, 0x9b, 0x33, 0xd8, 0x20, 0x21, 0x75, 0x2e, 0x76, 0xa8, 0x0e,
-	0x21, 0x4e, 0xbd, 0xa2, 0x82, 0x4c, 0xbd, 0xb0, 0xfc, 0xcc, 0x14, 0x29, 0x7e, 0x08, 0x13, 0x6e,
-	0x94, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x06, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0x16, 0x59,
-	0x23, 0x08, 0x82, 0x00, 0x00, 0x00,
+	0x4a, 0x2c, 0x4e, 0x85, 0x08, 0x28, 0x39, 0x71, 0x71, 0x85, 0xa5, 0x16, 0x15, 0x67, 0xe6, 0xe7,
+	0x05, 0xa5, 0x16, 0x0b, 0x49, 0x71, 0x71, 0x14, 0xa5, 0x96, 0x65, 0x82, 0xb8, 0x12, 0x8c, 0x0a,
+	0x8c, 0x1a, 0x9c, 0x41, 0x70, 0xbe, 0x90, 0x04, 0x17, 0x7b, 0x19, 0x44, 0xa5, 0x04, 0x13, 0x58,
+	0x0a, 0xc6, 0x35, 0xb2, 0xe6, 0xe2, 0x75, 0x06, 0x5b, 0x12, 0x9c, 0x5a, 0x54, 0x96, 0x99, 0x9c,
+	0x2a, 0xa4, 0xc5, 0xc5, 0xe5, 0x9e, 0x5a, 0x02, 0x35, 0x57, 0x88, 0x53, 0xaf, 0xa8, 0x20, 0x53,
+	0x2f, 0x2c, 0x3f, 0x33, 0x45, 0x8a, 0x1f, 0xc2, 0x84, 0x5b, 0xa8, 0xc4, 0x90, 0xc4, 0x06, 0x76,
+	0x87, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x6c, 0x73, 0xd5, 0xdd, 0xa8, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -87,64 +96,64 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// CommonClient is the client API for Common service.
+// CommonServiceClient is the client API for CommonService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type CommonClient interface {
-	Version(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error)
+type CommonServiceClient interface {
+	GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error)
 }
 
-type commonClient struct {
+type commonServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewCommonClient(cc *grpc.ClientConn) CommonClient {
-	return &commonClient{cc}
+func NewCommonServiceClient(cc *grpc.ClientConn) CommonServiceClient {
+	return &commonServiceClient{cc}
 }
 
-func (c *commonClient) Version(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error) {
+func (c *commonServiceClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error) {
 	out := new(VersionRes)
-	err := c.cc.Invoke(ctx, "/rpi.Common/Version", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.CommonService/GetVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CommonServer is the server API for Common service.
-type CommonServer interface {
-	Version(context.Context, *Void) (*VersionRes, error)
+// CommonServiceServer is the server API for CommonService service.
+type CommonServiceServer interface {
+	GetVersion(context.Context, *Void) (*VersionRes, error)
 }
 
-func RegisterCommonServer(s *grpc.Server, srv CommonServer) {
-	s.RegisterService(&_Common_serviceDesc, srv)
+func RegisterCommonServiceServer(s *grpc.Server, srv CommonServiceServer) {
+	s.RegisterService(&_CommonService_serviceDesc, srv)
 }
 
-func _Common_Version_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CommonService_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Void)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CommonServer).Version(ctx, in)
+		return srv.(CommonServiceServer).GetVersion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.Common/Version",
+		FullMethod: "/rpi.CommonService/GetVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommonServer).Version(ctx, req.(*Void))
+		return srv.(CommonServiceServer).GetVersion(ctx, req.(*Void))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Common_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "rpi.Common",
-	HandlerType: (*CommonServer)(nil),
+var _CommonService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "rpi.CommonService",
+	HandlerType: (*CommonServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Version",
-			Handler:    _Common_Version_Handler,
+			MethodName: "GetVersion",
+			Handler:    _CommonService_GetVersion_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
