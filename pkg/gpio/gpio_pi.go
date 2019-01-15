@@ -6,11 +6,11 @@ import (
 	"context"
 
 	rpio "github.com/gbbirkisson/go-rpio"
-	proto "github.com/gbbirkisson/rpi/proto"
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
 type Gpio struct {
-	Client proto.GpioClient
+	Client proto.GpioServiceClient
 }
 
 func (g *Gpio) Validate() error {
