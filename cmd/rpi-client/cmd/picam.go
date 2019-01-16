@@ -19,7 +19,7 @@ var picamCmd = &cobra.Command{
 	Use:   "picam",
 	Short: "Get frame from the PiCam",
 	Run: func(_ *cobra.Command, args []string) {
-		conn, err := rpi.GetGrpcClient(viper.GetString("host"), viper.GetString("port"))
+		conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
 		helper.ExitOnError("could not create client", err)
 		client := proto.NewPiCamServiceClient(conn)
 		ctx, cancel := getContext()

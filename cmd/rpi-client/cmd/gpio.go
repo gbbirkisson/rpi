@@ -13,7 +13,7 @@ import (
 )
 
 func getGpio() (*gpio.Gpio, error) {
-	conn, err := rpi.GetGrpcClient(viper.GetString("host"), viper.GetString("port"))
+	conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
 	if err != nil {
 		return nil, err
 	}
