@@ -13,7 +13,7 @@ type PiCamServer struct {
 	Camera *picamera.PiCamera
 }
 
-func (s *PiCamServer) GetFrames(req *proto.RequestImage, stream proto.PiCamService_GetFramesServer) error {
+func (s *PiCamServer) GetFrames(stream proto.PiCamService_GetFramesServer) error {
 	log.Println("PiCam.GetFrames()")
 	for {
 		select {

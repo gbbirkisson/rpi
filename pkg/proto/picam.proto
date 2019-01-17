@@ -2,15 +2,22 @@ syntax = "proto3";
 
 package rpi;
 
-message RequestImage {
+import "base.proto";
+
+message RequestOpen {
     int32 width = 1;
     int32 height = 2;
+    int32 rotation = 3;
 }
 
 message ResponseImage {
     bytes imageBytes = 1;
+    int32 width = 2;
+    int32 height = 3;
 }
 
 service PiCamService {
-    rpc GetFrames (RequestImage) returns (stream ResponseImage){};
+    rpc Open(RequestOpen) returns (Void) {};
+    rpc Close(Void) returns (Void) {};
+    rpc GetFrames (Void) returns (stream ResponseImage){};
 }

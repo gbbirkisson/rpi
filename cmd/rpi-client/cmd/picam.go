@@ -25,7 +25,7 @@ var picamCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		stream, err := client.GetFrames(ctx, &proto.RequestImage{})
+		stream, err := client.GetFrames(ctx, &proto.Void{})
 		helper.ExitOnError("error response from server", err)
 		defer stream.CloseSend()
 

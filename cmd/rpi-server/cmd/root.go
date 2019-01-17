@@ -51,10 +51,10 @@ func startCamera(srv *grpc.Server) func() {
 	err = cam.Start()
 	helper.ExitOnError("unable to start camera", err)
 
-	camserver, err := rpi.GetPiCamServer(cam)
+	// camserver, err := rpi.GetPiCamServer(cam)
 	helper.ExitOnError("unable to create picam server", err)
 
-	proto.RegisterPiCamServiceServer(srv, camserver)
+	// proto.RegisterPiCamServiceServer(srv, camserver)
 	return cam.Stop
 }
 
