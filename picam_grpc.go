@@ -1,32 +1,20 @@
-// +build pi
+// +build !pi
 
 package rpi
 
 import (
 	"context"
 	"fmt"
-	"image"
 
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
-func (c *PiCam) getClient() (proto.PiCamServiceClient, error) {
-	if c.client != nil {
-		return c.client, nil
-	}
-	if c.Connection == nil {
-		return nil, fmt.Errorf("PiCam.Connection is nil")
-	}
-	c.client = proto.NewPiCamServiceClient(c.Connection)
-	return c.client, nil
-}
-
-func (c *PiCam) Open(ctx context.Context, width, height, rotation int32) error {
+func (c *PiCam) Open(ctx context.Context) error {
 	cli, err := c.getClient()
 	if err != nil {
 		return fmt.Errorf("unable to get grpc client: %v", err)
 	}
-	_, err = cli.Open(ctx, &proto.RequestOpen{Width: width, Height: height, Rotation: rotation})
+	_, err = cli.Open(ctx, &proto.RequestOpen{Width: c.Width, Height: c.Height, Rotation: c.Rotation})
 	return err
 }
 
@@ -39,13 +27,13 @@ func (c *PiCam) Close(ctx context.Context) error {
 	return err
 }
 
-func (c *PiCam) GetFrames(ctx context.Context, imageChan chan<- image.Image, errorChan chan<- error) {
-	defer close(imageChan)
-	defer close(errorChan)
+func (c *PiCam) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) {
+	defer close(byteCh)
+	defer close(errCh)
 
 	cli, err := c.getClient()
 	if err != nil {
-		errorChan <- fmt.Errorf("unable to get grpc client: %v", err)
+		errCh <- fmt.Errorf("unable to get grpc client: %v", err)
 		return
 	}
 
@@ -53,27 +41,38 @@ func (c *PiCam) GetFrames(ctx context.Context, imageChan chan<- image.Image, err
 	defer stream.CloseSend()
 
 	if err != nil {
-		errorChan <- fmt.Errorf("unable to get frames: %v", err)
+		errCh <- fmt.Errorf("unable to get frames: %v", err)
 		return
 	}
 
 	for {
 		select {
 		case <-ctx.Done():
-			errorChan <- ctx.Err()
 			return
 		default:
 			if ctx.Err() != nil {
+				errCh <- ctx.Err()
 				return
 			}
 
 			res, err := stream.Recv()
 
 			if err != nil {
-				errorChan <- err
+				errCh <- err
 			} else {
-				imageChan <- c.createImage(res.ImageBytes, res.Width, res.Height)
+				byteCh <- res.ImageBytes
 			}
 		}
 	}
+}
+
+func (c *PiCam) getClient() (proto.PiCamServiceClient, error) {
+	if c.client != nil {
+		return c.client, nil
+	}
+	if c.Connection == nil {
+		return nil, fmt.Errorf("PiCam.Connection is nil")
+	}
+	c.client = proto.NewPiCamServiceClient(c.Connection)
+	return c.client, nil
 }

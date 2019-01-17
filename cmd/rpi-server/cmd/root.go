@@ -9,7 +9,6 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	picamera "github.com/gbbirkisson/piCamera"
 	"github.com/gbbirkisson/rpi"
 	helper "github.com/gbbirkisson/rpi/cmd"
 	gpio "github.com/gbbirkisson/rpi/pkg/gpio"
@@ -33,29 +32,25 @@ func startGpio(srv *grpc.Server) func() {
 	}
 }
 
-func startCamera(srv *grpc.Server) func() {
+func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 	log.Printf("adding picam service\n")
 
 	err := modprobe()
 	helper.ExitOnError("unable to modprobe", err)
 
-	camargs := picamera.NewArgs()
-	camargs.Width = viper.GetInt("camera_width")
-	camargs.Height = viper.GetInt("camera_height")
-	camargs.Rotation = viper.GetInt("camera_rotation")
-	log.Printf("camera arguments: %+v\n", camargs)
+	piCam := &rpi.PiCam{
+		Width:    viper.GetInt32("camera_width"),
+		Height:   viper.GetInt32("camera_height"),
+		Rotation: viper.GetInt32("camera_rotation"),
+	}
 
-	cam, err := rpi.GetPiCam(camargs)
+	err = piCam.Open(ctx)
 	helper.ExitOnError("unable to create camera", err)
 
-	err = cam.Start()
-	helper.ExitOnError("unable to start camera", err)
-
-	// camserver, err := rpi.GetPiCamServer(cam)
-	helper.ExitOnError("unable to create picam server", err)
-
-	// proto.RegisterPiCamServiceServer(srv, camserver)
-	return cam.Stop
+	proto.RegisterPiCamServiceServer(srv, &rpi.PiCamServer{Camera: piCam})
+	return func() error {
+		return piCam.Close(ctx)
+	}
 }
 
 type NgrokLogger struct{}
@@ -90,6 +85,9 @@ var rootCmd = &cobra.Command{
 	Short: "Raspberry PI IO server",
 	Long:  `A gRPC server that allows you to do IO operations on the Raspberry PI`,
 	RunE: func(_ *cobra.Command, args []string) error {
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+
 		log.Printf("rpi server started")
 		host := viper.GetString("host")
 		port := viper.GetString("port")
@@ -105,7 +103,7 @@ var rootCmd = &cobra.Command{
 		}
 
 		if viper.GetBool("camera") {
-			close := startCamera(srv)
+			close := startCamera(ctx, srv)
 			defer close()
 		}
 
@@ -141,9 +139,9 @@ func init() {
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
 	rootCmd.PersistentFlags().BoolP("camera", "c", false, "picam service enabled")
 	rootCmd.PersistentFlags().String("modprobe", "", "modprobe on start (for pi camera)")
-	rootCmd.PersistentFlags().Int("camera_width", 648, "Width of the image from pi camera")
-	rootCmd.PersistentFlags().Int("camera_height", 486, "Height of the image from pi camera")
-	rootCmd.PersistentFlags().Int("camera_rotation", 0, "Rotation of pi camera image")
+	rootCmd.PersistentFlags().Int32("camera_width", 648, "Width of the image from pi camera")
+	rootCmd.PersistentFlags().Int32("camera_height", 486, "Height of the image from pi camera")
+	rootCmd.PersistentFlags().Int32("camera_rotation", 0, "Rotation of pi camera image")
 
 	rootCmd.PersistentFlags().Bool("ngrok", false, "Start a ngrok tunnel")
 	rootCmd.PersistentFlags().String("ngrok_token", "", "Ngrok authentication token")

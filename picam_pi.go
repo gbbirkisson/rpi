@@ -1,11 +1,10 @@
-// +build !pi
+// +build pi
 
 package rpi
 
 import (
 	"context"
 	"fmt"
-	"image"
 
 	picamera "github.com/gbbirkisson/piCamera"
 )
@@ -41,25 +40,25 @@ func (c *PiCam) Close(ctx context.Context) error {
 	return nil
 }
 
-func (c *PiCam) GetFrames(ctx context.Context, imageChan chan<- *image.Image, errorChan chan<- error) {
-	defer close(imageChan)
-	defer close(errorChan)
+func (c *PiCam) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) {
+	defer close(byteCh)
+	defer close(errCh)
 
 	for {
 		select {
 		case <-ctx.Done():
-			errorChan <- ctx.Err()
 			return
 		default:
 			if ctx.Err() != nil {
+				errCh <- ctx.Err()
 				return
 			}
 
 			frame, err := c.camera.GetFrame()
 			if err != nil {
-				errorChan <- err
+				errCh <- err
 			} else {
-				imageChan <- c.createImage(frame, c.Width, c.Rotation)
+				byteCh <- frame
 			}
 		}
 	}
