@@ -19,9 +19,6 @@ func ExamplePiCam() {
 
 	picam := rpi.PiCam{
 		Connection: conn,
-		Width:      648,
-		Height:     486,
-		Rotation:   180,
 	}
 
 	log.Printf("%+v", picam.Connection)

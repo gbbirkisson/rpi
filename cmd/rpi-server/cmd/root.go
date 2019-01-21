@@ -44,6 +44,8 @@ func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 		Rotation: viper.GetInt32("picam_rotation"),
 	}
 
+	log.Printf("picam parameters: %+v\n", piCam)
+
 	err = piCam.Open(ctx)
 	helper.ExitOnError("unable to create camera", err)
 

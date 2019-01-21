@@ -49,7 +49,7 @@ func (s *PiCamServer) GetFrames(_ *proto.Void, stream proto.PiCamService_GetFram
 
 	done, err := s.Camera.GetFrames(stream.Context(), imgChan, errChan)
 
-	if err == nil {
+	if err != nil {
 		return fmt.Errorf("unable to start getting frames")
 	}
 
