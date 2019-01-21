@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/gbbirkisson/rpi"
 )
+
+var picam rpi.PiCam
 
 func ExamplePiCam() {
 	conn, err := rpi.GrpcClientConnectionInsecure("localhost", "8000")
@@ -36,24 +39,12 @@ func ExamplePiCam_pi() {
 }
 
 func ExamplePiCam_Open() {
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
 
-	conn, err := rpi.GrpcClientConnectionInsecure("localhost", "8000")
+	err := picam.Open(ctx)
 	if err != nil {
-		log.Fatalf("unable to create grpc client connection: %v\n", err)
-	}
-	defer conn.Close()
-
-	picam := rpi.PiCam{
-		Connection: conn,
-		Width:      648,
-		Height:     486,
-		Rotation:   180,
-	}
-
-	err = picam.Open(ctx)
-	if err != nil {
-		log.Fatalf("Unable to open picam: %v", err)
+		log.Fatalf("unable to open picam: %v", err)
 	}
 }
 
@@ -68,6 +59,6 @@ func ExamplePiCam_Open_pi() {
 
 	err := picam.Open(ctx)
 	if err != nil {
-		log.Fatalf("Unable to open picam: %v", err)
+		log.Fatalf("unable to open picam: %v", err)
 	}
 }

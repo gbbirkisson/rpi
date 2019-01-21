@@ -9,19 +9,20 @@ import (
 
 // A PiCam GRPC server that needs a PiCam to operate
 type PiCamServer struct {
-	Camera *PiCam
+	Camera                  *PiCam
+	Width, Height, Rotation int32
 }
 
-func (s *PiCamServer) Open(ctx context.Context, req *proto.RequestOpen) (*proto.Void, error) {
+func (s *PiCamServer) Open(ctx context.Context, req *proto.Void) (*proto.Void, error) {
 
 	if s.Camera != nil {
 		return &proto.Void{}, s.Camera.Open(ctx)
 	}
 
 	cam := PiCam{
-		Width:    req.Width,
-		Height:   req.Height,
-		Rotation: req.Rotation,
+		Width:    s.Width,
+		Height:   s.Height,
+		Rotation: s.Rotation,
 	}
 
 	err := cam.Open(ctx)

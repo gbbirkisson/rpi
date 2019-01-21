@@ -40,26 +40,30 @@ func (c *PiCam) Close(ctx context.Context) error {
 	return nil
 }
 
-func (c *PiCam) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) {
-	defer close(byteCh)
-	defer close(errCh)
+func (c *PiCam) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) (<-chan struct{}, error) {
 
-	for {
-		select {
-		case <-ctx.Done():
-			return
-		default:
+	if c.camera == nil {
+		return nil, fmt.Errorf("picam is nil")
+	}
+
+	go func() {
+		defer close(byteCh)
+		defer close(errCh)
+
+		for {
 			if ctx.Err() != nil {
-				errCh <- ctx.Err()
 				return
 			}
 
 			frame, err := c.camera.GetFrame()
+
 			if err != nil {
 				errCh <- err
 			} else {
 				byteCh <- frame
 			}
 		}
-	}
+	}()
+
+	return ctx.Done(), nil
 }

@@ -39,9 +39,9 @@ func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 	helper.ExitOnError("unable to modprobe", err)
 
 	piCam := &rpi.PiCam{
-		Width:    viper.GetInt32("camera_width"),
-		Height:   viper.GetInt32("camera_height"),
-		Rotation: viper.GetInt32("camera_rotation"),
+		Width:    viper.GetInt32("picam_width"),
+		Height:   viper.GetInt32("picam_height"),
+		Rotation: viper.GetInt32("picam_rotation"),
 	}
 
 	err = piCam.Open(ctx)
@@ -102,7 +102,7 @@ var rootCmd = &cobra.Command{
 			defer close()
 		}
 
-		if viper.GetBool("camera") {
+		if viper.GetBool("picam") {
 			close := startCamera(ctx, srv)
 			defer close()
 		}
@@ -137,11 +137,11 @@ func init() {
 	rootCmd.PersistentFlags().Int("port", 8000, "server port")
 
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
-	rootCmd.PersistentFlags().BoolP("camera", "c", false, "picam service enabled")
-	rootCmd.PersistentFlags().String("modprobe", "", "modprobe on start (for pi camera)")
-	rootCmd.PersistentFlags().Int32("camera_width", 648, "Width of the image from pi camera")
-	rootCmd.PersistentFlags().Int32("camera_height", 486, "Height of the image from pi camera")
-	rootCmd.PersistentFlags().Int32("camera_rotation", 0, "Rotation of pi camera image")
+	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
+	rootCmd.PersistentFlags().String("picam_modprobe", "", "modprobe on start")
+	rootCmd.PersistentFlags().Int32("picam_width", 648, "Width of the image from pi camera")
+	rootCmd.PersistentFlags().Int32("picam_height", 486, "Height of the image from pi camera")
+	rootCmd.PersistentFlags().Int32("picam_rotation", 0, "Rotation of pi camera image")
 
 	rootCmd.PersistentFlags().Bool("ngrok", false, "Start a ngrok tunnel")
 	rootCmd.PersistentFlags().String("ngrok_token", "", "Ngrok authentication token")
@@ -152,11 +152,11 @@ func init() {
 
 	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
 
-	viper.BindPFlag("camera", rootCmd.PersistentFlags().Lookup("camera"))
-	viper.BindPFlag("modprobe", rootCmd.PersistentFlags().Lookup("modprobe"))
-	viper.BindPFlag("camera_width", rootCmd.PersistentFlags().Lookup("camera_width"))
-	viper.BindPFlag("camera_height", rootCmd.PersistentFlags().Lookup("camera_height"))
-	viper.BindPFlag("camera_rotation", rootCmd.PersistentFlags().Lookup("camera_rotation"))
+	viper.BindPFlag("picam", rootCmd.PersistentFlags().Lookup("picam"))
+	viper.BindPFlag("picam_modprobe", rootCmd.PersistentFlags().Lookup("picam_modprobe"))
+	viper.BindPFlag("picam_width", rootCmd.PersistentFlags().Lookup("picam_width"))
+	viper.BindPFlag("picam_height", rootCmd.PersistentFlags().Lookup("picam_height"))
+	viper.BindPFlag("picam_rotation", rootCmd.PersistentFlags().Lookup("picam_rotation"))
 
 	viper.BindPFlag("ngrok", rootCmd.PersistentFlags().Lookup("ngrok"))
 	viper.BindPFlag("ngrok_token", rootCmd.PersistentFlags().Lookup("ngrok_token"))
@@ -195,11 +195,11 @@ func initConfig() {
 }
 
 func modprobe() error {
-	param := viper.GetString("modprobe")
+	param := viper.GetString("picam_modprobe")
 	if param != "" {
 		log.Printf("running 'modprobe %s'\n", param)
 
-		output, err := exec.Command("modprobe", param).CombinedOutput()
+		output, err := exec.Command("picam_modprobe", param).CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("%v: %s", err, output)
 		}

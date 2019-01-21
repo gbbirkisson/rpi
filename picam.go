@@ -24,7 +24,10 @@ func (c *PiCam) GetFrame(ctx context.Context) ([]byte, error) {
 	newCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	go c.GetFrames(newCtx, imgch, errCh)
+	_, err := c.GetFrames(newCtx, imgch, errCh)
+	if err != nil {
+		return nil, err
+	}
 
 	select {
 	case img := <-imgch:
