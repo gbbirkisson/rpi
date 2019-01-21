@@ -193,7 +193,7 @@ func modprobe() error {
 	if param != "" {
 		log.Printf("running 'modprobe %s'\n", param)
 
-		output, err := exec.Command("picam_modprobe", param).CombinedOutput()
+		output, err := exec.Command("modprobe", param).CombinedOutput()
 		if err != nil {
 			return fmt.Errorf("%v: %s", err, output)
 		}
