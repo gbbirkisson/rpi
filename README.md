@@ -12,18 +12,6 @@ A gRPC server for remote IO operations on the RaspberryPi + cli tool to call it
 
 ## Installing
 
-#### The client
-
-```bash
-make install-cli
-```
-
-#### The server
-
-```bash
-make install-server
-```
-
 #### Pushing server to balena.io
 
 Add your balena remote to the git repo:
@@ -61,7 +49,7 @@ To enable on balena.io:
     * `RESIN_HOST_CONFIG_gpu_mem`: `128`
     * `RESIN_HOST_CONFIG_start_x`: `1`
 * Device Service variables
-    * `RPI_CAMERA`: `true`
+    * `RPI_PICAM`: `true`
     * `RPI_MODPROBE`: `bcm2835-v4l2`
 
 ### Ngrok tunnel
@@ -72,4 +60,4 @@ To enable on balena.io:
 
 ## Using another languages
 
-Generate a client with `protoc` from [.proto](./proto) files.
+Generate a client with `protoc` from [./pkg/proto/*.proto](./pkg/proto) files.

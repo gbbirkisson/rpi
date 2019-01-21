@@ -1,16 +1,3 @@
-.PHONY: proto
-
-VVAR:=github.com/gbbirkisson/rpi.Version
-
-install-cli:
-	@cd ./cmd/rpi-client && go install -ldflags "-X ${VVAR}=$(shell git rev-parse HEAD)"
-
-install-server:
-	@cd ./cmd/rpi-server && go install -ldflags "-X ${VVAR}=$(shell git rev-parse HEAD)"
-
-proto:
-	@cd ./pkg/proto && protoc --go_out=plugins=grpc,import_path=rpi:. *.proto
-
 balena:
 	@git push balena master
 

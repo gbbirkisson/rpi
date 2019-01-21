@@ -1,12 +1,9 @@
 package rpi
 
-import (
-	common "github.com/gbbirkisson/rpi/pkg/common"
-)
+var version string = ""
+var revision string = "development"
 
-var Revision string = "development"
-var Version string = "development"
-
-func GetCommonServer() *common.CommonServer {
-	return &common.CommonServer{Version: Version, Revision: Revision}
+// Returns the version and revision of rpi. These are set during the compilation of the binaries.
+func GetVersion() (string, string) {
+	return version, revision
 }

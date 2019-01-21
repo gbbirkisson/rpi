@@ -2,11 +2,11 @@
 
 gox -os="linux" -arch="arm" \
     -tags pi \
-    -ldflags "-X github.com/gbbirkisson/rpi.Revision=${TRAVIS_COMMIT} -X github.com/gbbirkisson/rpi.Version=${TRAVIS_TAG}" \
-    -output="{{.Dir}}_{{.OS}}_{{.Arch}}_local" \
-    -verbose ./...
+    -ldflags "-X github.com/gbbirkisson/rpi.revision=${TRAVIS_COMMIT} -X github.com/gbbirkisson/rpi.version=${TRAVIS_TAG}" \
+    -output="{{.Dir}}_{{.OS}}_{{.Arch}}" \
+    -verbose ./cmd/rpi-server
 
 gox -os="linux" -arch="amd64 arm" \
-    -ldflags "-X github.com/gbbirkisson/rpi.Revision=${TRAVIS_COMMIT} -X github.com/gbbirkisson/rpi.Version=${TRAVIS_TAG}" \
+    -ldflags "-X github.com/gbbirkisson/rpi.revision=${TRAVIS_COMMIT} -X github.com/gbbirkisson/rpi.version=${TRAVIS_TAG}" \
     -output="{{.Dir}}_{{.OS}}_{{.Arch}}" \
     -verbose ./cmd/rpi-client

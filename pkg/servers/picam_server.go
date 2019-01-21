@@ -3,57 +3,45 @@ package rpi
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
-// A PiCam GRPC server that needs a PiCam to operate
+// A PiCam GRPC service that needs a PiCam to operate
 type PiCamServer struct {
-	Camera                  *rpi.PiCam
-	Width, Height, Rotation int32
+	Camera *rpi.PiCam
 }
 
 func (s *PiCamServer) Open(ctx context.Context, req *proto.Void) (*proto.Void, error) {
+	log.Printf("PiCam.Open called\n")
+	defer log.Printf("PiCam.Open finished\n")
 
-	if s.Camera != nil {
-		return &proto.Void{}, s.Camera.Open(ctx)
+	if s.Camera == nil {
+		return nil, fmt.Errorf("server picam is null")
 	}
 
-	cam := rpi.PiCam{
-		Width:    s.Width,
-		Height:   s.Height,
-		Rotation: s.Rotation,
-	}
-
-	err := cam.Open(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	s.Camera = &cam
-
-	return &proto.Void{}, nil
+	return &proto.Void{}, s.Camera.Open(ctx)
 }
 
 func (s *PiCamServer) Close(ctx context.Context, req *proto.Void) (*proto.Void, error) {
+	log.Printf("PiCam.Close called\n")
+	defer log.Printf("PiCam.Close finished\n")
+
 	if s.Camera == nil {
-		return nil, fmt.Errorf("server camera already closed")
+		return nil, fmt.Errorf("server picam is null")
 	}
 
-	err := s.Camera.Close(ctx)
-	if s.Camera == nil {
-		return nil, err
-	}
-
-	s.Camera = nil
-
-	return &proto.Void{}, nil
+	return &proto.Void{}, s.Camera.Close(ctx)
 }
 
 func (s *PiCamServer) GetFrames(_ *proto.Void, stream proto.PiCamService_GetFramesServer) error {
+	log.Printf("PiCam.GetFrames called\n")
+	defer log.Printf("PiCam.GetFrames finished\n")
+
 	if s.Camera == nil {
-		return fmt.Errorf("server camera closed")
+		return fmt.Errorf("server picam is null")
 	}
 
 	imgChan := make(chan []byte)

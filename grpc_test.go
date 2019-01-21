@@ -15,14 +15,3 @@ func ExampleGrpcClientConnectionInsecure() {
 
 	// Use client
 }
-
-func ExampleGrpcServerInsecure() {
-	srv, lis, err := rpi.GrpcServerInsecure("0.0.0.0", "8000")
-	if err != nil {
-		log.Fatalf("unable to create grpc server: %v\n", err)
-	}
-
-	// Register services with srv.RegisterService(...)
-
-	log.Fatal(srv.Serve(lis))
-}

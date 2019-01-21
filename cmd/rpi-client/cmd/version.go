@@ -13,7 +13,10 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("rpi-client version %s %s\n", rpi.Version, rpi.Revision)
+
+		ver, rev := rpi.GetVersion()
+
+		fmt.Printf("rpi-client version %s %s\n", ver, rev)
 		client, err := getCommonClient()
 		if err != nil {
 			helper.ExitOnError("could not get server version", err)

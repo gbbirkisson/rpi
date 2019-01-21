@@ -43,9 +43,11 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
+	viper.SetEnvPrefix("rpi")
+
 	rootCmd.PersistentFlags().String("host", "127.0.0.1", "server ip")
 	rootCmd.PersistentFlags().Int("port", 8000, "server port")
-	rootCmd.PersistentFlags().Int("timeout", 3000, "server timeout in milliseconds")
+	rootCmd.PersistentFlags().Int("timeout", 5000, "server timeout in milliseconds")
 
 	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
