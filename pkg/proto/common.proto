@@ -5,10 +5,15 @@ package rpi;
 import "base.proto";
 
 message VersionRes {
-    string revision = 1;
-    string version = 2;
+  string revision = 1;
+  string version = 2;
+}
+
+message ModprobeRequest {
+  string params = 1;
 }
 
 service CommonService {
   rpc GetVersion (Void) returns (VersionRes) {};
+  rpc Modprobe (ModprobeRequest) returns (Void) {};
 }

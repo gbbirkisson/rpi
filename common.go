@@ -1,9 +1,18 @@
 package rpi
 
+import (
+	proto "github.com/gbbirkisson/rpi/pkg/proto"
+	"google.golang.org/grpc"
+)
+
 var version string = ""
 var revision string = "development"
 
-// Returns the version and revision of rpi. These are set during the compilation of the binaries.
-func GetVersion() (string, string) {
+type Common struct {
+	Connection *grpc.ClientConn
+	client     proto.CommonServiceClient
+}
+
+func GetLocalVersion() (string, string) {
 	return version, revision
 }

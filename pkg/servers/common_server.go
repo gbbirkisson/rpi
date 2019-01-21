@@ -9,13 +9,22 @@ import (
 )
 
 // A GRPC server for basic operations
-type CommonServer struct{}
+type CommonServer struct {
+	Common *rpi.Common
+}
 
-func (s *CommonServer) GetVersion(context.Context, *proto.Void) (*proto.VersionRes, error) {
+func (s *CommonServer) GetVersion(ctx context.Context, _ *proto.Void) (*proto.VersionRes, error) {
 	log.Printf("Common.GetVersion called\n")
 	defer log.Printf("Common.GetVersion finished\n")
 
-	version, revision := rpi.GetVersion()
+	version, revision, err := s.Common.GetVersion(ctx)
+	if err != nil {
+		return nil, err
+	}
 
 	return &proto.VersionRes{Version: version, Revision: revision}, nil
+}
+
+func (s *CommonServer) Modprobe(ctx context.Context, req *proto.ModprobeRequest) (*proto.Void, error) {
+	return &proto.Void{}, s.Common.Modprobe(ctx, req.Params)
 }

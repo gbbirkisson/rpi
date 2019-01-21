@@ -32,11 +32,23 @@ func startGpio(srv *grpc.Server) func() {
 	}
 }
 
+func startCommon(ctx context.Context, srv *grpc.Server) func() error {
+	common := &rpi.Common{}
+
+	cam_modprobe := viper.GetString("picam_modprobe")
+
+	if cam_modprobe != "" {
+		err := common.Modprobe(ctx, cam_modprobe)
+		helper.ExitOnError(fmt.Sprintf("unable to modprobe %s", cam_modprobe), err)
+	}
+
+	proto.RegisterCommonServiceServer(srv, &servers.CommonServer{Common: common})
+
+	return func() error { return nil }
+}
+
 func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 	log.Printf("adding picam service\n")
-
-	err := modprobe()
-	helper.ExitOnError("unable to modprobe", err)
 
 	piCam := &rpi.PiCam{
 		Width:    viper.GetInt32("picam_width"),
@@ -46,7 +58,7 @@ func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 
 	log.Printf("picam parameters: %+v\n", piCam)
 
-	err = piCam.Open(ctx)
+	err := piCam.Open(ctx)
 	helper.ExitOnError("unable to create camera", err)
 
 	proto.RegisterPiCamServiceServer(srv, &servers.PiCamServer{Camera: piCam})
@@ -96,7 +108,7 @@ var rootCmd = &cobra.Command{
 			helper.ExitOnError("unable to create server", err)
 		}
 
-		proto.RegisterCommonServiceServer(srv, &servers.CommonServer{})
+		startCommon(ctx, srv)
 
 		if viper.GetBool("gpio") {
 			close := startGpio(srv)
@@ -186,17 +198,4 @@ func initConfig() {
 			return
 		}
 	}
-}
-
-func modprobe() error {
-	param := viper.GetString("picam_modprobe")
-	if param != "" {
-		log.Printf("running 'modprobe %s'\n", param)
-
-		output, err := exec.Command("modprobe", param).CombinedOutput()
-		if err != nil {
-			return fmt.Errorf("%v: %s", err, output)
-		}
-	}
-	return nil
 }

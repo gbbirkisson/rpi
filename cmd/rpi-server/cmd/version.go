@@ -11,7 +11,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version",
 	Run: func(cmd *cobra.Command, args []string) {
-		ver, rev := rpi.GetVersion()
+		ver, rev := rpi.GetLocalVersion()
 		fmt.Printf("rpi-server version %s %s\n", ver, rev)
 	},
 }
