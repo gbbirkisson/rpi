@@ -13,6 +13,7 @@ import (
 	helper "github.com/gbbirkisson/rpi/cmd"
 	gpio "github.com/gbbirkisson/rpi/pkg/gpio"
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
+	servers "github.com/gbbirkisson/rpi/pkg/servers"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -47,7 +48,7 @@ func startCamera(ctx context.Context, srv *grpc.Server) func() error {
 	err = piCam.Open(ctx)
 	helper.ExitOnError("unable to create camera", err)
 
-	proto.RegisterPiCamServiceServer(srv, &rpi.PiCamServer{Camera: piCam})
+	proto.RegisterPiCamServiceServer(srv, &servers.PiCamServer{Camera: piCam})
 	return func() error {
 		return piCam.Close(ctx)
 	}

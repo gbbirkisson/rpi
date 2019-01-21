@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/gbbirkisson/rpi"
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
 // A PiCam GRPC server that needs a PiCam to operate
 type PiCamServer struct {
-	Camera                  *PiCam
+	Camera                  *rpi.PiCam
 	Width, Height, Rotation int32
 }
 
@@ -19,7 +20,7 @@ func (s *PiCamServer) Open(ctx context.Context, req *proto.Void) (*proto.Void, e
 		return &proto.Void{}, s.Camera.Open(ctx)
 	}
 
-	cam := PiCam{
+	cam := rpi.PiCam{
 		Width:    s.Width,
 		Height:   s.Height,
 		Rotation: s.Rotation,
