@@ -56,16 +56,22 @@ func (s *PiCamServer) GetFrames(_ *proto.Void, stream proto.PiCamService_GetFram
 		return fmt.Errorf("server camera closed")
 	}
 
-	imgch := make(chan []byte)
-	errCh := make(chan error)
-	go s.Camera.GetFrames(stream.Context(), imgch, errCh)
+	imgChan := make(chan []byte)
+	errChan := make(chan error)
+
+	done, err := s.Camera.GetFrames(stream.Context(), imgChan, errChan)
+
+	if err == nil {
+		return fmt.Errorf("unable to start getting frames")
+	}
+
 	for {
 		select {
-		case <-stream.Context().Done():
-			return stream.Context().Err()
-		case err := <-errCh:
+		case <-done:
+			return nil
+		case err := <-errChan:
 			return err
-		case img := <-imgch:
+		case img := <-imgChan:
 			stream.Send(&proto.ResponseImage{ImageBytes: img})
 		}
 	}

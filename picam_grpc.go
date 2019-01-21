@@ -11,6 +11,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
+// Open the PiCamera
 func (c *PiCam) Open(ctx context.Context) error {
 	cli, err := c.getClient()
 	if err != nil {
@@ -20,6 +21,7 @@ func (c *PiCam) Open(ctx context.Context) error {
 	return err
 }
 
+// Close the PiCamera
 func (c *PiCam) Close(ctx context.Context) error {
 	cli, err := c.getClient()
 	if err != nil {
@@ -29,6 +31,7 @@ func (c *PiCam) Close(ctx context.Context) error {
 	return err
 }
 
+// Get a stream of frames from the camera. Each frame is sent to the byte channel. If an error occurs if is sent to the error channel without stopping to try to get new frames
 func (c *PiCam) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) (<-chan struct{}, error) {
 	cli, err := c.getClient()
 	if err != nil {
