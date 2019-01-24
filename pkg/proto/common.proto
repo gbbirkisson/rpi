@@ -10,10 +10,10 @@ message VersionRes {
 }
 
 message ModprobeRequest {
-  string params = 1;
+  string module = 1;
 }
 
-service CommonService {
+service Common {
   rpc GetVersion (Void) returns (VersionRes) {};
   rpc Modprobe (ModprobeRequest) returns (Void) {};
 }

@@ -37,7 +37,7 @@ message ResponseEdgeDetected {
   bool detected = 1;
 }
 
-service GpioService {
+service Gpio {
   // Init / Shutdown
   rpc Open (Void) returns (Void) {};
   rpc Close (Void) returns (Void) {};

@@ -70,7 +70,7 @@ func (m *VersionRes) GetVersion() string {
 }
 
 type ModprobeRequest struct {
-	Params               string   `protobuf:"bytes,1,opt,name=params,proto3" json:"params,omitempty"`
+	Module               string   `protobuf:"bytes,1,opt,name=module,proto3" json:"module,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -101,9 +101,9 @@ func (m *ModprobeRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ModprobeRequest proto.InternalMessageInfo
 
-func (m *ModprobeRequest) GetParams() string {
+func (m *ModprobeRequest) GetModule() string {
 	if m != nil {
-		return m.Params
+		return m.Module
 	}
 	return ""
 }
@@ -116,20 +116,19 @@ func init() {
 func init() { proto.RegisterFile("common.proto", fileDescriptor_555bd8c177793206) }
 
 var fileDescriptor_555bd8c177793206 = []byte{
-	// 194 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x49, 0xce, 0xcf, 0xcd,
-	0xcd, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x94, 0xe2, 0x4a,
-	0x4a, 0x2c, 0x4e, 0x85, 0x08, 0x28, 0x39, 0x71, 0x71, 0x85, 0xa5, 0x16, 0x15, 0x67, 0xe6, 0xe7,
-	0x05, 0xa5, 0x16, 0x0b, 0x49, 0x71, 0x71, 0x14, 0xa5, 0x96, 0x65, 0x82, 0xb8, 0x12, 0x8c, 0x0a,
-	0x8c, 0x1a, 0x9c, 0x41, 0x70, 0xbe, 0x90, 0x04, 0x17, 0x7b, 0x19, 0x44, 0xa5, 0x04, 0x13, 0x58,
-	0x0a, 0xc6, 0x55, 0xd2, 0xe4, 0xe2, 0xf7, 0xcd, 0x4f, 0x29, 0x28, 0xca, 0x4f, 0x4a, 0x0d, 0x4a,
-	0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0x12, 0xe3, 0x62, 0x2b, 0x48, 0x2c, 0x4a, 0xcc, 0x2d, 0x86,
-	0x1a, 0x03, 0xe5, 0x19, 0x65, 0x71, 0xf1, 0x3a, 0x83, 0xdd, 0x13, 0x9c, 0x5a, 0x54, 0x96, 0x99,
-	0x9c, 0x2a, 0xa4, 0xc5, 0xc5, 0xe5, 0x9e, 0x5a, 0x02, 0x75, 0x82, 0x10, 0xa7, 0x5e, 0x51, 0x41,
-	0xa6, 0x5e, 0x58, 0x7e, 0x66, 0x8a, 0x14, 0x3f, 0x84, 0x09, 0x77, 0x9b, 0x12, 0x83, 0x90, 0x2e,
-	0x17, 0x07, 0xcc, 0x1e, 0x21, 0x11, 0xb0, 0x34, 0x9a, 0xb5, 0x52, 0x08, 0xfd, 0x4a, 0x0c, 0x49,
-	0x6c, 0x60, 0x1f, 0x1a, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0xc5, 0xa1, 0x05, 0x3d, 0x02, 0x01,
-	0x00, 0x00,
+	// 185 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x8f, 0x3f, 0x0f, 0x82, 0x40,
+	0x0c, 0xc5, 0x41, 0x13, 0x84, 0xc6, 0x84, 0xa4, 0x31, 0x86, 0xdc, 0x64, 0x6e, 0x52, 0x13, 0x19,
+	0xf4, 0x1b, 0xe8, 0xe0, 0xe4, 0xc2, 0xc0, 0x2e, 0xd0, 0xe1, 0x12, 0xa1, 0xe7, 0x1d, 0xf0, 0xf9,
+	0x8d, 0xc7, 0x1f, 0x13, 0xb7, 0xfe, 0xfa, 0xda, 0xbe, 0x57, 0x58, 0x97, 0x5c, 0xd7, 0xdc, 0xa4,
+	0xda, 0x70, 0xcb, 0xb8, 0x34, 0x5a, 0x09, 0x28, 0x9e, 0x96, 0x86, 0x86, 0xbc, 0x02, 0xe4, 0x64,
+	0xac, 0xe2, 0x26, 0x23, 0x8b, 0x02, 0x42, 0x43, 0xbd, 0xfa, 0x62, 0xe2, 0xef, 0xfc, 0x7d, 0x94,
+	0xcd, 0x8c, 0x09, 0xac, 0xfa, 0x61, 0x32, 0x59, 0x38, 0x69, 0x42, 0x79, 0x80, 0xf8, 0xc1, 0x95,
+	0x36, 0x5c, 0x50, 0x46, 0xef, 0x8e, 0x6c, 0x8b, 0x5b, 0x08, 0x6a, 0xae, 0xba, 0x17, 0x8d, 0x67,
+	0x46, 0x3a, 0x97, 0x10, 0xdc, 0x5c, 0x1e, 0x3c, 0x02, 0xdc, 0xa9, 0x1d, 0xbd, 0x31, 0x4a, 0x8d,
+	0x56, 0x69, 0xce, 0xaa, 0x12, 0xf1, 0x50, 0xce, 0xa1, 0xa4, 0x87, 0x27, 0x08, 0x27, 0x03, 0xdc,
+	0x38, 0xf9, 0xcf, 0x4f, 0xfc, 0xf6, 0xa5, 0x57, 0x04, 0xee, 0xb5, 0xcb, 0x27, 0x00, 0x00, 0xff,
+	0xff, 0x4d, 0x6e, 0xda, 0x88, 0xfb, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -140,97 +139,97 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// CommonServiceClient is the client API for CommonService service.
+// CommonClient is the client API for Common service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type CommonServiceClient interface {
+type CommonClient interface {
 	GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error)
 	Modprobe(ctx context.Context, in *ModprobeRequest, opts ...grpc.CallOption) (*Void, error)
 }
 
-type commonServiceClient struct {
+type commonClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewCommonServiceClient(cc *grpc.ClientConn) CommonServiceClient {
-	return &commonServiceClient{cc}
+func NewCommonClient(cc *grpc.ClientConn) CommonClient {
+	return &commonClient{cc}
 }
 
-func (c *commonServiceClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error) {
+func (c *commonClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error) {
 	out := new(VersionRes)
-	err := c.cc.Invoke(ctx, "/rpi.CommonService/GetVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Common/GetVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *commonServiceClient) Modprobe(ctx context.Context, in *ModprobeRequest, opts ...grpc.CallOption) (*Void, error) {
+func (c *commonClient) Modprobe(ctx context.Context, in *ModprobeRequest, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.CommonService/Modprobe", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Common/Modprobe", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CommonServiceServer is the server API for CommonService service.
-type CommonServiceServer interface {
+// CommonServer is the server API for Common service.
+type CommonServer interface {
 	GetVersion(context.Context, *Void) (*VersionRes, error)
 	Modprobe(context.Context, *ModprobeRequest) (*Void, error)
 }
 
-func RegisterCommonServiceServer(s *grpc.Server, srv CommonServiceServer) {
-	s.RegisterService(&_CommonService_serviceDesc, srv)
+func RegisterCommonServer(s *grpc.Server, srv CommonServer) {
+	s.RegisterService(&_Common_serviceDesc, srv)
 }
 
-func _CommonService_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Common_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Void)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CommonServiceServer).GetVersion(ctx, in)
+		return srv.(CommonServer).GetVersion(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.CommonService/GetVersion",
+		FullMethod: "/rpi.Common/GetVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommonServiceServer).GetVersion(ctx, req.(*Void))
+		return srv.(CommonServer).GetVersion(ctx, req.(*Void))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CommonService_Modprobe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Common_Modprobe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ModprobeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CommonServiceServer).Modprobe(ctx, in)
+		return srv.(CommonServer).Modprobe(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.CommonService/Modprobe",
+		FullMethod: "/rpi.Common/Modprobe",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommonServiceServer).Modprobe(ctx, req.(*ModprobeRequest))
+		return srv.(CommonServer).Modprobe(ctx, req.(*ModprobeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _CommonService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "rpi.CommonService",
-	HandlerType: (*CommonServiceServer)(nil),
+var _Common_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "rpi.Common",
+	HandlerType: (*CommonServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetVersion",
-			Handler:    _CommonService_GetVersion_Handler,
+			Handler:    _Common_GetVersion_Handler,
 		},
 		{
 			MethodName: "Modprobe",
-			Handler:    _CommonService_Modprobe_Handler,
+			Handler:    _Common_Modprobe_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

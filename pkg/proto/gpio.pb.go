@@ -348,35 +348,35 @@ func init() {
 func init() { proto.RegisterFile("gpio.proto", fileDescriptor_59fedb88b556689a) }
 
 var fileDescriptor_59fedb88b556689a = []byte{
-	// 440 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x94, 0x4d, 0x8f, 0xd3, 0x30,
-	0x10, 0x86, 0xb7, 0x24, 0x69, 0xbb, 0xb3, 0x3d, 0xec, 0x5a, 0x0b, 0x2a, 0x45, 0x82, 0xc5, 0x2c,
-	0x02, 0x0e, 0x14, 0x69, 0x57, 0x42, 0xea, 0xb9, 0xe5, 0x4b, 0xaa, 0xd4, 0x2a, 0x7c, 0x49, 0xdc,
-	0xda, 0x64, 0x1a, 0x2c, 0x42, 0xec, 0x26, 0x0e, 0x55, 0x7f, 0x25, 0x7f, 0x09, 0xd9, 0x71, 0x9a,
-	0x58, 0x74, 0x93, 0xdb, 0xcc, 0xe4, 0x79, 0xdf, 0x19, 0xbb, 0xe3, 0x02, 0x44, 0x82, 0xf1, 0xb1,
-	0x48, 0xb9, 0xe4, 0xc4, 0x49, 0x05, 0x1b, 0xc1, 0x7a, 0x95, 0x61, 0x51, 0xa0, 0x8f, 0xa0, 0xf7,
-	0x41, 0x30, 0xbe, 0x64, 0x09, 0x39, 0x07, 0x47, 0xb0, 0x64, 0xd8, 0xb9, 0xea, 0xbc, 0xf4, 0x7c,
-	0x15, 0xd2, 0x5b, 0x38, 0xf3, 0x71, 0x9b, 0x63, 0x26, 0xdf, 0xa7, 0xb8, 0xfd, 0x1f, 0x20, 0x04,
-	0xdc, 0x4d, 0x8a, 0xdb, 0xe1, 0x3d, 0x5d, 0xd2, 0x31, 0xfd, 0x01, 0xe7, 0x46, 0x34, 0xcb, 0xe5,
-	0x7e, 0xba, 0x0f, 0x62, 0x3c, 0xa2, 0x1c, 0x42, 0x2f, 0xcc, 0xe5, 0x7e, 0x8e, 0x89, 0x11, 0x97,
-	0x29, 0x19, 0x41, 0x3f, 0x50, 0x22, 0xf5, 0xc9, 0xd1, 0x9f, 0x0e, 0x39, 0x7d, 0x0b, 0x03, 0xe3,
-	0xfd, 0x3d, 0x65, 0xf2, 0x98, 0xef, 0x25, 0x78, 0x99, 0x5c, 0x49, 0x34, 0xae, 0x45, 0x42, 0xaf,
-	0x95, 0x2e, 0x13, 0x3c, 0xc9, 0xd0, 0xc7, 0x55, 0x58, 0x51, 0x9d, 0x3a, 0x35, 0x81, 0x0b, 0xe3,
-	0xfe, 0x2e, 0x8c, 0x70, 0x86, 0x12, 0x03, 0x79, 0xfc, 0xd0, 0x18, 0x46, 0x65, 0x07, 0x1d, 0xd3,
-	0x1b, 0xb8, 0x2c, 0x1b, 0x54, 0x5a, 0x0c, 0xd5, 0x61, 0x42, 0x13, 0x6b, 0x8b, 0xbe, 0x7f, 0xc8,
-	0x6f, 0xfe, 0x7a, 0x70, 0xa6, 0xee, 0xfe, 0x33, 0xa6, 0x7f, 0x58, 0x80, 0xe4, 0x31, 0xb8, 0x0b,
-	0x81, 0x09, 0x39, 0x1d, 0xa7, 0x82, 0x8d, 0xbf, 0x71, 0x16, 0x8e, 0xaa, 0x90, 0x9e, 0x90, 0x27,
-	0xe0, 0x4d, 0x63, 0x9e, 0xe1, 0x9d, 0x00, 0x05, 0xef, 0x53, 0x22, 0x72, 0x49, 0x06, 0xba, 0x6a,
-	0x7e, 0x57, 0x9b, 0x79, 0x06, 0xdd, 0x45, 0x2e, 0x5b, 0x20, 0xaa, 0x3b, 0x05, 0xbf, 0x9a, 0x98,
-	0x2b, 0x70, 0x96, 0xbb, 0xdf, 0x2d, 0xad, 0x96, 0x79, 0x1c, 0x7f, 0x15, 0x4d, 0xd0, 0x73, 0xe8,
-	0x2b, 0x68, 0xc6, 0x77, 0x49, 0x13, 0x76, 0x0d, 0x3d, 0x85, 0x2d, 0x36, 0x9b, 0x26, 0xea, 0x29,
-	0xb8, 0x1f, 0x59, 0xf4, 0xb3, 0x65, 0xec, 0x39, 0xdf, 0xb5, 0x8c, 0xfd, 0x85, 0x47, 0x51, 0x8c,
-	0x4d, 0xd0, 0x0b, 0xf0, 0x8a, 0x0d, 0xbc, 0xd0, 0xd5, 0xfa, 0x52, 0xda, 0xe0, 0x2b, 0x70, 0xf5,
-	0xc6, 0xd9, 0x5e, 0xa5, 0xaa, 0x5a, 0x49, 0x7d, 0x15, 0x6e, 0xf1, 0xcc, 0xea, 0x96, 0xaa, 0x62,
-	0x3b, 0xbe, 0x81, 0xd3, 0xea, 0x61, 0xdd, 0xaf, 0xb3, 0x87, 0xb2, 0x2d, 0x78, 0x0d, 0x5d, 0xb3,
-	0xcb, 0x0f, 0xea, 0x74, 0xb5, 0xa7, 0x36, 0x3e, 0x81, 0x81, 0xb5, 0xc2, 0xf6, 0xe4, 0x0f, 0xad,
-	0xc9, 0xeb, 0x20, 0x3d, 0x59, 0x77, 0xf5, 0x7f, 0xca, 0xed, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0x4a, 0xf4, 0x53, 0x5c, 0x72, 0x04, 0x00, 0x00,
+	// 433 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x94, 0xdf, 0x8f, 0xd2, 0x40,
+	0x10, 0xc7, 0x0f, 0xdb, 0x02, 0x37, 0xf2, 0x70, 0xb7, 0x39, 0x0d, 0x62, 0xa2, 0xe7, 0x7a, 0x46,
+	0x7d, 0x10, 0x13, 0x48, 0x4c, 0x78, 0x06, 0x7f, 0x25, 0x24, 0x90, 0xc6, 0x1f, 0x89, 0x6f, 0xd0,
+	0x0e, 0x75, 0x63, 0xed, 0x2e, 0xed, 0x36, 0x84, 0xff, 0xd0, 0x3f, 0xcb, 0xec, 0x76, 0x4b, 0xbb,
+	0x11, 0xdb, 0xb7, 0x99, 0xe9, 0xe7, 0xfb, 0x9d, 0xd9, 0x65, 0x16, 0x80, 0x48, 0x30, 0x3e, 0x16,
+	0x29, 0x97, 0x9c, 0x38, 0xa9, 0x60, 0x23, 0xd8, 0x6e, 0x32, 0x2c, 0x0a, 0xf4, 0x31, 0xf4, 0x3e,
+	0x0a, 0xc6, 0xd7, 0x2c, 0x21, 0x57, 0xe0, 0x08, 0x96, 0x0c, 0x3b, 0xb7, 0x9d, 0x57, 0x9e, 0xaf,
+	0x42, 0x3a, 0x85, 0xfb, 0x3e, 0xee, 0x73, 0xcc, 0xe4, 0x87, 0x14, 0xf7, 0xff, 0x02, 0x84, 0x80,
+	0xbb, 0x4b, 0x71, 0x3f, 0xbc, 0xa7, 0x4b, 0x3a, 0xa6, 0x3f, 0xe0, 0xca, 0x88, 0x16, 0xb9, 0x3c,
+	0xce, 0x8f, 0x41, 0x8c, 0x67, 0x94, 0x43, 0xe8, 0x85, 0xb9, 0x3c, 0x2e, 0x31, 0x31, 0xe2, 0x32,
+	0x25, 0x23, 0xe8, 0x07, 0x4a, 0xa4, 0x3e, 0x39, 0xfa, 0xd3, 0x29, 0xa7, 0xef, 0x60, 0x60, 0xbc,
+	0xbf, 0xa7, 0x4c, 0x9e, 0xf3, 0xbd, 0x01, 0x2f, 0x93, 0x1b, 0x89, 0xc6, 0xb5, 0x48, 0xe8, 0x9d,
+	0xd2, 0x65, 0x82, 0x27, 0x19, 0xfa, 0xb8, 0x09, 0x2b, 0xaa, 0x53, 0xa7, 0x66, 0x70, 0x6d, 0xdc,
+	0xdf, 0x87, 0x11, 0x2e, 0x50, 0x62, 0x20, 0xcf, 0x1f, 0x1a, 0xc3, 0xa8, 0xec, 0xa0, 0x63, 0x3a,
+	0x81, 0x9b, 0xb2, 0x41, 0xa5, 0xc5, 0x50, 0x1d, 0x26, 0x34, 0xb1, 0xb6, 0xe8, 0xfb, 0xa7, 0x7c,
+	0xf2, 0xc7, 0x03, 0x57, 0xdd, 0x3d, 0x79, 0x02, 0xee, 0x4a, 0x60, 0x42, 0x2e, 0xc7, 0xa9, 0x60,
+	0xe3, 0x6f, 0x9c, 0x85, 0xa3, 0x2a, 0xa4, 0x17, 0xe4, 0x29, 0x78, 0xf3, 0x98, 0x67, 0xf8, 0x5f,
+	0x80, 0x82, 0xf7, 0x39, 0x11, 0xb9, 0x24, 0x03, 0x5d, 0x35, 0x3f, 0xa8, 0xcd, 0x3c, 0x87, 0xee,
+	0x2a, 0x97, 0x2d, 0x10, 0xd5, 0x9d, 0x82, 0x5f, 0x4d, 0xcc, 0x2d, 0x38, 0xeb, 0xc3, 0xef, 0x96,
+	0x56, 0xeb, 0x3c, 0x8e, 0xbf, 0x8a, 0x26, 0xe8, 0x05, 0xf4, 0x15, 0xb4, 0xe0, 0x87, 0xa4, 0x09,
+	0xbb, 0x83, 0x9e, 0xc2, 0x56, 0xbb, 0x5d, 0x13, 0xf5, 0x0c, 0xdc, 0x4f, 0x2c, 0xfa, 0xd9, 0x32,
+	0xf6, 0x92, 0x1f, 0x5a, 0xc6, 0xfe, 0xc2, 0xa3, 0x28, 0xc6, 0x26, 0xe8, 0x25, 0x78, 0xc5, 0xea,
+	0x5d, 0xeb, 0x6a, 0x7d, 0x1b, 0x6d, 0xf0, 0x35, 0xb8, 0x7a, 0xd5, 0x6c, 0xaf, 0x52, 0x55, 0xed,
+	0xa2, 0xbe, 0x0a, 0xb7, 0x78, 0x5f, 0x75, 0x4b, 0x55, 0xb1, 0x1d, 0xdf, 0xc2, 0x65, 0xf5, 0xa2,
+	0x1e, 0xd4, 0xd9, 0x53, 0xd9, 0x16, 0xbc, 0x81, 0xae, 0x59, 0xe2, 0x87, 0x75, 0xba, 0x5a, 0x50,
+	0x1b, 0x9f, 0xc1, 0xc0, 0xda, 0x5d, 0x7b, 0xf2, 0x47, 0xd6, 0xe4, 0x75, 0x90, 0x5e, 0x6c, 0xbb,
+	0xfa, 0xcf, 0x64, 0xfa, 0x37, 0x00, 0x00, 0xff, 0xff, 0x59, 0x95, 0x1a, 0xa8, 0x6b, 0x04, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -387,10 +387,10 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// GpioServiceClient is the client API for GpioService service.
+// GpioClient is the client API for Gpio service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type GpioServiceClient interface {
+type GpioClient interface {
 	// Init / Shutdown
 	Open(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error)
 	Close(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error)
@@ -416,178 +416,178 @@ type GpioServiceClient interface {
 	EdgeDetected(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseEdgeDetected, error)
 }
 
-type gpioServiceClient struct {
+type gpioClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewGpioServiceClient(cc *grpc.ClientConn) GpioServiceClient {
-	return &gpioServiceClient{cc}
+func NewGpioClient(cc *grpc.ClientConn) GpioClient {
+	return &gpioClient{cc}
 }
 
-func (c *gpioServiceClient) Open(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Open(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Open", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Open", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Close(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Close(ctx context.Context, in *Void, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Close", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Close", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Input(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Input(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Input", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Input", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Output(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Output(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Output", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Output", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Clock(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Clock(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Clock", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Clock", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Pwm(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Pwm(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Pwm", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Pwm", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) PullUp(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) PullUp(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/PullUp", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullUp", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) PullDown(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) PullDown(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/PullDown", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullDown", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) PullOff(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) PullOff(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/PullOff", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/PullOff", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) High(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) High(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/High", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/High", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Low(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Low(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Low", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Low", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Toggle(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Toggle(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Toggle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Toggle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Write(ctx context.Context, in *RequestWrite, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Write(ctx context.Context, in *RequestWrite, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Write", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Write", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Read(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseRead, error) {
+func (c *gpioClient) Read(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseRead, error) {
 	out := new(ResponseRead)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Read", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Read", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Freq(ctx context.Context, in *RequestFreq, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Freq(ctx context.Context, in *RequestFreq, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Freq", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Freq", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) DutyCycle(ctx context.Context, in *RequestDutyCycle, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) DutyCycle(ctx context.Context, in *RequestDutyCycle, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/DutyCycle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/DutyCycle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) Detect(ctx context.Context, in *RequestEdgeDetect, opts ...grpc.CallOption) (*Void, error) {
+func (c *gpioClient) Detect(ctx context.Context, in *RequestEdgeDetect, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/Detect", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/Detect", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *gpioServiceClient) EdgeDetected(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseEdgeDetected, error) {
+func (c *gpioClient) EdgeDetected(ctx context.Context, in *GpioPin, opts ...grpc.CallOption) (*ResponseEdgeDetected, error) {
 	out := new(ResponseEdgeDetected)
-	err := c.cc.Invoke(ctx, "/rpi.GpioService/EdgeDetected", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpi.Gpio/EdgeDetected", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// GpioServiceServer is the server API for GpioService service.
-type GpioServiceServer interface {
+// GpioServer is the server API for Gpio service.
+type GpioServer interface {
 	// Init / Shutdown
 	Open(context.Context, *Void) (*Void, error)
 	Close(context.Context, *Void) (*Void, error)
@@ -613,409 +613,409 @@ type GpioServiceServer interface {
 	EdgeDetected(context.Context, *GpioPin) (*ResponseEdgeDetected, error)
 }
 
-func RegisterGpioServiceServer(s *grpc.Server, srv GpioServiceServer) {
-	s.RegisterService(&_GpioService_serviceDesc, srv)
+func RegisterGpioServer(s *grpc.Server, srv GpioServer) {
+	s.RegisterService(&_Gpio_serviceDesc, srv)
 }
 
-func _GpioService_Open_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Open_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Void)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Open(ctx, in)
+		return srv.(GpioServer).Open(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Open",
+		FullMethod: "/rpi.Gpio/Open",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Open(ctx, req.(*Void))
+		return srv.(GpioServer).Open(ctx, req.(*Void))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Close_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Close_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Void)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Close(ctx, in)
+		return srv.(GpioServer).Close(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Close",
+		FullMethod: "/rpi.Gpio/Close",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Close(ctx, req.(*Void))
+		return srv.(GpioServer).Close(ctx, req.(*Void))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Input_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Input_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Input(ctx, in)
+		return srv.(GpioServer).Input(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Input",
+		FullMethod: "/rpi.Gpio/Input",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Input(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Input(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Output_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Output_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Output(ctx, in)
+		return srv.(GpioServer).Output(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Output",
+		FullMethod: "/rpi.Gpio/Output",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Output(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Output(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Clock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Clock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Clock(ctx, in)
+		return srv.(GpioServer).Clock(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Clock",
+		FullMethod: "/rpi.Gpio/Clock",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Clock(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Clock(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Pwm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Pwm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Pwm(ctx, in)
+		return srv.(GpioServer).Pwm(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Pwm",
+		FullMethod: "/rpi.Gpio/Pwm",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Pwm(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Pwm(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_PullUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_PullUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).PullUp(ctx, in)
+		return srv.(GpioServer).PullUp(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/PullUp",
+		FullMethod: "/rpi.Gpio/PullUp",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).PullUp(ctx, req.(*GpioPin))
+		return srv.(GpioServer).PullUp(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_PullDown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_PullDown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).PullDown(ctx, in)
+		return srv.(GpioServer).PullDown(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/PullDown",
+		FullMethod: "/rpi.Gpio/PullDown",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).PullDown(ctx, req.(*GpioPin))
+		return srv.(GpioServer).PullDown(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_PullOff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_PullOff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).PullOff(ctx, in)
+		return srv.(GpioServer).PullOff(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/PullOff",
+		FullMethod: "/rpi.Gpio/PullOff",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).PullOff(ctx, req.(*GpioPin))
+		return srv.(GpioServer).PullOff(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_High_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_High_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).High(ctx, in)
+		return srv.(GpioServer).High(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/High",
+		FullMethod: "/rpi.Gpio/High",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).High(ctx, req.(*GpioPin))
+		return srv.(GpioServer).High(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Low_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Low_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Low(ctx, in)
+		return srv.(GpioServer).Low(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Low",
+		FullMethod: "/rpi.Gpio/Low",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Low(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Low(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Toggle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Toggle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Toggle(ctx, in)
+		return srv.(GpioServer).Toggle(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Toggle",
+		FullMethod: "/rpi.Gpio/Toggle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Toggle(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Toggle(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Write_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Write_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestWrite)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Write(ctx, in)
+		return srv.(GpioServer).Write(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Write",
+		FullMethod: "/rpi.Gpio/Write",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Write(ctx, req.(*RequestWrite))
+		return srv.(GpioServer).Write(ctx, req.(*RequestWrite))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Read(ctx, in)
+		return srv.(GpioServer).Read(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Read",
+		FullMethod: "/rpi.Gpio/Read",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Read(ctx, req.(*GpioPin))
+		return srv.(GpioServer).Read(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Freq_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Freq_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestFreq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Freq(ctx, in)
+		return srv.(GpioServer).Freq(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Freq",
+		FullMethod: "/rpi.Gpio/Freq",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Freq(ctx, req.(*RequestFreq))
+		return srv.(GpioServer).Freq(ctx, req.(*RequestFreq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_DutyCycle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_DutyCycle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestDutyCycle)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).DutyCycle(ctx, in)
+		return srv.(GpioServer).DutyCycle(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/DutyCycle",
+		FullMethod: "/rpi.Gpio/DutyCycle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).DutyCycle(ctx, req.(*RequestDutyCycle))
+		return srv.(GpioServer).DutyCycle(ctx, req.(*RequestDutyCycle))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_Detect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_Detect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RequestEdgeDetect)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).Detect(ctx, in)
+		return srv.(GpioServer).Detect(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/Detect",
+		FullMethod: "/rpi.Gpio/Detect",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).Detect(ctx, req.(*RequestEdgeDetect))
+		return srv.(GpioServer).Detect(ctx, req.(*RequestEdgeDetect))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GpioService_EdgeDetected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Gpio_EdgeDetected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GpioPin)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GpioServiceServer).EdgeDetected(ctx, in)
+		return srv.(GpioServer).EdgeDetected(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/rpi.GpioService/EdgeDetected",
+		FullMethod: "/rpi.Gpio/EdgeDetected",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GpioServiceServer).EdgeDetected(ctx, req.(*GpioPin))
+		return srv.(GpioServer).EdgeDetected(ctx, req.(*GpioPin))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _GpioService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "rpi.GpioService",
-	HandlerType: (*GpioServiceServer)(nil),
+var _Gpio_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "rpi.Gpio",
+	HandlerType: (*GpioServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Open",
-			Handler:    _GpioService_Open_Handler,
+			Handler:    _Gpio_Open_Handler,
 		},
 		{
 			MethodName: "Close",
-			Handler:    _GpioService_Close_Handler,
+			Handler:    _Gpio_Close_Handler,
 		},
 		{
 			MethodName: "Input",
-			Handler:    _GpioService_Input_Handler,
+			Handler:    _Gpio_Input_Handler,
 		},
 		{
 			MethodName: "Output",
-			Handler:    _GpioService_Output_Handler,
+			Handler:    _Gpio_Output_Handler,
 		},
 		{
 			MethodName: "Clock",
-			Handler:    _GpioService_Clock_Handler,
+			Handler:    _Gpio_Clock_Handler,
 		},
 		{
 			MethodName: "Pwm",
-			Handler:    _GpioService_Pwm_Handler,
+			Handler:    _Gpio_Pwm_Handler,
 		},
 		{
 			MethodName: "PullUp",
-			Handler:    _GpioService_PullUp_Handler,
+			Handler:    _Gpio_PullUp_Handler,
 		},
 		{
 			MethodName: "PullDown",
-			Handler:    _GpioService_PullDown_Handler,
+			Handler:    _Gpio_PullDown_Handler,
 		},
 		{
 			MethodName: "PullOff",
-			Handler:    _GpioService_PullOff_Handler,
+			Handler:    _Gpio_PullOff_Handler,
 		},
 		{
 			MethodName: "High",
-			Handler:    _GpioService_High_Handler,
+			Handler:    _Gpio_High_Handler,
 		},
 		{
 			MethodName: "Low",
-			Handler:    _GpioService_Low_Handler,
+			Handler:    _Gpio_Low_Handler,
 		},
 		{
 			MethodName: "Toggle",
-			Handler:    _GpioService_Toggle_Handler,
+			Handler:    _Gpio_Toggle_Handler,
 		},
 		{
 			MethodName: "Write",
-			Handler:    _GpioService_Write_Handler,
+			Handler:    _Gpio_Write_Handler,
 		},
 		{
 			MethodName: "Read",
-			Handler:    _GpioService_Read_Handler,
+			Handler:    _Gpio_Read_Handler,
 		},
 		{
 			MethodName: "Freq",
-			Handler:    _GpioService_Freq_Handler,
+			Handler:    _Gpio_Freq_Handler,
 		},
 		{
 			MethodName: "DutyCycle",
-			Handler:    _GpioService_DutyCycle_Handler,
+			Handler:    _Gpio_DutyCycle_Handler,
 		},
 		{
 			MethodName: "Detect",
-			Handler:    _GpioService_Detect_Handler,
+			Handler:    _Gpio_Detect_Handler,
 		},
 		{
 			MethodName: "EdgeDetected",
-			Handler:    _GpioService_EdgeDetected_Handler,
+			Handler:    _Gpio_EdgeDetected_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

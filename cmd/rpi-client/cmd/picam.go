@@ -20,10 +20,9 @@ var picamCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
+		cam, err := rpi.NewPiCamRemote(getConnection())
 		helper.ExitOnError("could not create client", err)
 
-		cam := &rpi.PiCam{Connection: conn}
 		raw, err := cam.GetFrame(ctx)
 		helper.ExitOnError("could not get image", err)
 

@@ -7,17 +7,11 @@ import (
 
 	"github.com/gbbirkisson/rpi"
 	helper "github.com/gbbirkisson/rpi/cmd"
-	gpio "github.com/gbbirkisson/rpi/pkg/gpio"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
-func getGpio() (*gpio.Gpio, error) {
-	conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
-	if err != nil {
-		return nil, err
-	}
-	return rpi.GetGpio(rpi.GetGpioClient(conn))
+func getGpio() rpi.Gpio {
+	return rpi.NewGpioRemote(getConnection())
 }
 
 var gpioCmd = &cobra.Command{
@@ -84,9 +78,7 @@ var gpioOpenCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
-		gpio, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("error repsonse from server", gpio.Open(ctx))
+		helper.ExitOnError("error repsonse from server", getGpio().Open(ctx))
 	},
 }
 
@@ -96,9 +88,7 @@ var gpioCloseCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
-		gpio, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("error repsonse from server", gpio.Close(ctx))
+		helper.ExitOnError("error repsonse from server", getGpio().Close(ctx))
 	},
 }
 
@@ -121,9 +111,7 @@ var gpioToggleCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		gpioClient, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("error repsonse from server", gpioClient.Toggle(ctx, gpio.Pin(pin)))
+		helper.ExitOnError("error repsonse from server", getGpio().Toggle(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -146,9 +134,7 @@ var gpioHighCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		gpioClient, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("error repsonse from server", gpioClient.High(ctx, gpio.Pin(pin)))
+		helper.ExitOnError("error repsonse from server", getGpio().High(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -171,9 +157,7 @@ var gpioLowCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		gpioClient, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("error repsonse from server", gpioClient.Low(ctx, gpio.Pin(pin)))
+		helper.ExitOnError("error repsonse from server", getGpio().Low(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -194,47 +178,45 @@ var gpioModeCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		pin, _ := strconv.Atoi(args[0])
 
-		var setMode func(g *gpio.Gpio) error
+		var setMode func(g rpi.Gpio) error
 
 		ctx, cancel := getContext()
 		defer cancel()
 
 		switch args[1] {
 		case "input":
-			setMode = func(g *gpio.Gpio) error {
-				return g.Input(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.Input(ctx, rpi.Pin(pin))
 			}
 		case "output":
-			setMode = func(g *gpio.Gpio) error {
-				return g.Output(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.Output(ctx, rpi.Pin(pin))
 			}
 		case "clock":
-			setMode = func(g *gpio.Gpio) error {
-				return g.Clock(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.Clock(ctx, rpi.Pin(pin))
 			}
 		case "pwm":
-			setMode = func(g *gpio.Gpio) error {
-				return g.Pwm(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.Pwm(ctx, rpi.Pin(pin))
 			}
 		case "pullup":
-			setMode = func(g *gpio.Gpio) error {
-				return g.PullUp(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.PullUp(ctx, rpi.Pin(pin))
 			}
 		case "pulldown":
-			setMode = func(g *gpio.Gpio) error {
-				return g.PullDown(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.PullDown(ctx, rpi.Pin(pin))
 			}
 		case "pulloff":
-			setMode = func(g *gpio.Gpio) error {
-				return g.PullOff(ctx, gpio.Pin(pin))
+			setMode = func(g rpi.Gpio) error {
+				return g.PullOff(ctx, rpi.Pin(pin))
 			}
 		default:
 			return errors.New("argument [mode] is not a valid mode")
 		}
 
-		gpioClient, err := getGpio()
-		helper.ExitOnError("could not create client", err)
-		helper.ExitOnError("could not create client", setMode(gpioClient))
+		helper.ExitOnError("could not create client", setMode(getGpio()))
 		return nil
 	},
 }
@@ -254,5 +236,4 @@ func init() {
 	gpioCmd.AddCommand(gpioToggleCmd)
 	gpioCmd.AddCommand(gpioHighCmd)
 	gpioCmd.AddCommand(gpioLowCmd)
-
 }

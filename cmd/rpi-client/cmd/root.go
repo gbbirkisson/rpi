@@ -8,20 +8,19 @@ import (
 	"time"
 
 	"github.com/gbbirkisson/rpi"
-	proto "github.com/gbbirkisson/rpi/pkg/proto"
+	helper "github.com/gbbirkisson/rpi/cmd"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 var cfgFile string
 
-func getCommonClient() (proto.CommonServiceClient, error) {
-	conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
-	if err != nil {
-		return nil, err
-	}
-	return proto.NewCommonServiceClient(conn), nil
+func getConnection() *grpc.ClientConn {
+	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
+	helper.ExitOnError("could not create connection", err)
+	return conn
 }
 
 func getContext() (context.Context, context.CancelFunc) {

@@ -6,7 +6,6 @@ import (
 	"github.com/gbbirkisson/rpi"
 	helper "github.com/gbbirkisson/rpi/cmd"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var versionCmd = &cobra.Command{
@@ -16,19 +15,17 @@ var versionCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		ver, rev := rpi.GetLocalVersion()
+		commonLocal := rpi.NewCommonLocal()
+		localVer, localRev, _ := commonLocal.GetVersion(ctx)
+		fmt.Printf("rpi-client version %s %s\n", localVer, localRev)
 
-		fmt.Printf("rpi-client version %s %s\n", ver, rev)
-
-		conn, err := rpi.GrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
+		commonRemote, err := rpi.NewCommonRemote(getConnection())
 		helper.ExitOnError("could not create client", err)
 
-		common := rpi.Common{Connection: conn}
-
-		ver, rev, err = common.GetVersion(ctx)
+		remoteVer, remoteRev, err := commonRemote.GetVersion(ctx)
 		helper.ExitOnError("could not get server version", err)
 
-		fmt.Printf("rpi-server version %s %s\n", ver, rev)
+		fmt.Printf("rpi-server version %s %s\n", remoteVer, remoteRev)
 	},
 }
 

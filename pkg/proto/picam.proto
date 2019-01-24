@@ -8,7 +8,7 @@ message ResponseImage {
     bytes imageBytes = 1;
 }
 
-service PiCamService {
+service PiCam {
     rpc Open(Void) returns (Void) {};
     rpc Close(Void) returns (Void) {};
     rpc GetFrames (Void) returns (stream ResponseImage){};
