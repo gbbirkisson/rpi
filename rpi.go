@@ -15,7 +15,7 @@ package rpi
 import (
 	"context"
 
-	rpio "github.com/gbbirkisson/go-rpio"
+	rpio "github.com/stianeikeland/go-rpio/v4"
 )
 
 // Pin is the raw BCM2835 pinout of a GPIO pin

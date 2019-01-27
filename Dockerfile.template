@@ -3,7 +3,8 @@ FROM balenalib/raspberrypi3-golang:1.10-stretch as builder
 ENV NGROK_DL="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip" \
     GOOS="linux" \
     GOARCH="arm" \
-    GOTAGS="-tags pi"
+    GOTAGS="-tags pi" \
+    GO111MODULE="on"
 
 RUN apt-get update && apt-get install -yq unzip wget && wget ${NGROK_DL} -O /tmp/ngrok.zip && \
     unzip /tmp/ngrok.zip -d /tmp/ngrok && \
