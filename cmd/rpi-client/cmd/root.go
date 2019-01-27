@@ -32,6 +32,7 @@ var rootCmd = &cobra.Command{
 	Short: "A client to run commands on the rpi-server",
 }
 
+// Execute the root command
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
