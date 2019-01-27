@@ -3,16 +3,27 @@ language: go
 sudo: false
 matrix:
   include:
-    - go: 1.11.x
-      env: LATEST=true 
-
+  - go: 1.11.x
+    env: LATEST=true
 before_install:
-  - go get github.com/mitchellh/gox
-
+- go get github.com/mitchellh/gox
 script:
-  - go get -t -v ./...
-  - diff -u <(echo -n) <(gofmt -d .)
-  - go vet $(go list ./... | grep -v /vendor/)
-  - go test -v -race ./...
-  # Only build binaries from the latest Go release.
-  - if [ "${LATEST}" = "true" ]; then ./build_bin.sh; fi
+- go get -t -v ./...
+- diff -u <(echo -n) <(gofmt -d .)
+- go vet $(go list ./... | grep -v /vendor/)
+- go test -v -race ./...
+# Only build binaries from the latest Go release.
+- if [ "${LATEST}" = "true" ]; then ./build_bin.sh; fi
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: trWAndw7wnmFM6RxJQTXYmJ/uZRKARtm4ZmETpyvm32+YdcBFhkLi6S9czG0D8kXVL2UHg4OKeuKI8sRfkAmogSh4JbUefYsmpPKSFMBhm46f+tk7DHtmgmhWZL5yQ/vXqTcY7rJlQbEA/6T9Nb33RN8pRtm4KrcpA5vU+oIxtVlcnaECj8fIj2AUcVQs+FTVOHywfXvrFEEHUZLTl9BBFlGeqvhLDEGEMJs/Sr8AWH+BPb9wpyULbneAFs9kEYnfak/I6UwTI8yVn2sOJvz5uqj+Bvcc7Oi5xUDmjlEDxHldkOYn+Vtqe7AEO9lxcTX0hfhCw8qykXPWaRpBHldg4gKGNAym/U86Gh7A9la5NuSCzu8oL3FjoBHQ3SFbU4lG82hTeNr/lv5IJoTbV63ZDdrGcese+fahN0S44+LZZF1ufOLnC1ZQXDxzawwblXfnOzmPmGXLpNtaE/glaj+B3jiSlhhtPlXvrWq4HsYsHHLx1uBLe3WZ8YMDYz6LNOwSRrnAaxp4vKNT11FfPvhS3tI+zD/Pl43Sxqij+Ki7hYulR6bYtteNJgA9nWguKjADqv8g2OhfLUx2jPHHPZQGUsZoNUXMkh31xEIEB4kllRhHVnLStrAgA2SHtCpp4GyqhIcjLtLqcdKOfh+bhE0zWXQ1F3e7be/b+trn6yFaxY=
+  file:
+  - rpi-client_linux_amd64
+  - rpi-client_linux_arm
+  - rpi-server_linux_arm
+  on:
+    repo: gbbirkisson/rpi
+    tags: true
+    condition: $LATEST = true
