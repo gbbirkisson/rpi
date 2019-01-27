@@ -1,11 +1,11 @@
 # rpi
 
 <p align="center">
-<a href="https://github.com/gbbirkisson/rpi/releases/latest"><img src="https://img.shields.io/github/release/gbbirkisson/rpi.svg?style=flat-square"/></a>
-<a href="https://travis-ci.org/gbbirkisson/rpi"><img src="https://img.shields.io/travis/gbbirkisson/rpi/master.svg?style=flat-square"/></a>
-<a href="https://goreportcard.com/report/github.com/gbbirkisson/rpi"><img src="https://goreportcard.com/badge/github.com/gbbirkisson/rpi?style=flat-square"/></a>
-<a href="https://godoc.org/github.com/gbbirkisson/rpi"><img src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"/></a>
-<a href="./LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square"/></a>
+<a href="https://github.com/gbbirkisson/rpi/releases/latest" target="_blank"><img src="https://img.shields.io/github/release/gbbirkisson/rpi.svg?style=flat-square"/></a>
+<a href="https://travis-ci.org/gbbirkisson/rpi" target="_blank"><img src="https://img.shields.io/travis/gbbirkisson/rpi/master.svg?style=flat-square"/></a>
+<a href="https://goreportcard.com/report/github.com/gbbirkisson/rpi" target="_blank"><img src="https://goreportcard.com/badge/github.com/gbbirkisson/rpi?style=flat-square"/></a>
+<a href="https://godoc.org/github.com/gbbirkisson/rpi" target="_blank"><img src="https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square"/></a>
+<a href="./LICENSE" target="_blank"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square"/></a>
 </p>
 
 A gRPC server for remote IO operations on the RaspberryPi + cli tool to call it
