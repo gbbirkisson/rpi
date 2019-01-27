@@ -8,7 +8,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
-// Get a new PiCam GRPC server
+// NewPicamServer creates a new PiCam GRPC server
 func NewPicamServer(cam PiCam) proto.PiCamServer {
 	return &piCamServer{camera: cam}
 }

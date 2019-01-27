@@ -28,6 +28,7 @@ var picamCmd = &cobra.Command{
 
 		r := bytes.NewReader(raw)
 		imageData, _, err := image.Decode(r)
+		helper.ExitOnError("unable to decode image", err)
 
 		opts := jpeg.Options{}
 		opts.Quality = 80

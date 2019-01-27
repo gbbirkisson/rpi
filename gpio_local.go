@@ -6,7 +6,7 @@ import (
 	rpio "github.com/gbbirkisson/go-rpio"
 )
 
-// Get a new local PiCam
+// NewGpioLocal creates a new Gpio interface that uses local gpio pins
 func NewGpioLocal() Gpio {
 	return &gpioLocal{}
 }

@@ -9,10 +9,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-var version string = ""
-var revision string = "development"
+var version string
+var revision = "development"
 
-// Get new local common functions
+// NewCommonLocal creates a new common interface that operates locally
 func NewCommonLocal() Common {
 	return &commonLocal{}
 }
@@ -34,7 +34,7 @@ func (c *commonLocal) Modprobe(ctx context.Context, mod string) error {
 	return nil
 }
 
-// Get new remote common functions
+// NewCommonRemote creates a new common interface that operates on a remote server
 func NewCommonRemote(connection *grpc.ClientConn) (Common, error) {
 	return &commonRemote{client: proto.NewCommonClient(connection)}, nil
 }

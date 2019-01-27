@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Get a new remote PiCam
+// NewPiCamRemote creates a new remote PiCam
 func NewPiCamRemote(connection *grpc.ClientConn) (PiCam, error) {
 	return &piCamGrpc{client: proto.NewPiCamClient(connection)}, nil
 }
@@ -30,7 +30,7 @@ func (c *piCamGrpc) Close(ctx context.Context) error {
 }
 
 func (c *piCamGrpc) GetFrame(ctx context.Context) ([]byte, error) {
-	return getFrame(c, ctx)
+	return getFrame(ctx, c)
 }
 
 func (c *piCamGrpc) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) (<-chan struct{}, error) {

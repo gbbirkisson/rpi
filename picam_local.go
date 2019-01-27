@@ -7,9 +7,10 @@ import (
 	picamera "github.com/gbbirkisson/piCamera"
 )
 
+// PiCamArgs is a struct of arguments when initializing the PiCamera
 type PiCamArgs = picamera.RaspividArgs
 
-// Get a new local PiCam
+// NewPiCamLocal creates a new local PiCam
 func NewPiCamLocal(args *PiCamArgs) (PiCam, error) {
 	cam, err := picamera.New(nil, args)
 	if err != nil {
@@ -39,7 +40,7 @@ func (c *piCamLocal) Close(ctx context.Context) error {
 }
 
 func (c *piCamLocal) GetFrame(ctx context.Context) ([]byte, error) {
-	return getFrame(c, ctx)
+	return getFrame(ctx, c)
 }
 
 func (c *piCamLocal) GetFrames(ctx context.Context, byteCh chan<- []byte, errCh chan<- error) (<-chan struct{}, error) {

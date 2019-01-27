@@ -2,7 +2,7 @@ package rpi
 
 import "context"
 
-func getFrame(cam PiCam, ctx context.Context) ([]byte, error) {
+func getFrame(ctx context.Context, cam PiCam) ([]byte, error) {
 	imgch := make(chan []byte)
 	errCh := make(chan error)
 

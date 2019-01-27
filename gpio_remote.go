@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Get a new remote Gpio
+// NewGpioRemote creates a new Gpio interface that uses remote gpio pins
 func NewGpioRemote(connection *grpc.ClientConn) Gpio {
 	return &gpioRemote{client: proto.NewGpioClient(connection)}
 }

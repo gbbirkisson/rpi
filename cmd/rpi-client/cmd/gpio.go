@@ -78,7 +78,7 @@ var gpioOpenCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
-		helper.ExitOnError("error repsonse from server", getGpio().Open(ctx))
+		helper.ExitOnError("error response from server", getGpio().Open(ctx))
 	},
 }
 
@@ -88,7 +88,7 @@ var gpioCloseCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, cancel := getContext()
 		defer cancel()
-		helper.ExitOnError("error repsonse from server", getGpio().Close(ctx))
+		helper.ExitOnError("error response from server", getGpio().Close(ctx))
 	},
 }
 
@@ -111,7 +111,7 @@ var gpioToggleCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		helper.ExitOnError("error repsonse from server", getGpio().Toggle(ctx, rpi.Pin(pin)))
+		helper.ExitOnError("error response from server", getGpio().Toggle(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -134,7 +134,7 @@ var gpioHighCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		helper.ExitOnError("error repsonse from server", getGpio().High(ctx, rpi.Pin(pin)))
+		helper.ExitOnError("error response from server", getGpio().High(ctx, rpi.Pin(pin)))
 	},
 }
 
@@ -157,7 +157,7 @@ var gpioLowCmd = &cobra.Command{
 		ctx, cancel := getContext()
 		defer cancel()
 
-		helper.ExitOnError("error repsonse from server", getGpio().Low(ctx, rpi.Pin(pin)))
+		helper.ExitOnError("error response from server", getGpio().Low(ctx, rpi.Pin(pin)))
 	},
 }
 
