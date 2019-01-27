@@ -53,11 +53,12 @@ var rootCmd = &cobra.Command{
 
 		if viper.GetBool("picam") {
 			log.Printf("adding picam service")
-			cam, err := rpi.NewPiCamLocal(&rpi.PiCamArgs{
-				Width:    viper.GetInt("picam_width"),
-				Height:   viper.GetInt("picam_height"),
-				Rotation: viper.GetInt("picam_rotation"),
-			})
+			camArgs := rpi.NewPiCamArgs()
+			camArgs.Width = viper.GetInt("picam_width")
+			camArgs.Height = viper.GetInt("picam_height")
+			camArgs.Rotation = viper.GetInt("picam_rotation")
+			cam, err := rpi.NewPiCamLocal(camArgs)
+
 			helper.ExitOnError("unable to create camera", err)
 
 			err = cam.Open(ctx)

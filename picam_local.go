@@ -10,8 +10,16 @@ import (
 // PiCamArgs is a struct of arguments when initializing the PiCamera
 type PiCamArgs = picamera.RaspividArgs
 
+// NewPiCamArgs creates the default arguments for the PiCam
+func NewPiCamArgs() *PiCamArgs {
+	return picamera.NewArgs()
+}
+
 // NewPiCamLocal creates a new local PiCam
 func NewPiCamLocal(args *PiCamArgs) (PiCam, error) {
+	if args.Brightness == 0 || args.Mode == 0 {
+		return nil, fmt.Errorf("invalid camera arguments, use NewPiCamArgs() to create PiCam arguments")
+	}
 	cam, err := picamera.New(nil, args)
 	if err != nil {
 		return nil, err
@@ -24,6 +32,10 @@ type piCamLocal struct {
 }
 
 func (c *piCamLocal) Open(ctx context.Context) error {
+	if ctx.Err() != nil {
+		return ctx.Err()
+	}
+
 	err := c.camera.Start()
 	if err != nil {
 		return fmt.Errorf("unable to start camera: %v", err)
