@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"path/filepath"
 
 	"github.com/gbbirkisson/rpi"
@@ -14,35 +13,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
-
-var cfgFile string
-
-// type ngrokLogger struct{}
-
-// func (nl *ngrokLogger) Write(p []byte) (n int, err error) {
-// 	log.Printf("ngrok: %s", p)
-// 	return len(p), nil
-// }
-
-func startNgrok() {
-	log.Printf("starting ngrok\n")
-
-	cmd := exec.Command(
-		"ngrok",
-		"tcp",
-		viper.GetString("port"),
-		"--authtoken",
-		viper.GetString("ngrok_token"),
-		"--log=stdout",
-		"--region",
-		viper.GetString("ngrok_region"),
-	)
-
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err := cmd.Start()
-	helper.ExitOnError("unable to start ngrok", err)
-}
 
 var rootCmd = &cobra.Command{
 	Use:   "rpi-server",
@@ -97,9 +67,14 @@ var rootCmd = &cobra.Command{
 			proto.RegisterPiCamServer(srv, rpi.NewPicamServer(cam))
 		}
 
-		// if viper.GetBool("ngrok") {
-		// 	startNgrok()
-		// }
+		if viper.GetBool("ngrok") {
+			log.Printf("adding ngrok service")
+			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
+			helper.ExitOnError("unable to setup ngrok", err)
+			err = ngrok.Open(ctx)
+			helper.ExitOnError("unable start ngrok", err)
+			defer ngrok.Close(ctx)
+		}
 
 		log.Fatal(srv.Serve(lis))
 	},

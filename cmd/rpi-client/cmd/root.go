@@ -15,8 +15,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-var cfgFile string
-
 func getConnection() *grpc.ClientConn {
 	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
 	helper.ExitOnError("could not create connection", err)

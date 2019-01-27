@@ -64,3 +64,9 @@ type Gpio interface {
 	Detect(ctx context.Context, pin Pin, edge PinEdge) error
 	EdgeDetected(ctx context.Context, pin Pin) (bool, error)
 }
+
+// Ngrok interface provides a way to create an Ngrok tunnel to expose services to the internet
+type Ngrok interface {
+	Open(ctx context.Context) error
+	Close(ctx context.Context) error
+}
