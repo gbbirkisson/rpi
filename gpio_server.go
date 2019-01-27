@@ -7,7 +7,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
-// NewGpioServer creates a new Gpio server that uses the provied Gpio interface
+// NewGpioServer creates a new gpio server that uses the gpio interface provided
 func NewGpioServer(gpio Gpio) proto.GpioServer {
 	return &gpioServer{gpio: gpio}
 }

@@ -18,7 +18,7 @@ func NewGrpcClientConnectionInsecure(host, port string) (*grpc.ClientConn, error
 	return conn, nil
 }
 
-// NewGrpcServerInsecure returns a creates insecure grpc server that can serve grpc services
+// NewGrpcServerInsecure creates a new insecure grpc server that can serve grpc services
 func NewGrpcServerInsecure(host, port string) (*grpc.Server, net.Listener, error) {
 	address := host + ":" + port
 	log.Printf("listening to %s\n", address)

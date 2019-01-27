@@ -7,7 +7,7 @@ import (
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
 
-// NewCommonServer returns a new common server using the common interface provided
+// NewCommonServer creates a new common server using the common interface provided
 func NewCommonServer(common Common) proto.CommonServer {
 	return &commonServer{common: common}
 }

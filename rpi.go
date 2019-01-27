@@ -26,7 +26,7 @@ const (
 	High = rpio.High
 )
 
-// Common interface are basic operations sometimes needed to use other interfaces
+// Common interface are the basic operations sometimes needed to use other the other interfaces
 type Common interface {
 	GetVersion(ctx context.Context) (string, string, error)
 	Modprobe(ctx context.Context, mod string) error
