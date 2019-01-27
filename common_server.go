@@ -2,7 +2,6 @@ package rpi
 
 import (
 	"context"
-	"log"
 
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
@@ -17,9 +16,6 @@ type commonServer struct {
 }
 
 func (s *commonServer) GetVersion(ctx context.Context, _ *proto.Void) (*proto.VersionRes, error) {
-	log.Printf("Common.GetVersion called\n")
-	defer log.Printf("Common.GetVersion finished\n")
-
 	version, revision, err := s.common.GetVersion(ctx)
 	if err != nil {
 		return nil, err

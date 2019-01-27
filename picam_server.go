@@ -3,7 +3,6 @@ package rpi
 import (
 	"context"
 	"fmt"
-	"log"
 
 	proto "github.com/gbbirkisson/rpi/pkg/proto"
 )
@@ -18,23 +17,14 @@ type piCamServer struct {
 }
 
 func (s *piCamServer) Open(ctx context.Context, req *proto.Void) (*proto.Void, error) {
-	log.Printf("PiCam.Open called\n")
-	defer log.Printf("PiCam.Open finished\n")
-
 	return &proto.Void{}, s.camera.Open(ctx)
 }
 
 func (s *piCamServer) Close(ctx context.Context, req *proto.Void) (*proto.Void, error) {
-	log.Printf("PiCam.Close called\n")
-	defer log.Printf("PiCam.Close finished\n")
-
 	return &proto.Void{}, s.camera.Close(ctx)
 }
 
 func (s *piCamServer) GetFrames(_ *proto.Void, stream proto.PiCam_GetFramesServer) error {
-	log.Printf("PiCam.GetFrames called\n")
-	defer log.Printf("PiCam.GetFrames finished\n")
-
 	imgChan := make(chan []byte)
 	errChan := make(chan error)
 
