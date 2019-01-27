@@ -1,3 +1,15 @@
+// Package rpi helps you to develop software for the Raspberry Pi that does
+// IO operations on the Raspberry PI. It enables you to develop your code
+// locally on any type of architecture, by using gRPC to control a Raspberry PI
+// remotely. This is very convenient in conjunction with services like balena.io.
+//
+// This makes developing applications for the RaspberryPi extremely easy.
+// Once your software is ready, you have the option of continuing to use
+// gRPC calls, or switch over to a local version of the interfaces to compile
+// a binary that runs directly on the RaspberryPi.
+//
+// If you have any suggestion or comments, please feel free to open an issue on
+// the projects GitHub page.
 package rpi
 
 import (

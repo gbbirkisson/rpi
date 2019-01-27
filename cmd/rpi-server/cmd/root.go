@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 
-		log.Printf("starting rpi server")
+		log.Println("starting rpi server")
 		srv, lis, err := rpi.NewGrpcServerInsecure(viper.GetString("host"), viper.GetString("port"))
 		if err != nil {
 			helper.ExitOnError("unable to create server", err)
@@ -32,17 +32,20 @@ var rootCmd = &cobra.Command{
 		proto.RegisterCommonServer(srv, rpi.NewCommonServer(common))
 
 		if viper.GetBool("gpio") {
-			log.Printf("adding gpio service")
+			log.Println("adding gpio service")
 			gpio := rpi.NewGpioLocal()
-			err := gpio.Open(ctx)
-			helper.ExitOnError("unable to open gpio", err)
+			if viper.GetBool("gpio_open") {
+				log.Println("opening gpio interface")
+				err := gpio.Open(ctx)
+				helper.ExitOnError("unable to open gpio", err)
+			}
 			defer gpio.Close(ctx)
 			proto.RegisterGpioServer(srv, rpi.NewGpioServer(gpio))
 		}
 
 		modprobe := viper.GetStringSlice("modprobe")
 		if len(modprobe) > 0 {
-			log.Printf("running modprobe")
+			log.Printf("running modprobe for %s\n", modprobe)
 			for _, mod := range modprobe {
 				err := common.Modprobe(ctx, mod)
 				if err != nil {
@@ -52,7 +55,7 @@ var rootCmd = &cobra.Command{
 		}
 
 		if viper.GetBool("picam") {
-			log.Printf("adding picam service")
+			log.Println("adding picam service")
 			camArgs := rpi.NewPiCamArgs()
 			camArgs.Width = viper.GetInt("picam_width")
 			camArgs.Height = viper.GetInt("picam_height")
@@ -61,15 +64,18 @@ var rootCmd = &cobra.Command{
 
 			helper.ExitOnError("unable to create camera", err)
 
-			err = cam.Open(ctx)
-			helper.ExitOnError("unable to open camera", err)
+			if viper.GetBool("picam_open") {
+				log.Println("opening picam interface")
+				err = cam.Open(ctx)
+				helper.ExitOnError("unable to open camera", err)
+			}
 			defer cam.Close(ctx)
 
 			proto.RegisterPiCamServer(srv, rpi.NewPicamServer(cam))
 		}
 
 		if viper.GetBool("ngrok") {
-			log.Printf("adding ngrok service")
+			log.Println("adding ngrok service")
 			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
 			helper.ExitOnError("unable to setup ngrok", err)
 			err = ngrok.Open(ctx)
@@ -101,12 +107,15 @@ func init() {
 	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
+	rootCmd.PersistentFlags().Bool("gpio_open", false, "open gpio service on start")
 	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
+	viper.BindPFlag("gpio_open", rootCmd.PersistentFlags().Lookup("gpio_open"))
 
 	rootCmd.PersistentFlags().StringSlice("modprobe", []string{}, "modprobe on start")
 	viper.BindPFlag("modprobe", rootCmd.PersistentFlags().Lookup("modprobe"))
 
 	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
+	rootCmd.PersistentFlags().Bool("picam_open", false, "open picam service on start")
 	rootCmd.PersistentFlags().Int("picam_width", 648, "Width of the image from pi camera")
 	rootCmd.PersistentFlags().Int("picam_height", 486, "Height of the image from pi camera")
 	rootCmd.PersistentFlags().Int("picam_rotation", 0, "Rotation of pi camera image")
