@@ -16,7 +16,7 @@ func getGpio() rpi.Gpio {
 
 var gpioCmd = &cobra.Command{
 	Use:   "gpio",
-	Short: "Control the GPIO pins on the device",
+	Short: "Control the GPIO pins on server",
 }
 
 var gpioInfoCmd = &cobra.Command{

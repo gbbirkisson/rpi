@@ -35,8 +35,8 @@ func (c *commonLocal) Modprobe(ctx context.Context, mod string) error {
 }
 
 // NewCommonRemote creates a new common interface that operates on a remote server
-func NewCommonRemote(connection *grpc.ClientConn) (Common, error) {
-	return &commonRemote{client: proto.NewCommonClient(connection)}, nil
+func NewCommonRemote(connection *grpc.ClientConn) Common {
+	return &commonRemote{client: proto.NewCommonClient(connection)}
 }
 
 type commonRemote struct {

@@ -11,8 +11,8 @@ import (
 )
 
 // NewPiCamRemote creates a new remote PiCam
-func NewPiCamRemote(connection *grpc.ClientConn) (PiCam, error) {
-	return &piCamGrpc{client: proto.NewPiCamClient(connection)}, nil
+func NewPiCamRemote(connection *grpc.ClientConn) PiCam {
+	return &piCamGrpc{client: proto.NewPiCamClient(connection)}
 }
 
 type piCamGrpc struct {

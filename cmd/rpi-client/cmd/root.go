@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/gbbirkisson/rpi"
@@ -16,13 +15,13 @@ import (
 )
 
 func getConnection() *grpc.ClientConn {
-	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
+	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("server_host"), viper.GetString("server_port"))
 	helper.ExitOnError("could not create connection", err)
 	return conn
 }
 
 func getContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("timeout"))*time.Millisecond)
+	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("server_timeout"))*time.Millisecond)
 }
 
 var rootCmd = &cobra.Command{
@@ -43,35 +42,26 @@ func init() {
 
 	viper.SetEnvPrefix("rpi")
 
-	rootCmd.PersistentFlags().String("host", "127.0.0.1", "server ip")
-	rootCmd.PersistentFlags().Int("port", 8000, "server port")
-	rootCmd.PersistentFlags().Int("timeout", 5000, "server timeout in milliseconds")
+	rootCmd.PersistentFlags().StringP("server_host", "s", "127.0.0.1", "server host address")
+	rootCmd.PersistentFlags().IntP("server_port", "p", 8000, "server port")
+	rootCmd.PersistentFlags().IntP("server_timeout", "t", 5000, "server timeout in milliseconds")
 
-	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
-	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
-	viper.BindPFlag("timeout", rootCmd.PersistentFlags().Lookup("timeout"))
+	viper.BindPFlag("server_host", rootCmd.PersistentFlags().Lookup("server_host"))
+	viper.BindPFlag("server_port", rootCmd.PersistentFlags().Lookup("server_port"))
+	viper.BindPFlag("server_timeout", rootCmd.PersistentFlags().Lookup("server_timeout"))
+
+	helper.AddConfigCommand(rootCmd)
 }
 
-// initConfig reads in config file and ENV variables if set.
+var configFileName = ".rpi-client"
+
 func initConfig() {
-
-	// Find home directory.
 	home, err := homedir.Dir()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	helper.ExitOnError("unable to find home directory", err)
 
-	// Search config in home directory with name ".rpi-client" (without extension).
 	viper.AddConfigPath(home)
-	viper.SetConfigName(".rpi-client")
+	viper.SetConfigName(configFileName)
 
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err != nil {
-		file := filepath.Join(home, ".rpi-client.yaml")
-		fmt.Fprintf(os.Stderr, "Config file not found, creating it: %s\n", file)
-		viper.WriteConfigAs(file)
-	}
+	viper.ReadInConfig()
+	viper.AutomaticEnv()
 }

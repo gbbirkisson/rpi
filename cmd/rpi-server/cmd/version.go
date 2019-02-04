@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/gbbirkisson/rpi"
+	helper "github.com/gbbirkisson/rpi/cmd"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		common := rpi.NewCommonLocal()
 		ver, rev, _ := common.GetVersion(context.Background())
-		fmt.Printf("rpi-server version %s %s\n", ver, rev)
+		helper.PrintVersion("rpi-server", ver, rev)
 	},
 }
 

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 
 	"github.com/gbbirkisson/rpi"
 	helper "github.com/gbbirkisson/rpi/cmd"
@@ -23,7 +22,7 @@ var rootCmd = &cobra.Command{
 		defer cancel()
 
 		log.Println("starting rpi server")
-		srv, lis, err := rpi.NewGrpcServerInsecure(viper.GetString("host"), viper.GetString("port"))
+		srv, lis, err := rpi.NewGrpcServerInsecure(viper.GetString("server_host"), viper.GetString("server_port"))
 		if err != nil {
 			helper.ExitOnError("unable to create server", err)
 		}
@@ -76,7 +75,7 @@ var rootCmd = &cobra.Command{
 
 		if viper.GetBool("ngrok") {
 			log.Println("adding ngrok service")
-			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
+			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("server_port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
 			helper.ExitOnError("unable to setup ngrok", err)
 			err = ngrok.Open(ctx)
 			helper.ExitOnError("unable start ngrok", err)
@@ -100,12 +99,6 @@ func init() {
 
 	viper.SetEnvPrefix("rpi")
 
-	rootCmd.PersistentFlags().String("host", "0.0.0.0", "server ip")
-	rootCmd.PersistentFlags().Int("port", 8000, "server port")
-
-	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
-	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
-
 	rootCmd.PersistentFlags().BoolP("gpio", "g", false, "gpio service enabled")
 	rootCmd.PersistentFlags().Bool("gpio_open", false, "open gpio service on start")
 	viper.BindPFlag("gpio", rootCmd.PersistentFlags().Lookup("gpio"))
@@ -114,49 +107,39 @@ func init() {
 	rootCmd.PersistentFlags().StringSlice("modprobe", []string{}, "modprobe on start")
 	viper.BindPFlag("modprobe", rootCmd.PersistentFlags().Lookup("modprobe"))
 
-	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
-	rootCmd.PersistentFlags().Bool("picam_open", false, "open picam service on start")
-	rootCmd.PersistentFlags().Int("picam_width", 648, "Width of the image from pi camera")
-	rootCmd.PersistentFlags().Int("picam_height", 486, "Height of the image from pi camera")
-	rootCmd.PersistentFlags().Int("picam_rotation", 0, "Rotation of pi camera image")
-	viper.BindPFlag("picam", rootCmd.PersistentFlags().Lookup("picam"))
-	viper.BindPFlag("picam_width", rootCmd.PersistentFlags().Lookup("picam_width"))
-	viper.BindPFlag("picam_height", rootCmd.PersistentFlags().Lookup("picam_height"))
-	viper.BindPFlag("picam_rotation", rootCmd.PersistentFlags().Lookup("picam_rotation"))
-
 	rootCmd.PersistentFlags().Bool("ngrok", false, "Start a ngrok tunnel")
 	rootCmd.PersistentFlags().String("ngrok_token", "", "Ngrok authentication token")
 	rootCmd.PersistentFlags().String("ngrok_region", "eu", "Ngrok region")
 	viper.BindPFlag("ngrok", rootCmd.PersistentFlags().Lookup("ngrok"))
 	viper.BindPFlag("ngrok_token", rootCmd.PersistentFlags().Lookup("ngrok_token"))
 	viper.BindPFlag("ngrok_region", rootCmd.PersistentFlags().Lookup("ngrok_region"))
+
+	rootCmd.PersistentFlags().BoolP("picam", "c", false, "picam service enabled")
+	rootCmd.PersistentFlags().Bool("picam_open", false, "open picam service on start")
+	rootCmd.PersistentFlags().Int("picam_width", 648, "Width of the image from pi camera")
+	rootCmd.PersistentFlags().Int("picam_height", 486, "Height of the image from pi camera")
+	rootCmd.PersistentFlags().Int("picam_rotation", 0, "Rotation of pi camera image")
+	viper.BindPFlag("picam", rootCmd.PersistentFlags().Lookup("picam"))
+	viper.BindPFlag("picam_open", rootCmd.PersistentFlags().Lookup("picam_open"))
+	viper.BindPFlag("picam_width", rootCmd.PersistentFlags().Lookup("picam_width"))
+	viper.BindPFlag("picam_height", rootCmd.PersistentFlags().Lookup("picam_height"))
+	viper.BindPFlag("picam_rotation", rootCmd.PersistentFlags().Lookup("picam_rotation"))
+
+	rootCmd.PersistentFlags().String("server_host", "0.0.0.0", "server ip")
+	rootCmd.PersistentFlags().Int("server_port", 8000, "server port")
+	viper.BindPFlag("server_host", rootCmd.PersistentFlags().Lookup("server_host"))
+	viper.BindPFlag("server_port", rootCmd.PersistentFlags().Lookup("server_port"))
+
+	helper.AddConfigCommand(rootCmd)
 }
 
-// initConfig reads in config file and ENV variables if set.
+var configFileName = "config"
+var configPath = "/etc/rpi-server"
+
 func initConfig() {
-
-	configPath := "/etc/rpi-server"
 	viper.AddConfigPath(configPath)
-	viper.SetConfigName("config")
+	viper.SetConfigName(configFileName)
 
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err != nil {
-		file := filepath.Join(configPath, "config.yaml")
-
-		fmt.Fprintf(os.Stderr, "Config file not found, creating it: %s\n", file)
-
-		err = os.MkdirAll(configPath, os.ModePerm)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed creating configuration folder: %v\n", err)
-			return
-		}
-
-		err = viper.WriteConfigAs(file)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Failed creating configuration file: %v\n", err)
-			return
-		}
-	}
+	viper.ReadInConfig()
+	viper.AutomaticEnv()
 }
