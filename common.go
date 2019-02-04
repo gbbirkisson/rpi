@@ -52,6 +52,6 @@ func (c *commonRemote) GetVersion(ctx context.Context) (string, string, error) {
 }
 
 func (c *commonRemote) Modprobe(ctx context.Context, module string) error {
-	_, err := c.client.Modprobe(ctx, &proto.ModprobeRequest{Module: module})
+	_, err := c.client.Modprobe(ctx, &proto.RequestModprobe{Module: module})
 	return err
 }

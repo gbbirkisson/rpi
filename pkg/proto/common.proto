@@ -4,16 +4,16 @@ package rpi;
 
 import "base.proto";
 
-message VersionRes {
+message ResponseVersion {
   string revision = 1;
   string version = 2;
 }
 
-message ModprobeRequest {
+message RequestModprobe {
   string module = 1;
 }
 
 service Common {
-  rpc GetVersion (Void) returns (VersionRes) {};
-  rpc Modprobe (ModprobeRequest) returns (Void) {};
+  rpc GetVersion (Void) returns (ResponseVersion) {};
+  rpc Modprobe (RequestModprobe) returns (Void) {};
 }

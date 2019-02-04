@@ -23,7 +23,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type VersionRes struct {
+type ResponseVersion struct {
 	Revision             string   `protobuf:"bytes,1,opt,name=revision,proto3" json:"revision,omitempty"`
 	Version              string   `protobuf:"bytes,2,opt,name=version,proto3" json:"version,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -31,76 +31,76 @@ type VersionRes struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *VersionRes) Reset()         { *m = VersionRes{} }
-func (m *VersionRes) String() string { return proto.CompactTextString(m) }
-func (*VersionRes) ProtoMessage()    {}
-func (*VersionRes) Descriptor() ([]byte, []int) {
-	return fileDescriptor_common_804c2cd13a31b198, []int{0}
+func (m *ResponseVersion) Reset()         { *m = ResponseVersion{} }
+func (m *ResponseVersion) String() string { return proto.CompactTextString(m) }
+func (*ResponseVersion) ProtoMessage()    {}
+func (*ResponseVersion) Descriptor() ([]byte, []int) {
+	return fileDescriptor_common_619a0212bf9e5dbf, []int{0}
 }
-func (m *VersionRes) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_VersionRes.Unmarshal(m, b)
+func (m *ResponseVersion) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ResponseVersion.Unmarshal(m, b)
 }
-func (m *VersionRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_VersionRes.Marshal(b, m, deterministic)
+func (m *ResponseVersion) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ResponseVersion.Marshal(b, m, deterministic)
 }
-func (dst *VersionRes) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_VersionRes.Merge(dst, src)
+func (dst *ResponseVersion) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ResponseVersion.Merge(dst, src)
 }
-func (m *VersionRes) XXX_Size() int {
-	return xxx_messageInfo_VersionRes.Size(m)
+func (m *ResponseVersion) XXX_Size() int {
+	return xxx_messageInfo_ResponseVersion.Size(m)
 }
-func (m *VersionRes) XXX_DiscardUnknown() {
-	xxx_messageInfo_VersionRes.DiscardUnknown(m)
+func (m *ResponseVersion) XXX_DiscardUnknown() {
+	xxx_messageInfo_ResponseVersion.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_VersionRes proto.InternalMessageInfo
+var xxx_messageInfo_ResponseVersion proto.InternalMessageInfo
 
-func (m *VersionRes) GetRevision() string {
+func (m *ResponseVersion) GetRevision() string {
 	if m != nil {
 		return m.Revision
 	}
 	return ""
 }
 
-func (m *VersionRes) GetVersion() string {
+func (m *ResponseVersion) GetVersion() string {
 	if m != nil {
 		return m.Version
 	}
 	return ""
 }
 
-type ModprobeRequest struct {
+type RequestModprobe struct {
 	Module               string   `protobuf:"bytes,1,opt,name=module,proto3" json:"module,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ModprobeRequest) Reset()         { *m = ModprobeRequest{} }
-func (m *ModprobeRequest) String() string { return proto.CompactTextString(m) }
-func (*ModprobeRequest) ProtoMessage()    {}
-func (*ModprobeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_common_804c2cd13a31b198, []int{1}
+func (m *RequestModprobe) Reset()         { *m = RequestModprobe{} }
+func (m *RequestModprobe) String() string { return proto.CompactTextString(m) }
+func (*RequestModprobe) ProtoMessage()    {}
+func (*RequestModprobe) Descriptor() ([]byte, []int) {
+	return fileDescriptor_common_619a0212bf9e5dbf, []int{1}
 }
-func (m *ModprobeRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ModprobeRequest.Unmarshal(m, b)
+func (m *RequestModprobe) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestModprobe.Unmarshal(m, b)
 }
-func (m *ModprobeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ModprobeRequest.Marshal(b, m, deterministic)
+func (m *RequestModprobe) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestModprobe.Marshal(b, m, deterministic)
 }
-func (dst *ModprobeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ModprobeRequest.Merge(dst, src)
+func (dst *RequestModprobe) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestModprobe.Merge(dst, src)
 }
-func (m *ModprobeRequest) XXX_Size() int {
-	return xxx_messageInfo_ModprobeRequest.Size(m)
+func (m *RequestModprobe) XXX_Size() int {
+	return xxx_messageInfo_RequestModprobe.Size(m)
 }
-func (m *ModprobeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ModprobeRequest.DiscardUnknown(m)
+func (m *RequestModprobe) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestModprobe.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ModprobeRequest proto.InternalMessageInfo
+var xxx_messageInfo_RequestModprobe proto.InternalMessageInfo
 
-func (m *ModprobeRequest) GetModule() string {
+func (m *RequestModprobe) GetModule() string {
 	if m != nil {
 		return m.Module
 	}
@@ -108,8 +108,8 @@ func (m *ModprobeRequest) GetModule() string {
 }
 
 func init() {
-	proto.RegisterType((*VersionRes)(nil), "rpi.VersionRes")
-	proto.RegisterType((*ModprobeRequest)(nil), "rpi.ModprobeRequest")
+	proto.RegisterType((*ResponseVersion)(nil), "rpi.ResponseVersion")
+	proto.RegisterType((*RequestModprobe)(nil), "rpi.RequestModprobe")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -124,8 +124,8 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CommonClient interface {
-	GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error)
-	Modprobe(ctx context.Context, in *ModprobeRequest, opts ...grpc.CallOption) (*Void, error)
+	GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*ResponseVersion, error)
+	Modprobe(ctx context.Context, in *RequestModprobe, opts ...grpc.CallOption) (*Void, error)
 }
 
 type commonClient struct {
@@ -136,8 +136,8 @@ func NewCommonClient(cc *grpc.ClientConn) CommonClient {
 	return &commonClient{cc}
 }
 
-func (c *commonClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*VersionRes, error) {
-	out := new(VersionRes)
+func (c *commonClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.CallOption) (*ResponseVersion, error) {
+	out := new(ResponseVersion)
 	err := c.cc.Invoke(ctx, "/rpi.Common/GetVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -145,7 +145,7 @@ func (c *commonClient) GetVersion(ctx context.Context, in *Void, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *commonClient) Modprobe(ctx context.Context, in *ModprobeRequest, opts ...grpc.CallOption) (*Void, error) {
+func (c *commonClient) Modprobe(ctx context.Context, in *RequestModprobe, opts ...grpc.CallOption) (*Void, error) {
 	out := new(Void)
 	err := c.cc.Invoke(ctx, "/rpi.Common/Modprobe", in, out, opts...)
 	if err != nil {
@@ -156,8 +156,8 @@ func (c *commonClient) Modprobe(ctx context.Context, in *ModprobeRequest, opts .
 
 // CommonServer is the server API for Common service.
 type CommonServer interface {
-	GetVersion(context.Context, *Void) (*VersionRes, error)
-	Modprobe(context.Context, *ModprobeRequest) (*Void, error)
+	GetVersion(context.Context, *Void) (*ResponseVersion, error)
+	Modprobe(context.Context, *RequestModprobe) (*Void, error)
 }
 
 func RegisterCommonServer(s *grpc.Server, srv CommonServer) {
@@ -183,7 +183,7 @@ func _Common_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Common_Modprobe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ModprobeRequest)
+	in := new(RequestModprobe)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func _Common_Modprobe_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/rpi.Common/Modprobe",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommonServer).Modprobe(ctx, req.(*ModprobeRequest))
+		return srv.(CommonServer).Modprobe(ctx, req.(*RequestModprobe))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -217,20 +217,20 @@ var _Common_serviceDesc = grpc.ServiceDesc{
 	Metadata: "common.proto",
 }
 
-func init() { proto.RegisterFile("common.proto", fileDescriptor_common_804c2cd13a31b198) }
+func init() { proto.RegisterFile("common.proto", fileDescriptor_common_619a0212bf9e5dbf) }
 
-var fileDescriptor_common_804c2cd13a31b198 = []byte{
-	// 185 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x8f, 0x3f, 0x0f, 0x82, 0x40,
-	0x0c, 0xc5, 0x41, 0x13, 0x84, 0xc6, 0x84, 0xa4, 0x31, 0x86, 0xdc, 0x64, 0x6e, 0x52, 0x13, 0x19,
-	0xf4, 0x1b, 0xe8, 0xe0, 0xe4, 0xc2, 0xc0, 0x2e, 0xd0, 0xe1, 0x12, 0xa1, 0xe7, 0x1d, 0xf0, 0xf9,
-	0x8d, 0xc7, 0x1f, 0x13, 0xb7, 0xfe, 0xfa, 0xda, 0xbe, 0x57, 0x58, 0x97, 0x5c, 0xd7, 0xdc, 0xa4,
-	0xda, 0x70, 0xcb, 0xb8, 0x34, 0x5a, 0x09, 0x28, 0x9e, 0x96, 0x86, 0x86, 0xbc, 0x02, 0xe4, 0x64,
-	0xac, 0xe2, 0x26, 0x23, 0x8b, 0x02, 0x42, 0x43, 0xbd, 0xfa, 0x62, 0xe2, 0xef, 0xfc, 0x7d, 0x94,
-	0xcd, 0x8c, 0x09, 0xac, 0xfa, 0x61, 0x32, 0x59, 0x38, 0x69, 0x42, 0x79, 0x80, 0xf8, 0xc1, 0x95,
-	0x36, 0x5c, 0x50, 0x46, 0xef, 0x8e, 0x6c, 0x8b, 0x5b, 0x08, 0x6a, 0xae, 0xba, 0x17, 0x8d, 0x67,
-	0x46, 0x3a, 0x97, 0x10, 0xdc, 0x5c, 0x1e, 0x3c, 0x02, 0xdc, 0xa9, 0x1d, 0xbd, 0x31, 0x4a, 0x8d,
-	0x56, 0x69, 0xce, 0xaa, 0x12, 0xf1, 0x50, 0xce, 0xa1, 0xa4, 0x87, 0x27, 0x08, 0x27, 0x03, 0xdc,
-	0x38, 0xf9, 0xcf, 0x4f, 0xfc, 0xf6, 0xa5, 0x57, 0x04, 0xee, 0xb5, 0xcb, 0x27, 0x00, 0x00, 0xff,
-	0xff, 0x4d, 0x6e, 0xda, 0x88, 0xfb, 0x00, 0x00, 0x00,
+var fileDescriptor_common_619a0212bf9e5dbf = []byte{
+	// 187 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x49, 0xce, 0xcf, 0xcd,
+	0xcd, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2e, 0x2a, 0xc8, 0x94, 0xe2, 0x4a,
+	0x4a, 0x2c, 0x4e, 0x85, 0x08, 0x28, 0xb9, 0x73, 0xf1, 0x07, 0xa5, 0x16, 0x17, 0xe4, 0xe7, 0x15,
+	0xa7, 0x86, 0xa5, 0x16, 0x15, 0x67, 0xe6, 0xe7, 0x09, 0x49, 0x71, 0x71, 0x14, 0xa5, 0x96, 0x65,
+	0x82, 0xd8, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x70, 0xbe, 0x90, 0x04, 0x17, 0x7b, 0x19,
+	0x44, 0x99, 0x04, 0x13, 0x58, 0x0a, 0xc6, 0x55, 0xd2, 0x04, 0x19, 0x54, 0x58, 0x9a, 0x5a, 0x5c,
+	0xe2, 0x9b, 0x9f, 0x52, 0x50, 0x94, 0x9f, 0x94, 0x2a, 0x24, 0xc6, 0xc5, 0x96, 0x9b, 0x9f, 0x52,
+	0x9a, 0x93, 0x0a, 0x35, 0x06, 0xca, 0x33, 0xca, 0xe0, 0x62, 0x73, 0x06, 0x3b, 0x4a, 0x48, 0x9f,
+	0x8b, 0xcb, 0x3d, 0xb5, 0x04, 0x66, 0x31, 0xa7, 0x5e, 0x51, 0x41, 0xa6, 0x5e, 0x58, 0x7e, 0x66,
+	0x8a, 0x94, 0x08, 0x98, 0x89, 0xe6, 0x32, 0x25, 0x06, 0x21, 0x5d, 0x2e, 0x0e, 0xb8, 0xf1, 0x30,
+	0x35, 0x28, 0x96, 0x4a, 0x21, 0x0c, 0x51, 0x62, 0x48, 0x62, 0x03, 0x7b, 0xd2, 0x18, 0x10, 0x00,
+	0x00, 0xff, 0xff, 0x5d, 0x33, 0xab, 0xa6, 0x05, 0x01, 0x00, 0x00,
 }

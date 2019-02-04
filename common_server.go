@@ -15,15 +15,15 @@ type commonServer struct {
 	common Common
 }
 
-func (s *commonServer) GetVersion(ctx context.Context, _ *proto.Void) (*proto.VersionRes, error) {
+func (s *commonServer) GetVersion(ctx context.Context, _ *proto.Void) (*proto.ResponseVersion, error) {
 	version, revision, err := s.common.GetVersion(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return &proto.VersionRes{Version: version, Revision: revision}, nil
+	return &proto.ResponseVersion{Version: version, Revision: revision}, nil
 }
 
-func (s *commonServer) Modprobe(ctx context.Context, req *proto.ModprobeRequest) (*proto.Void, error) {
+func (s *commonServer) Modprobe(ctx context.Context, req *proto.RequestModprobe) (*proto.Void, error) {
 	return &proto.Void{}, s.common.Modprobe(ctx, req.Module)
 }
