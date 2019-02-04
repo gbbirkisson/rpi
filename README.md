@@ -16,17 +16,16 @@ If you have any suggestion or comments, please feel free to open an issue on thi
 
 ## Installing
 
-#### Pushing server to balena.io
+### Client / Server
 
-Add your balena remote to the git repo:
+There are 2 ways of installing the binaries:
 
-```bash
-git add remote balena <URL>
-```
+* Download the binaries [latest release](https://github.com/gbbirkisson/rpi/releases/latest)
+* Install from source: `go get github.com/gbbirkisson/rpi`
 
-```bash
-make balena
-```
+### Pushing server to balena.io
+
+Take a look at the [rpi-balena](https://github.com/gbbirkisson/rpi-balena) project to see how to use balena.io
 
 ## Cli usage
 
@@ -36,32 +35,6 @@ Run the program using help to get documentation
 rpi-client help
 ```
 
-## Server modules
-
-### GPIO
-
-To enable on balena.io:
-
-* Device Service variables
-    * `RPI_GPIO`: `true`
-
-### Pi Camera
-
-To enable on balena.io:
-
-* Device Configuration
-    * `RESIN_HOST_CONFIG_gpu_mem`: `128`
-    * `RESIN_HOST_CONFIG_start_x`: `1`
-* Device Service variables
-    * `RPI_PICAM`: `true`
-    * `RPI_MODPROBE`: `bcm2835-v4l2`
-
-### Ngrok tunnel
-
-* Device Service variables
-    * `RPI_NGROK`: `true`
-    * `RPI_NGROK_TOKEN`: `<your ngrok token>`
-
 ## Using another languages
 
-Generate a client with `protoc` from [./pkg/proto/*.proto](./pkg/proto) files.
+Generate a client for your language of choice with `protoc` using [./pkg/proto/*.proto](./pkg/proto) files.
