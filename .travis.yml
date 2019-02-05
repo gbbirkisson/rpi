@@ -13,6 +13,7 @@ before_install:
 script:
 - go get -t -v ./...
 - diff -u <(echo -n) <(gofmt -d .)
+- diff -u <(echo -n) <(golint ./...)
 - go vet $(go list ./... | grep -v /vendor/)
 - go test -v -race ./...
 # Only build binaries from the latest Go release.
