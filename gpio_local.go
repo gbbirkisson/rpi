@@ -1,3 +1,5 @@
+// +build !windows
+
 package rpi
 
 import (
@@ -89,7 +91,7 @@ func (g *gpioLocal) Toggle(ctx context.Context, pin Pin) error {
 
 func (g *gpioLocal) Write(ctx context.Context, pin Pin, state PinState) error {
 	return checkContextAndExec(ctx, func() {
-		rpio.Pin(pin).Write(state)
+		rpio.Pin(pin).Write(rpio.State(state))
 	})
 }
 
@@ -97,7 +99,7 @@ func (g *gpioLocal) Read(ctx context.Context, pin Pin) (PinState, error) {
 	if ctx.Err() != nil {
 		return 255, ctx.Err()
 	}
-	return rpio.Pin(pin).Read(), nil
+	return PinState(rpio.Pin(pin).Read()), nil
 }
 
 func (g *gpioLocal) Freq(ctx context.Context, pin Pin, freq int32) error {
@@ -114,7 +116,7 @@ func (g *gpioLocal) DutyCycle(ctx context.Context, pin Pin, dutyLen, cycleLen in
 
 func (g *gpioLocal) Detect(ctx context.Context, pin Pin, edge PinEdge) error {
 	return checkContextAndExec(ctx, func() {
-		rpio.Pin(pin).Detect(edge)
+		rpio.Pin(pin).Detect(rpio.Edge(edge))
 	})
 }
 

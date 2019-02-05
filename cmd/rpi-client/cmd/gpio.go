@@ -10,6 +10,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Missing:
+// Write(RequestWrite) returns (Void) {};
+// Read(GpioPin) returns (ResponseRead) {};
+// Freq(RequestFreq) returns (Void) {};
+// DutyCycle(RequestDutyCycle) returns (Void) {};
+// Detect(RequestEdgeDetect) returns (Void) {};
+// EdgeDetected(GpioPin) returns (ResponseEdgeDetected) {};
+
 func getGpio() rpi.Gpio {
 	return rpi.NewGpioRemote(getConnection())
 }

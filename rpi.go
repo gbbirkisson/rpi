@@ -14,28 +14,32 @@ package rpi
 
 import (
 	"context"
-
-	rpio "github.com/stianeikeland/go-rpio/v4"
 )
 
 // Pin is the raw BCM2835 pinout of a GPIO pin
-type Pin = rpio.Pin
+type Pin uint8
 
 // PinEdge is edge events detection modes
-type PinEdge = rpio.Edge
+type PinEdge uint8
 
 // PinState is either high or low
-type PinState = rpio.State
+type PinState uint8
+
+// PinMode is the mode of the pin, Input, Output, Clock, Pwm or Spi
+type PinMode uint8
 
 const (
 	// Input is the constant used to set a pin to input mode
-	Input = rpio.Input
+	Input PinMode = iota
 	// Output is the constant used to set a pin to output mode
-	Output = rpio.Output
+	Output
+)
+
+const (
 	// Low is the constant used to set a pin to low (0v)
-	Low = rpio.Low
+	Low PinState = iota
 	// High is the constant used to set a pin to high (+5v)
-	High = rpio.High
+	High
 )
 
 // Common interface are the basic operations sometimes needed to use other the other interfaces
