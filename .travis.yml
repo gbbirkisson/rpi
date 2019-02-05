@@ -5,6 +5,9 @@ matrix:
   include:
   - go: 1.11.x
     env: LATEST=true
+env:
+  global:
+  - GO111MODULE=on
 before_install:
 - go get github.com/mitchellh/gox
 script:
