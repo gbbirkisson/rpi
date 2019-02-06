@@ -10,14 +10,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// Missing:
-// Write(RequestWrite) returns (Void) {};
-// Read(GpioPin) returns (ResponseRead) {};
-// Freq(RequestFreq) returns (Void) {};
-// DutyCycle(RequestDutyCycle) returns (Void) {};
-// Detect(RequestEdgeDetect) returns (Void) {};
-// EdgeDetected(GpioPin) returns (ResponseEdgeDetected) {};
-
 func getGpio() rpi.Gpio {
 	return rpi.NewGpioRemote(getConnection())
 }
@@ -183,7 +175,7 @@ var gpioModeCmd = &cobra.Command{
 		}
 		return nil
 	},
-	RunE: func(cmd *cobra.Command, args []string) error {
+	Run: func(cmd *cobra.Command, args []string) {
 		pin, _ := strconv.Atoi(args[0])
 
 		var setMode func(g rpi.Gpio) error
@@ -221,11 +213,65 @@ var gpioModeCmd = &cobra.Command{
 				return g.PullOff(ctx, rpi.Pin(pin))
 			}
 		default:
-			return errors.New("argument [mode] is not a valid mode")
+			setMode = func(g rpi.Gpio) error {
+				return errors.New("argument [mode] is not a valid mode")
+			}
 		}
 
-		helper.ExitOnError("could not create client", setMode(getGpio()))
+		helper.ExitOnError("operation returned an error", setMode(getGpio()))
+	},
+}
+
+var gpioWriteCmd = &cobra.Command{
+	Use:   "write [pin] [state]",
+	Short: "Write a value to a pin",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 2 {
+			return errors.New("command requires [pin] and [state] arguments")
+		}
+		_, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("argument [pin] is not a valid int")
+		}
+		_, err = strconv.Atoi(args[1])
+		if err != nil {
+			return errors.New("argument [state] is not a valid int")
+		}
 		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		pin, _ := strconv.Atoi(args[0])
+		state, _ := strconv.Atoi(args[1])
+
+		ctx, cancel := getContext()
+		defer cancel()
+
+		helper.ExitOnError("error response from server", getGpio().Write(ctx, rpi.Pin(pin), rpi.PinState(state)))
+	},
+}
+
+var gpioReadCmd = &cobra.Command{
+	Use:   "read [pin]",
+	Short: "Read pin value",
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) != 1 {
+			return errors.New("command requires [pin] arguments")
+		}
+		_, err := strconv.Atoi(args[0])
+		if err != nil {
+			return errors.New("argument [pin] is not a valid int")
+		}
+		return nil
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		pin, _ := strconv.Atoi(args[0])
+
+		ctx, cancel := getContext()
+		defer cancel()
+
+		res, err := getGpio().Read(ctx, rpi.Pin(pin))
+		helper.ExitOnError("error response from server", err)
+		fmt.Println(res)
 	},
 }
 
@@ -244,4 +290,12 @@ func init() {
 	gpioCmd.AddCommand(gpioToggleCmd)
 	gpioCmd.AddCommand(gpioHighCmd)
 	gpioCmd.AddCommand(gpioLowCmd)
+	gpioCmd.AddCommand(gpioWriteCmd)
+	gpioCmd.AddCommand(gpioReadCmd)
 }
+
+// Missing:
+// Freq(RequestFreq) returns (Void) {};
+// DutyCycle(RequestDutyCycle) returns (Void) {};
+// Detect(RequestEdgeDetect) returns (Void) {};
+// EdgeDetected(GpioPin) returns (ResponseEdgeDetected) {};

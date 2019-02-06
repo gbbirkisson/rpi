@@ -11,6 +11,7 @@ import (
 	"github.com/gbbirkisson/rpi"
 	helper "github.com/gbbirkisson/rpi/cmd"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -84,7 +85,7 @@ rpi-client picam frame > image.jpg
 		}()
 
 		if terminal.IsTerminal(int(os.Stdout.Fd())) {
-			err = viewer(cmd, pr)
+			err = viewer(pr)
 			helper.ExitOnError("error running viewer command", err)
 		} else {
 			io.Copy(os.Stdout, pr)
@@ -92,10 +93,8 @@ rpi-client picam frame > image.jpg
 	},
 }
 
-func viewer(cmd *cobra.Command, reader io.Reader) error {
-	viewerCmd, err := cmd.Flags().GetStringSlice("viewer")
-	helper.ExitOnError("unable to get viewer command", err)
-
+func viewer(reader io.Reader) error {
+	viewerCmd := viper.GetStringSlice("picam_viewer")
 	vCmd := exec.Command(viewerCmd[0], viewerCmd[1:]...)
 	vCmd.Stdin = reader
 	vCmd.Stdout = os.Stdout
@@ -105,6 +104,7 @@ func viewer(cmd *cobra.Command, reader io.Reader) error {
 
 func init() {
 	picamFrameCmd.Flags().StringSliceP("viewer", "v", []string{"feh", "-x", "-"}, "Command that the image bytes will be piped to using stdin")
+	viper.BindPFlag("picam_viewer", picamFrameCmd.Flags().Lookup("viewer"))
 
 	picamCmd.AddCommand(
 		picamFrameCmd,

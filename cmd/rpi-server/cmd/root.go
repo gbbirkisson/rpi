@@ -22,7 +22,7 @@ var rootCmd = &cobra.Command{
 		defer cancel()
 
 		log.Println("starting rpi server")
-		srv, lis, err := rpi.NewGrpcServerInsecure(viper.GetString("server_host"), viper.GetString("server_port"))
+		srv, lis, err := rpi.NewGrpcServerInsecure(viper.GetString("host"), viper.GetString("port"))
 		if err != nil {
 			helper.ExitOnError("unable to create server", err)
 		}
@@ -75,7 +75,7 @@ var rootCmd = &cobra.Command{
 
 		if viper.GetBool("ngrok") {
 			log.Println("adding ngrok service")
-			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("server_port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
+			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
 			helper.ExitOnError("unable to setup ngrok", err)
 			err = ngrok.Open(ctx)
 			helper.ExitOnError("unable start ngrok", err)
@@ -125,10 +125,10 @@ func init() {
 	viper.BindPFlag("picam_height", rootCmd.PersistentFlags().Lookup("picam_height"))
 	viper.BindPFlag("picam_rotation", rootCmd.PersistentFlags().Lookup("picam_rotation"))
 
-	rootCmd.PersistentFlags().String("server_host", "0.0.0.0", "server ip")
-	rootCmd.PersistentFlags().Int("server_port", 8000, "server port")
-	viper.BindPFlag("server_host", rootCmd.PersistentFlags().Lookup("server_host"))
-	viper.BindPFlag("server_port", rootCmd.PersistentFlags().Lookup("server_port"))
+	rootCmd.PersistentFlags().StringP("host", "s", "0.0.0.0", "server ip")
+	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
+	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
+	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
 
 	helper.AddConfigCommand(rootCmd)
 }

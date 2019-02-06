@@ -15,13 +15,13 @@ import (
 )
 
 func getConnection() *grpc.ClientConn {
-	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("server_host"), viper.GetString("server_port"))
+	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
 	helper.ExitOnError("could not create connection", err)
 	return conn
 }
 
 func getContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("server_timeout"))*time.Millisecond)
+	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("timeout"))*time.Millisecond)
 }
 
 var rootCmd = &cobra.Command{
@@ -42,13 +42,13 @@ func init() {
 
 	viper.SetEnvPrefix("rpi")
 
-	rootCmd.PersistentFlags().StringP("server_host", "s", "127.0.0.1", "server host address")
-	rootCmd.PersistentFlags().IntP("server_port", "p", 8000, "server port")
-	rootCmd.PersistentFlags().IntP("server_timeout", "t", 5000, "server timeout in milliseconds")
+	rootCmd.PersistentFlags().StringP("host", "s", "127.0.0.1", "server host address")
+	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
+	rootCmd.PersistentFlags().IntP("timeout", "t", 5000, "server timeout in milliseconds")
 
-	viper.BindPFlag("server_host", rootCmd.PersistentFlags().Lookup("server_host"))
-	viper.BindPFlag("server_port", rootCmd.PersistentFlags().Lookup("server_port"))
-	viper.BindPFlag("server_timeout", rootCmd.PersistentFlags().Lookup("server_timeout"))
+	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
+	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("timeout", rootCmd.PersistentFlags().Lookup("timeout"))
 
 	helper.AddConfigCommand(rootCmd)
 }
