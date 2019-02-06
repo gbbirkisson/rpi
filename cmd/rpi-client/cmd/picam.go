@@ -94,7 +94,7 @@ rpi-client picam frame > image.jpg
 }
 
 func viewer(reader io.Reader) error {
-	viewerCmd := viper.GetStringSlice("picam_viewer")
+	viewerCmd := viper.GetStringSlice("picam.viewer")
 	vCmd := exec.Command(viewerCmd[0], viewerCmd[1:]...)
 	vCmd.Stdin = reader
 	vCmd.Stdout = os.Stdout
@@ -104,7 +104,7 @@ func viewer(reader io.Reader) error {
 
 func init() {
 	picamFrameCmd.Flags().StringSliceP("viewer", "v", []string{"feh", "-x", "-"}, "Command that the image bytes will be piped to using stdin")
-	viper.BindPFlag("picam_viewer", picamFrameCmd.Flags().Lookup("viewer"))
+	viper.BindPFlag("picam.viewer", picamFrameCmd.Flags().Lookup("viewer"))
 
 	picamCmd.AddCommand(
 		picamFrameCmd,

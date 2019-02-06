@@ -64,8 +64,6 @@ var configSetCmd = &cobra.Command{
 
 // AddConfigCommand adds configuration commands that are mutual between server and client
 func AddConfigCommand(root *cobra.Command) {
-	configWriteCmd.Flags().BoolP("force", "f", false, "Force writing configuration file event though it exists")
-
 	configCmd.AddCommand(configPrintCmd)
 	configCmd.AddCommand(configWriteCmd)
 	configCmd.AddCommand(configSetCmd)

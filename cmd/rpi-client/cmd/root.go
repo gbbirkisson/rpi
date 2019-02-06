@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gbbirkisson/rpi"
@@ -15,13 +16,13 @@ import (
 )
 
 func getConnection() *grpc.ClientConn {
-	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("host"), viper.GetString("port"))
+	conn, err := rpi.NewGrpcClientConnectionInsecure(viper.GetString("server.host"), viper.GetString("server.port"))
 	helper.ExitOnError("could not create connection", err)
 	return conn
 }
 
 func getContext() (context.Context, context.CancelFunc) {
-	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("timeout"))*time.Millisecond)
+	return context.WithTimeout(context.Background(), time.Duration(viper.GetInt64("server.timeout"))*time.Millisecond)
 }
 
 var rootCmd = &cobra.Command{
@@ -40,15 +41,13 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	viper.SetEnvPrefix("rpi")
-
 	rootCmd.PersistentFlags().StringP("host", "s", "127.0.0.1", "server host address")
 	rootCmd.PersistentFlags().IntP("port", "p", 8000, "server port")
 	rootCmd.PersistentFlags().IntP("timeout", "t", 5000, "server timeout in milliseconds")
 
-	viper.BindPFlag("host", rootCmd.PersistentFlags().Lookup("host"))
-	viper.BindPFlag("port", rootCmd.PersistentFlags().Lookup("port"))
-	viper.BindPFlag("timeout", rootCmd.PersistentFlags().Lookup("timeout"))
+	viper.BindPFlag("server.host", rootCmd.PersistentFlags().Lookup("host"))
+	viper.BindPFlag("server.port", rootCmd.PersistentFlags().Lookup("port"))
+	viper.BindPFlag("server.timeout", rootCmd.PersistentFlags().Lookup("timeout"))
 
 	helper.AddConfigCommand(rootCmd)
 }
@@ -57,11 +56,13 @@ var configFileName = ".rpi-client"
 
 func initConfig() {
 	home, err := homedir.Dir()
-	helper.ExitOnError("unable to find home directory", err)
-
-	viper.AddConfigPath(home)
-	viper.SetConfigName(configFileName)
+	if err != nil {
+		viper.AddConfigPath(home)
+		viper.SetConfigName(configFileName)
+	}
 
 	viper.ReadInConfig()
 	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.SetEnvPrefix("rpi")
 }
