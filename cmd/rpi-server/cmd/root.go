@@ -76,7 +76,7 @@ var rootCmd = &cobra.Command{
 
 		if viper.GetBool("ngrok.enabled") {
 			log.Println("adding ngrok service")
-			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("server.port"), viper.GetString("ngrok_token"), viper.GetString("ngrok_region"))
+			ngrok, err := rpi.NewNgrokLocal("tcp", viper.GetString("server.port"), viper.GetString("ngrok.token"), viper.GetString("ngrok.region"))
 			helper.ExitOnError("unable to setup ngrok", err)
 			err = ngrok.Open(ctx)
 			helper.ExitOnError("unable start ngrok", err)
@@ -139,7 +139,10 @@ func initConfig() {
 	viper.AddConfigPath(configPath)
 	viper.SetConfigName(configFileName)
 
-	viper.ReadInConfig()
+	readErr := viper.ReadInConfig()
+	if readErr != nil {
+		fmt.Fprintf(os.Stderr, "unable to read config file: %v\n", readErr)
+	}
 	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.SetEnvPrefix("rpi")
