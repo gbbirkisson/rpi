@@ -56,12 +56,17 @@ var configFileName = ".rpi-client"
 
 func initConfig() {
 	home, err := homedir.Dir()
-	if err != nil {
+	if err == nil {
 		viper.AddConfigPath(home)
 		viper.SetConfigName(configFileName)
+		readErr := viper.ReadInConfig()
+		if readErr != nil {
+			fmt.Fprintf(os.Stderr, "unable to read config: %v\n", readErr)
+		}
+	} else {
+		fmt.Fprintf(os.Stderr, "unable to find home dir: %v\n", err)
 	}
 
-	viper.ReadInConfig()
 	viper.AutomaticEnv()
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.SetEnvPrefix("rpi")
