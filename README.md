@@ -14,6 +14,10 @@ This makes developing applications for the RaspberryPi extremely easy. Once your
 
 If you have any suggestion or comments, please feel free to open an issue on this GitHub page.
 
+## Using the library
+
+Read the [go docs](https://godoc.org/github.com/gbbirkisson/rpi) to to see usage. For more concrete examples see [rpi-client](./cmd/rpi-client/cmd) code.
+
 ## Installing
 
 ### Client / Server
@@ -58,10 +62,16 @@ To generate the default configuration files (yaml in this example) do:
 # For server
 $ touch /etc/rpi-server/config.yaml
 $ rpi-server config write
-
-# For client
+```
+```bash
+# For client (linux/mac)
 $ touch ~/.rpi-client.yaml
 $ rpi-client config write
+```
+```bash
+# For client (windows)
+$ type nul > %userprofile%\.rpi-client.yaml
+$ rpi-client.exe config write
 ```
 
 The resulting client configuration file (`~/.rpi-client.yaml`) would be something like:
