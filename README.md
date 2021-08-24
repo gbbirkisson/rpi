@@ -1,5 +1,5 @@
 <img align="right" width="128" height="128" src="logo.png">
-# rpi
+<h1>rpi</h1>
 
 <p align="center">
 <a href="https://github.com/gbbirkisson/rpi/releases/latest" target="_blank"><img src="https://img.shields.io/github/release/gbbirkisson/rpi.svg?style=flat-square"/></a>
@@ -14,6 +14,16 @@ This package helps you to develop software for the RaspberryPi that does IO oper
 This makes developing applications for the RaspberryPi extremely easy. Once your software is ready, you have the option of continuing to use gRPC calls, or switch over to a local version of the interfaces to compile a binary that runs directly on the RaspberryPi.
 
 If you have any suggestion or comments, please feel free to open an issue on this GitHub page.
+
+- [Using the library](#using-the-library)
+- [Installing](#installing)
+  - [Client / Server](#client--server)
+  - [Pushing server to balena.io](#pushing-server-to-balenaio)
+- [Configuration](#configuration)
+  - [Flags](#flags)
+  - [Configuration files](#configuration-files)
+  - [Environmental variables](#environmental-variables)
+- [Using another languages](#using-another-languages)
 
 ## Using the library
 
